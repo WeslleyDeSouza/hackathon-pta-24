@@ -1,4 +1,5 @@
 import { Component, TemplateRef, inject } from '@angular/core';
+import { PageBase } from '../../view.base';
 
 @Component({
   standalone: true,
@@ -7,6 +8,6 @@ import { Component, TemplateRef, inject } from '@angular/core';
   styleUrl: './user-review.component.scss',
   imports: [],
 })
-export class UserReviewComponent {
+export class UserReviewComponent extends PageBase{
 
 }

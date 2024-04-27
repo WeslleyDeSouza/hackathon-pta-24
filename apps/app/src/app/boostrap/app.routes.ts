@@ -31,6 +31,6 @@ export const appRoutes: Route[] = [
   {
     path:'',
     redirectTo:'project',
-    pathMatch:'full'
+    pathMatch:'prefix'
   }
 ];
