@@ -390,8 +390,102 @@ export const DummyDataGenerator  = ({
           "projectId": 3,
           "description": "As a user with disabilities, I want an accessible user interface so that I can navigate the site easily."
         },
-
-
+        {
+          "title": "RealTime Form Validation",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want the form validation to happen in real time so that I can correct any errors as I fill out the form."
+        },
+        {
+          "title": "Mobile Responsive Design",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a mobile user, I want the website to adjust to my screen size so that I can browse easily on my device."
+        },
+        {
+          "title": "Password Strength Indicator",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user creating an account, I want a password strength indicator so that I can create a secure password."
+        },
+        {
+          "title": "Drag and Drop File Upload",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want to be able to drag and drop files for upload to make the process quicker and easier."
+        },
+        {
+          "title": "Dark Mode Toggle",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want a toggle to switch to dark mode so that I can reduce eye strain."
+        },
+        {
+          "title": "Language Preference Setting",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want to set my language preference to improve my experience with the interface."
+        },
+        {
+          "title": "Two-Factor Authentication Setup",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want to enable two-factor authentication to secure my account."
+        },
+        {
+          "title": "User Profile Customization",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want to customize my profile so that I can display preferred information."
+        },
+        {
+          "title": "Interactive Data Visualizations",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want interactive data visualizations so that I can understand complex data easily."
+        },
+        {
+          "title": "Automated Report Generation",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want reports to be generated automatically so that I can save time."
+        },
+        {
+          "title": "Feedback System",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want to provide feedback through a simple interface so that my opinions are easily submitted."
+        },
+        {
+          "title": "Live Chat Support",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want access to live chat support so that I can resolve issues quickly."
+        },
+        {
+          "title": "Order Tracking",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want to track my orders so that I know when to expect delivery."
+        },
+        {
+          "title": "Secure Payment Gateway",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want a secure payment gateway to ensure my transaction details are safe."
+        },
+        {
+          "title": "Notification Preferences",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want to customize my notification preferences to receive relevant alerts."
+        },
+        {
+          "title": "Multi-Currency Support",
+          "tenantId": 1,
+          "projectId": 4,
+          "description": "As a user, I want to view prices in different currencies so that I can understand costs in my local currency."
+        }
       ]
     Promise.all(userStories.map((b,i) =>
       {
