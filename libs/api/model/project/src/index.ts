@@ -1,1 +1,1 @@
-export * from './lib/api-model-project.module';
+export * from './api-project.module';
