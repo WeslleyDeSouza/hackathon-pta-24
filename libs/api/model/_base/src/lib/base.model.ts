@@ -10,7 +10,15 @@ export abstract class TenantBaseEntity extends BaseEntity{
   })
   tenantId: number;
 
+  protected skipSetLastEntryId:boolean = false
+
+  public setSkipSetLastEntryId():void{
+    this.skipSetLastEntryId = true
+  }
+
   protected async setLastEntryId(key: string): Promise<number> {
+
+    if(this.skipSetLastEntryId)return this[key] as number
 
     const _db:typeof TenantBaseEntity = this.self as typeof TenantBaseEntity;
 

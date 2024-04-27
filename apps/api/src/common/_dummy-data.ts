@@ -5,6 +5,10 @@ import { BadgeEntity } from '../../../../libs/api/model/badge/src/lib/entities';
 import { BadgeFacade } from '@hackathon-pta/api/model/badge';
 import { UserBadgeAchievementFacade } from '@hackathon-pta/api/model/user';
 import { UserActivityFacade } from 'libs/api/model/user/src/facades/user-activity.facade';
+import ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
+import Project = ts.server.Project;
+import { ProjectEntity } from '../../../../libs/api/model/project/src/entities';
+import { ProjectFacade } from '@hackathon-pta/api/model/project';
 
 const isDev:boolean = process.env['APP_ENV'] == 'development' || true //
 
@@ -26,6 +30,38 @@ export const DummyDataGenerator  = ({
       firstName:'Max',
       email:'max.musterman@pta.ch'
     })
+  },
+  async projectGenerate(projectFacade:ProjectFacade){
+    const projects: Partial<ProjectEntity>[] = [
+      {
+        title: 'PTA',
+        tenantId:1,
+        description:'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut'
+      },
+      {
+        title: 'Esostat',
+        tenantId: 1,
+        description:'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut'
+      },
+      {
+        title: '7-Summit',
+        tenantId: 1,
+        description:'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut'
+      },
+      {
+        title: 'SIS-Portal Monorepo',
+        tenantId: 1,
+        description:'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut'
+      },
+    ]
+    Promise.all(projects.map((b,i) =>
+      {
+        const model = ProjectEntity.create(b) as ProjectEntity;
+        model.setSkipSetLastEntryId()
+        model.projectId = i + 1
+        return model.save().catch(()=> null)
+      }
+    ))
   },
   async badgeGenerate(badgeFacade:BadgeFacade){
     const badges: Partial<BadgeEntity>[] = [
@@ -94,6 +130,6 @@ export const DummyDataGenerator  = ({
           name: "workload_hours",
           progress: 50
         }]
-    })
+    }).catch(()=>null)
   },
 })
