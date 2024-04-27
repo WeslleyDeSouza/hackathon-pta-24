@@ -11,7 +11,7 @@ export class BadgeController {
   constructor(private readonly badgeService: BadgeFacade, private readonly badgeAchievementService: BadgeAchievementFacade) {}
 
   @Get()
-  findFromCurrentUser(@CurrentUser() currentUser:IUser) {
+  find(@CurrentUser() currentUser:IUser) {
     return this.badgeAchievementService.findByUserId(currentUser.userId);
   }
 
