@@ -2,7 +2,7 @@ import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, Bef
 import {UserEntity} from "./user.entity";
 import {TenantBaseEntity} from "@hackathon-pta/api/model/_base";
 
-@Entity('user_badge_achievement')
+@Entity('badge_user_achievement')
 export class UserBadgeAchievementEntity extends TenantBaseEntity{
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,4 +18,7 @@ export class UserBadgeAchievementEntity extends TenantBaseEntity{
     nullable: false
   })
   badgeId: string;
+
+  @CreateDateColumn()
+  achievementAt:Date
 }
