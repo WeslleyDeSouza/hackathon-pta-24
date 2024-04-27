@@ -7,12 +7,14 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface UserCreateUser$Params {
+export interface BadgeFindOne$Params {
+  id: string;
 }
 
-export function userCreateUser(http: HttpClient, rootUrl: string, params?: UserCreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, userCreateUser.PATH, 'get');
+export function badgeFindOne(http: HttpClient, rootUrl: string, params: BadgeFindOne$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, badgeFindOne.PATH, 'get');
   if (params) {
+    rb.path('id', params.id, {});
   }
 
   return http.request(
@@ -25,4 +27,4 @@ export function userCreateUser(http: HttpClient, rootUrl: string, params?: UserC
   );
 }
 
-userCreateUser.PATH = '/api/user/create';
+badgeFindOne.PATH = '/api/badge/{id}';
