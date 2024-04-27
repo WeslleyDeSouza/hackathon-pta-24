@@ -9,8 +9,11 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { ProjectDtoResponse } from '../models/project-dto-response';
 import { userStoryCreateUserStory } from '../fn/user-story/user-story-create-user-story';
 import { UserStoryCreateUserStory$Params } from '../fn/user-story/user-story-create-user-story';
+import { userStoryListFromProject } from '../fn/user-story/user-story-list-from-project';
+import { UserStoryListFromProject$Params } from '../fn/user-story/user-story-list-from-project';
 import { userStoryUpdateUserStory } from '../fn/user-story/user-story-update-user-story';
 import { UserStoryUpdateUserStory$Params } from '../fn/user-story/user-story-update-user-story';
 
@@ -67,6 +70,31 @@ export class UserStoryService extends BaseService {
   userStoryUpdateUserStory(params: UserStoryUpdateUserStory$Params, context?: HttpContext): Observable<void> {
     return this.userStoryUpdateUserStory$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
+    );
+  }
+
+  /** Path part for operation `userStoryListFromProject()` */
+  static readonly UserStoryListFromProjectPath = '/api/user-story/list/{projectId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `userStoryListFromProject()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  userStoryListFromProject$Response(params: UserStoryListFromProject$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ProjectDtoResponse>>> {
+    return userStoryListFromProject(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `userStoryListFromProject$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  userStoryListFromProject(params: UserStoryListFromProject$Params, context?: HttpContext): Observable<Array<ProjectDtoResponse>> {
+    return this.userStoryListFromProject$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<ProjectDtoResponse>>): Array<ProjectDtoResponse> => r.body)
     );
   }
 

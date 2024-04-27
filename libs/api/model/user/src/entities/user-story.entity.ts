@@ -11,11 +11,11 @@ export class UserStoryEntity extends TenantBaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Column({unique:true})
-  userStoryId: string;
+  @Column({unique:true,type:'int'})
+  userStoryId: number;
 
-  @Column()
-  projectId: string;
+  @Column({type:'int',nullable:false})
+  projectId: number;
 
   @Column()
   title:string

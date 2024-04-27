@@ -13,6 +13,10 @@ export class UserStoryResolver implements Resolve<any> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any>|Promise<any>|any {
-   console.log(route,state)
+    const {params} = route;
+    const {projectId} = params;
+   return this.userStoryService.userStoryListFromProject({
+      projectId
+    })
   }
 }

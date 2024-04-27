@@ -2,6 +2,6 @@
 /* eslint-disable */
 export interface UserStoryCreate {
   description: string;
-  projectId: string;
+  projectId: number;
   title: string;
 }

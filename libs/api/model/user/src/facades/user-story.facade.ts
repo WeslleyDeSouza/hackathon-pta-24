@@ -8,7 +8,16 @@ import {InjectRepository} from "@nestjs/typeorm";
 export class UserStoryFacade  {
   constructor(@InjectRepository( UserStoryEntity) protected userStoryEntity: Repository<UserStoryEntity>) {}
 
-  create(tenantId:number,projectId:string,user:Partial<UserEntity>,data:Partial<UserStoryEntity>):Promise<UserStoryEntity>{
+  listByProjectId(tenantId:number,projectId:number){
+   return this.userStoryEntity.find({
+      where:{
+        tenantId,
+        projectId
+      }
+    })
+  }
+
+  create(tenantId:number,projectId:number,user:Partial<UserEntity>,data:Partial<UserStoryEntity>):Promise<UserStoryEntity>{
     const userStory = this.userStoryEntity.create()
     userStory.user = user as UserEntity;
     userStory.tenantId = tenantId
