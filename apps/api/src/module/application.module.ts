@@ -9,6 +9,7 @@ import { ProjectModule } from './project/project.module';
 import { ApiModelTenantModule, TenantFacade } from '@hackathon-pta/api/model/tenant';
 import { ApiModelProjectModule } from '@hackathon-pta/api/model/project';
 import { TenantModule } from './tenant/tenant.module';
+import { BadgeModule } from './badge/badge.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { TenantModule } from './tenant/tenant.module';
     ),
     UserModule,
     ProjectModule,
-    TenantModule
+    TenantModule,
+    BadgeModule
   ],
 })
 export class ApplicationModule {

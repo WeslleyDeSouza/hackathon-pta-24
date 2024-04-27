@@ -1,1 +1,2 @@
-export * from './lib/api-model-badge.module';
+export * from './lib/api-badge.module';
+export * from './lib/facades';

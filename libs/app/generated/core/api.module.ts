@@ -6,6 +6,7 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { UserStoryService } from './services/user-story.service';
 import { ProjectService } from './services/project.service';
+import { BadgeService } from './services/badge.service';
 
 /**
  * Module that provides all services and configuration.
@@ -17,6 +18,7 @@ import { ProjectService } from './services/project.service';
   providers: [
     UserStoryService,
     ProjectService,
+    BadgeService,
     ApiConfiguration
   ],
 })
