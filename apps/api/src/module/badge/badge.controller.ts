@@ -5,7 +5,7 @@ import { CurrentUser, TenantMockGuard, UserMockGuard } from '@hackathon-pta/api/
 import { IUser } from '@hackathon-pta/api/model/user';
 
 @Controller('badge')
-@ApiTags('badge')
+@ApiTags('Badge')
 @UseGuards(UserMockGuard)
 export class BadgeController {
   constructor(private readonly badgeService: BadgeFacade) {}
