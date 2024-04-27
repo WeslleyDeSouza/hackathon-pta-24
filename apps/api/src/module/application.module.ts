@@ -10,6 +10,7 @@ import { ApiModelTenantModule, TenantFacade } from '@hackathon-pta/api/model/ten
 import { ApiModelProjectModule } from '@hackathon-pta/api/model/project';
 import { TenantModule } from './tenant/tenant.module';
 import { BadgeModule } from './badge/badge.module';
+import { ApiModelBadgeModule } from '@hackathon-pta/api/model/badge';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { BadgeModule } from './badge/badge.module';
       createDataSource(ApiDatabaseConfig,[
         ... ApiModelUserModule.dbConfig.entities as EntitySchema[],
         ... ApiModelProjectModule.dbConfig.entities as EntitySchema[],
-        ... ApiModelTenantModule.dbConfig.entities as EntitySchema[]
+        ... ApiModelTenantModule.dbConfig.entities as EntitySchema[],
+        ... ApiModelBadgeModule.dbConfig.entities as EntitySchema[]
       ])
     ),
     UserModule,

@@ -10,4 +10,10 @@ export class BadgeEntity extends BaseEntity {
 
   @Column()
   description: string;
+
+  @Column({nullable: true})
+  score: number | null = null;
+
+  @Column()
+  tag: string;
 }
