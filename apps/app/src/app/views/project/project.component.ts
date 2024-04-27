@@ -23,6 +23,10 @@ export class ProjectComponent extends PageBase{
 
   constructor(protected api:ProjectApi,protected store:ProjectStore) {
     super()
+
+    api.create({
+      title:'Hello World'
+    }).subscribe()
   }
 
   getData(){

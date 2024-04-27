@@ -4,6 +4,8 @@ import { TenantBaseEntity } from '@hackathon-pta/api/model/_base';
 @Entity('project')
 @Index(['tenantId'])
 export class ProjectEntity extends TenantBaseEntity {
+  override self = ProjectEntity;
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

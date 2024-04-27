@@ -27,7 +27,7 @@ export class ProjectFacade {
     )
   }
   create(tenantId:number,dto:ProjectDtoCreate){
-    this.projectEntity.save(
+    return this.projectEntity.save(
       Object.assign(
         this.projectEntity.create()
         ,{

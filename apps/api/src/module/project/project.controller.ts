@@ -9,33 +9,29 @@ import { CurrentTenant, TenantMockGuard, UserMockGuard } from '@hackathon-pta/ap
 export class ProjectController {
   constructor(private readonly projectService: ProjectFacade) {}
 
-
   @Get('')
-  listProject(@CurrentTenant()tenant,
-             ) {
+  list(@CurrentTenant()tenant) {
     return this.projectService.list(
       tenant.tenantId,
     )
   }
 
   @Put('create')
-  createProject(@CurrentTenant()tenant,
-                @Body() projectDto:ProjectDtoCreate) {
+  create(@CurrentTenant()tenant, @Body() projectDto:ProjectDtoCreate) {
    return this.projectService.create(
       tenant.tenantId,projectDto
     )
   }
 
   @Patch('update')
-  updateProject(@CurrentTenant()tenant,
-                @Body() projectDto:ProjectDtoUpdate) {
+  update(@CurrentTenant()tenant, @Body() projectDto:ProjectDtoUpdate) {
     return this.projectService.update(
       tenant.tenantId,projectDto
     )
   }
 
   @Delete(':id')
-  deleteProject(@CurrentTenant()tenant, @Param() id:number) {
+  delete(@CurrentTenant()tenant, @Param() id:number) {
     return this.projectService.delete(
       tenant.tenantId,id
     )

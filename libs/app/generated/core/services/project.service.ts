@@ -9,14 +9,14 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { projectCreateProject } from '../fn/project/project-create-project';
-import { ProjectCreateProject$Params } from '../fn/project/project-create-project';
-import { projectDeleteProject } from '../fn/project/project-delete-project';
-import { ProjectDeleteProject$Params } from '../fn/project/project-delete-project';
-import { projectListProject } from '../fn/project/project-list-project';
-import { ProjectListProject$Params } from '../fn/project/project-list-project';
-import { projectUpdateProject } from '../fn/project/project-update-project';
-import { ProjectUpdateProject$Params } from '../fn/project/project-update-project';
+import { projectCreate } from '../fn/project/project-create';
+import { ProjectCreate$Params } from '../fn/project/project-create';
+import { projectDelete } from '../fn/project/project-delete';
+import { ProjectDelete$Params } from '../fn/project/project-delete';
+import { projectList } from '../fn/project/project-list';
+import { ProjectList$Params } from '../fn/project/project-list';
+import { projectUpdate } from '../fn/project/project-update';
+import { ProjectUpdate$Params } from '../fn/project/project-update';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService extends BaseService {
@@ -24,102 +24,102 @@ export class ProjectService extends BaseService {
     super(config, http);
   }
 
-  /** Path part for operation `projectListProject()` */
-  static readonly ProjectListProjectPath = '/api/project';
+  /** Path part for operation `projectList()` */
+  static readonly ProjectListPath = '/api/project';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `projectListProject()` instead.
+   * To access only the response body, use `projectList()` instead.
    *
    * This method doesn't expect any request body.
    */
-  projectListProject$Response(params?: ProjectListProject$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return projectListProject(this.http, this.rootUrl, params, context);
+  projectList$Response(params?: ProjectList$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return projectList(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `projectListProject$Response()` instead.
+   * To access the full response (for headers, for example), `projectList$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  projectListProject(params?: ProjectListProject$Params, context?: HttpContext): Observable<void> {
-    return this.projectListProject$Response(params, context).pipe(
+  projectList(params?: ProjectList$Params, context?: HttpContext): Observable<void> {
+    return this.projectList$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 
-  /** Path part for operation `projectCreateProject()` */
-  static readonly ProjectCreateProjectPath = '/api/project/create';
+  /** Path part for operation `projectCreate()` */
+  static readonly ProjectCreatePath = '/api/project/create';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `projectCreateProject()` instead.
+   * To access only the response body, use `projectCreate()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  projectCreateProject$Response(params: ProjectCreateProject$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return projectCreateProject(this.http, this.rootUrl, params, context);
+  projectCreate$Response(params: ProjectCreate$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return projectCreate(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `projectCreateProject$Response()` instead.
+   * To access the full response (for headers, for example), `projectCreate$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  projectCreateProject(params: ProjectCreateProject$Params, context?: HttpContext): Observable<void> {
-    return this.projectCreateProject$Response(params, context).pipe(
+  projectCreate(params: ProjectCreate$Params, context?: HttpContext): Observable<void> {
+    return this.projectCreate$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 
-  /** Path part for operation `projectUpdateProject()` */
-  static readonly ProjectUpdateProjectPath = '/api/project/update';
+  /** Path part for operation `projectUpdate()` */
+  static readonly ProjectUpdatePath = '/api/project/update';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `projectUpdateProject()` instead.
+   * To access only the response body, use `projectUpdate()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  projectUpdateProject$Response(params: ProjectUpdateProject$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return projectUpdateProject(this.http, this.rootUrl, params, context);
+  projectUpdate$Response(params: ProjectUpdate$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return projectUpdate(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `projectUpdateProject$Response()` instead.
+   * To access the full response (for headers, for example), `projectUpdate$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  projectUpdateProject(params: ProjectUpdateProject$Params, context?: HttpContext): Observable<void> {
-    return this.projectUpdateProject$Response(params, context).pipe(
+  projectUpdate(params: ProjectUpdate$Params, context?: HttpContext): Observable<void> {
+    return this.projectUpdate$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 
-  /** Path part for operation `projectDeleteProject()` */
-  static readonly ProjectDeleteProjectPath = '/api/project/{id}';
+  /** Path part for operation `projectDelete()` */
+  static readonly ProjectDeletePath = '/api/project/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `projectDeleteProject()` instead.
+   * To access only the response body, use `projectDelete()` instead.
    *
    * This method doesn't expect any request body.
    */
-  projectDeleteProject$Response(params?: ProjectDeleteProject$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return projectDeleteProject(this.http, this.rootUrl, params, context);
+  projectDelete$Response(params?: ProjectDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return projectDelete(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `projectDeleteProject$Response()` instead.
+   * To access the full response (for headers, for example), `projectDelete$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  projectDeleteProject(params?: ProjectDeleteProject$Params, context?: HttpContext): Observable<void> {
-    return this.projectDeleteProject$Response(params, context).pipe(
+  projectDelete(params?: ProjectDelete$Params, context?: HttpContext): Observable<void> {
+    return this.projectDelete$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
