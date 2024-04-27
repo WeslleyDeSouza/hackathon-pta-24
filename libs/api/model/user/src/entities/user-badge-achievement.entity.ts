@@ -18,12 +18,4 @@ export class UserBadgeAchievementEntity extends TenantBaseEntity{
     nullable: false
   })
   badgeId: string;
-
-  @Column({
-    type:"int",
-    unsigned:true,
-    nullable:false,
-    unique:true
-  })
-  override tenantId: number;
 }
