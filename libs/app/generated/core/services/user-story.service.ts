@@ -9,8 +9,8 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { userStoryCreateUser } from '../fn/user-story/user-story-create-user';
-import { UserStoryCreateUser$Params } from '../fn/user-story/user-story-create-user';
+import { userStoryUpdateUserStory } from '../fn/user-story/user-story-update-user-story';
+import { UserStoryUpdateUserStory$Params } from '../fn/user-story/user-story-update-user-story';
 
 @Injectable({ providedIn: 'root' })
 export class UserStoryService extends BaseService {
@@ -18,27 +18,27 @@ export class UserStoryService extends BaseService {
     super(config, http);
   }
 
-  /** Path part for operation `userStoryCreateUser()` */
-  static readonly UserStoryCreateUserPath = '/api/user-story/create';
+  /** Path part for operation `userStoryUpdateUserStory()` */
+  static readonly UserStoryUpdateUserStoryPath = '/api/user-story/create';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `userStoryCreateUser()` instead.
+   * To access only the response body, use `userStoryUpdateUserStory()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  userStoryCreateUser$Response(params: UserStoryCreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return userStoryCreateUser(this.http, this.rootUrl, params, context);
+  userStoryUpdateUserStory$Response(params: UserStoryUpdateUserStory$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return userStoryUpdateUserStory(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `userStoryCreateUser$Response()` instead.
+   * To access the full response (for headers, for example), `userStoryUpdateUserStory$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  userStoryCreateUser(params: UserStoryCreateUser$Params, context?: HttpContext): Observable<void> {
-    return this.userStoryCreateUser$Response(params, context).pipe(
+  userStoryUpdateUserStory(params: UserStoryUpdateUserStory$Params, context?: HttpContext): Observable<void> {
+    return this.userStoryUpdateUserStory$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }

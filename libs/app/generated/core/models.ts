@@ -1,3 +1,3 @@
 /* tslint:disable */
 /* eslint-disable */
-export { UserStoryCreate } from './models/user-story-create';
+export { UserStoryUpdate } from './models/user-story-update';

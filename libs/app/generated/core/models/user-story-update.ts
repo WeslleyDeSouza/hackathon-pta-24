@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
-export interface UserStoryCreate {
+export interface UserStoryUpdate {
   description: string;
   title: string;
+  userStoryId: number;
 }

@@ -6,14 +6,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { UserStoryCreate } from '../../models/user-story-create';
+import { UserStoryUpdate } from '../../models/user-story-update';
 
-export interface UserStoryCreateUser$Params {
-      body: UserStoryCreate
+export interface UserStoryUpdateUserStory$Params {
+      body: UserStoryUpdate
 }
 
-export function userStoryCreateUser(http: HttpClient, rootUrl: string, params: UserStoryCreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, userStoryCreateUser.PATH, 'get');
+export function userStoryUpdateUserStory(http: HttpClient, rootUrl: string, params: UserStoryUpdateUserStory$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, userStoryUpdateUserStory.PATH, 'get');
   if (params) {
     rb.body(params.body, 'application/json');
   }
@@ -28,4 +28,4 @@ export function userStoryCreateUser(http: HttpClient, rootUrl: string, params: U
   );
 }
 
-userStoryCreateUser.PATH = '/api/user-story/create';
+userStoryUpdateUserStory.PATH = '/api/user-story/create';
