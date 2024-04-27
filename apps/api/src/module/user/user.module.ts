@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
-import { ApiModelUserModule, UserBadgeAchievementFacade, UserFacade } from '@hackathon-pta/api/model/user';
+import {
+  ApiModelUserModule,
+  UserBadgeAchievementFacade,
+  UserFacade,
+  UserStoryFacade
+} from '@hackathon-pta/api/model/user';
 import {UserStoryController} from "./user-story.controller";
 import { DummyDataGenerator } from '../../common/_dummy-data';
 
@@ -12,9 +17,14 @@ import { DummyDataGenerator } from '../../common/_dummy-data';
   providers: [],
 })
 export class UserModule {
-  constructor(facade:UserFacade, achievementFacade: UserBadgeAchievementFacade) {
-    DummyDataGenerator.userGenerate(facade);
-    
-    DummyDataGenerator.achievementGenerate(achievementFacade)
+  constructor(
+    userStoryFacade:UserStoryFacade,
+    facade:UserFacade, achievementFacade: UserBadgeAchievementFacade) {
+    DummyDataGenerator.userGenerate(facade).then(()=> {
+      DummyDataGenerator.userStoryGenerate(userStoryFacade)
+      DummyDataGenerator.achievementGenerate(achievementFacade)
+    })
+
   }
+
 }

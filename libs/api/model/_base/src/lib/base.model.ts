@@ -1,4 +1,5 @@
 import {BaseEntity, Column, Entity} from "typeorm";
+import { Exclude, instanceToPlain } from 'class-transformer';
 
 export abstract class TenantBaseEntity extends BaseEntity{
   protected self:typeof TenantBaseEntity = TenantBaseEntity
@@ -10,7 +11,8 @@ export abstract class TenantBaseEntity extends BaseEntity{
   })
   tenantId: number;
 
-  protected skipSetLastEntryId:boolean = false
+  @Exclude()
+  private skipSetLastEntryId:boolean = false
 
   public setSkipSetLastEntryId():void{
     this.skipSetLastEntryId = true
@@ -35,5 +37,9 @@ export abstract class TenantBaseEntity extends BaseEntity{
     this[key] = lastEntry && lastEntry[0] ? +lastEntry[0][key] + 1 : 1;
     // @ts-ignore
     return this[key];
+  }
+
+  toJson(){
+    return instanceToPlain(this);
   }
 }

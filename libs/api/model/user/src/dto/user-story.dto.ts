@@ -12,10 +12,10 @@ export class UserStoryCreate extends UserStoryEntity {
   @ApiProperty({
     required:true
   })
-  override projectId: string;
+  override projectId: number;
 }
 
 export class UserStoryUpdate extends UserStoryCreate {
   @ApiProperty({type:Number,required:true})
-  override userStoryId: string;
+  override userStoryId: number;
 }

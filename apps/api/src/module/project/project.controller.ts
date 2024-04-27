@@ -12,9 +12,7 @@ import { CurrentTenant, TenantMockGuard, UserMockGuard } from '@hackathon-pta/ap
 @ApiTags('Project')
 @UseGuards(UserMockGuard,TenantMockGuard)
 export class ProjectController {
-  constructor(private readonly projectService: ProjectFacade) {
-
-  }
+  constructor(private readonly projectService: ProjectFacade) {}
 
   @Get('')
   @ApiOkResponse({
@@ -27,6 +25,8 @@ export class ProjectController {
       tenant.tenantId,
     )
   }
+
+
 
   @Put('create')
   @ApiOkResponse({

@@ -1,8 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, BaseEntity, BeforeInsert, Index } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+  BaseEntity,
+  BeforeInsert,
+  Index,
+  Unique
+} from 'typeorm';
 import { TenantBaseEntity } from '@hackathon-pta/api/model/_base';
 
 @Entity('project')
 @Index(['tenantId'])
+@Unique(['tenantId','projectId'])
 export class ProjectEntity extends TenantBaseEntity {
   override self = ProjectEntity;
 

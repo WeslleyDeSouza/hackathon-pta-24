@@ -12,17 +12,19 @@ export const appRoutes: Route[] = [
     children:[
       {
         path:'project',
-        loadComponent:()=> ProjectComponent,
+
         children:[
           {
+
             path: ':projectId',
             children:[
               {
-                path:'story',
+                path:'user-story',
                 loadComponent:()=> UserStoryComponent,
                 resolve:{
                   stories:UserStoryResolver
                 },
+                providers:[UserStoryResolver],
                 children:[
                   {
                     path:'review',
@@ -31,7 +33,11 @@ export const appRoutes: Route[] = [
                 ]
               },
             ]
-          }
+          },
+          {
+            path:'',
+            loadComponent:()=> ProjectComponent,
+          },
         ]
       }
     ]
