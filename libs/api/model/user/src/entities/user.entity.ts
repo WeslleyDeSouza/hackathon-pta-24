@@ -1,13 +1,24 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, BaseEntity} from 'typeorm';
+import {UserStoryEntity} from "./user-story.entity";
+import {UserStoryEstimationEntity} from "./user-story-estimation.entity";
 
 @Entity('user')
-export class UserEntity {
-  @PrimaryGeneratedColumn()
-  userId: number;
+export class UserEntity extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  userId: string;
 
   @Column()
   firstName: string;
 
   @Column()
   lastName: string;
+
+  @Column({type:"varchar",length:50,nullable:false,unique:true})
+  email: string;
+
+  @OneToMany(() => UserStoryEntity, (stories) => stories.user)
+  stories: UserStoryEntity[]
+
+  @OneToMany(() => UserStoryEstimationEntity, (estimation) => estimation.user)
+  estimations: UserStoryEstimationEntity[]
 }
