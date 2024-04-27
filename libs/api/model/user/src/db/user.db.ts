@@ -2,6 +2,7 @@ import {Entity, Column, PrimaryGeneratedColumn, DataSourceOptions} from 'typeorm
 import {UserEntity} from "../entities";
 import {UserStoryEstimationEntity} from "../entities/user-story-estimation.entity";
 import {UserStoryEntity} from "../entities/user-story.entity";
+import { UserBadgeAchievementEntity } from '../entities/user-badge-achievement.entity';
 
 export const DBUserConfig:DataSourceOptions = {
   type: process.env['DB_TYPE'] as any,
@@ -10,6 +11,6 @@ export const DBUserConfig:DataSourceOptions = {
   username:  process.env['DB_USERNAME'],
   password:  process.env['DB_PASSWORD'] ,
   database:  process.env['DB_DATABASE'],
-  entities: [UserEntity,UserStoryEntity,UserStoryEstimationEntity],
+  entities: [UserEntity,UserStoryEntity,UserStoryEstimationEntity,UserBadgeAchievementEntity],
   synchronize: true,
 }
