@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  gamification-db-mysql:
+    container_name: mysql
+    image: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_USER: ${DB_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    volumes:
+      - gamification-db:/var/lib/mysql
+volumes:
+  gamification-db:

@@ -1,5 +1,7 @@
 # HackathonPta
 
+## Setup Projects
+copy .env.example into project root as .env and fill creds info
 
 ## Start Projects
 Frontend `npx nx serve app `

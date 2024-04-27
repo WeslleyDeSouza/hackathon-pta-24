@@ -1,12 +1,9 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
+import 'dotenv/config'
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
+import * as process from "process";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,6 +14,8 @@ async function bootstrap() {
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
   );
+
+  console.log(process.env['DB_NAME'])
 }
 
 bootstrap();
