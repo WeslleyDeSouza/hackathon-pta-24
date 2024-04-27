@@ -14,8 +14,6 @@ async function bootstrap() {
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
   );
-
-  console.log(process.env['DB_NAME'])
 }
 
 bootstrap();
