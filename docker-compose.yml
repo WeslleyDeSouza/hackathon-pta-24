@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  gamification-db-mysql:
+ gamification-db-mysql:
     container_name: mysql
     image: mysql
     restart: always
@@ -13,4 +13,4 @@ services:
     volumes:
       - gamification-db:/var/lib/mysql
 volumes:
-  gamification-db:
+ gamification-db:
