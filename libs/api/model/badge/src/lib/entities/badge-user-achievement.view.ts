@@ -3,9 +3,12 @@ import { ViewColumn, ViewEntity } from "typeorm"
 
 @ViewEntity({
     expression: `
-        SELECT badge.badgeId AS badgeId, user.userId AS userId, badge.title AS badgeTitle,
-        badge.description AS badgeDescription, IF(achievements.userId IS NOT NULL, true, false) AS achieved,
-        badge.activityName as activityName, badge.activityValue AS activityValue, 0 AS activityProgress
+        SELECT
+          badge.badgeId AS badgeId,
+          user.userId AS userId,
+          badge.title AS badgeTitle,
+          badge.description AS badgeDescription, IF(achievements.userId IS NOT NULL, true, false) AS achieved,
+          badge.activityName as activityName, badge.activityValue AS activityValue, 0 AS activityProgress
         FROM user
         CROSS JOIN badge
         LEFT JOIN user_badge_achievement achievements ON badge.badgeId = achievements.badgeId

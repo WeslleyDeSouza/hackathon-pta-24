@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, BeforeInsert} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, BeforeInsert, JoinColumn } from 'typeorm';
 import {TenantBaseEntity} from "@hackathon-pta/api/model/_base";
 import { UserEntity } from './user.entity';
 
@@ -17,5 +17,6 @@ export class UserBadgeAchievementEntity extends TenantBaseEntity{
   achievementAt:Date
 
   @ManyToOne(() => UserEntity, (user) => user.achievements)
+  @JoinColumn({ name: "userId" })
   user: UserEntity
 }
