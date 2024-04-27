@@ -3,14 +3,16 @@ import { ViewColumn, ViewEntity } from "typeorm"
 
 @ViewEntity({
     expression: `
-        SELECT "post"."id" AS "id", "post"."name" AS "name", "category"."name" AS "categoryName"
-        FROM "user" "user"
-        CROSS JOIN "badge" "badge"
-        LEFT JOIN "user_badge_achievement" "achievements" ON "badge"."badgeId" = "achievements"."badgeId" 
-        AND "user"."userId" = "achievements"."userId"
+        SELECT badge.badgeId AS badgeId, user.userId AS userId, badge.title AS badgeTitle,
+        badge.description AS badgeDescription, IF(achievements.userId IS NOT NULL, true, false) AS achieved,
+        badge.activityName as activityName, badge.activityValue AS activityValue, 0 AS activityProgress
+        FROM user
+        CROSS JOIN badge
+        LEFT JOIN user_badge_achievement achievements ON badge.badgeId = achievements.badgeId 
+        AND user.userId = achievements.userId
     `,
 })
-export class BadgeAchievement {
+export class BadgeAchievementEntity {
     @ViewColumn()
     badgeId: string;
 
