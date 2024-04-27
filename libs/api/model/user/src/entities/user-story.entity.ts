@@ -1,4 +1,13 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, BeforeInsert, Index} from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  BeforeInsert,
+  Index,
+  CreateDateColumn,
+  UpdateDateColumn
+} from 'typeorm';
 import {UserEntity} from "./user.entity";
 import {TenantBaseEntity} from "@hackathon-pta/api/model/_base";
 
@@ -31,6 +40,15 @@ export class UserStoryEntity extends TenantBaseEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.estimations)
   user: UserEntity
+
+  @Column({nullable:true, default:null, type:'date'})
+  stateOpenForReview:boolean
+
+  @UpdateDateColumn()
+  updatedAt:boolean
+
+  @UpdateDateColumn()
+  deletedAt:boolean
 
   @BeforeInsert()
   async beforeInsert(){
