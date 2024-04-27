@@ -1,16 +1,20 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, BeforeInsert} from 'typeorm';
 import {UserEntity} from "./user.entity";
+import {TenantBaseEntity} from "@hackathon-pta/api/model/_base";
 
 @Entity('user_story_estimation')
-export class UserStoryEstimationEntity {
+export class UserStoryEstimationEntity extends TenantBaseEntity{
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  projectId: string;
+  @Column({
+    type:'int',
+    unsigned:true
+  })
+  estimationId: number;
 
   @Column()
-  tenantId: string;
+  projectId: string;
 
   @Column({type:'varchar',length:50})
   title:string
@@ -26,4 +30,9 @@ export class UserStoryEstimationEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.estimations)
   user: UserEntity
+
+  @BeforeInsert()
+  async beforeInsert(){
+    await this.setLastEntryId('estimationId')
+  }
 }

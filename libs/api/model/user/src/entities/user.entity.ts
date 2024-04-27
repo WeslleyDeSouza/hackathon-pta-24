@@ -4,8 +4,8 @@ import {UserStoryEstimationEntity} from "./user-story-estimation.entity";
 
 @Entity('user')
 export class UserEntity {
-  @PrimaryGeneratedColumn()
-  userId: number;
+  @PrimaryGeneratedColumn('uuid')
+  userId: string;
 
   @Column()
   firstName: string;

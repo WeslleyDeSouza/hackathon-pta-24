@@ -1,21 +1,25 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, BeforeInsert, Index} from 'typeorm';
 import {UserEntity} from "./user.entity";
+import {TenantBaseEntity} from "@hackathon-pta/api/model/_base";
 
 @Entity('user_story')
-export class UserStoryEntity {
+@Index(['tenantId'])
+@Index(['tenantId','projectId'])
+export class UserStoryEntity extends TenantBaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
+
+  @Column({unique:true})
+  userStoryId: string;
 
   @Column()
   projectId: string;
 
   @Column()
-  tenantId: string;
+  title:string
 
-  @Column()
+  @Column({type:'text'})
   description:string
-
-  estimationValue:number // custom Value
 
   @Column({type:'varchar',length:10 , nullable:true})
   estimateUnit:number // custom Value
@@ -25,4 +29,11 @@ export class UserStoryEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.estimations)
   user: UserEntity
+
+  @BeforeInsert()
+  async beforeInsert(){
+    await this.setLastEntryId('userStoryId')
+  }
 }
+
+
