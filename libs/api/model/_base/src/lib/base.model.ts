@@ -1,7 +1,7 @@
-import {Column, Entity} from "typeorm";
+import {BaseEntity, Column, Entity} from "typeorm";
 
 @Entity()
-export abstract class TenantBaseEntity {
+export abstract class TenantBaseEntity extends BaseEntity{
   protected self:typeof TenantBaseEntity = TenantBaseEntity
 
   @Column({
@@ -13,7 +13,9 @@ export abstract class TenantBaseEntity {
 
   protected async setLastEntryId(key: string): Promise<number> {
 
-    const _db = this.self as any;
+    const _db:typeof TenantBaseEntity = this.self as typeof TenantBaseEntity;
+
+    // @ts-ignore
     const lastEntry = await _db.find({
       withDeleted: true,
       order: {

@@ -6,6 +6,8 @@ import {TenantBaseEntity} from "@hackathon-pta/api/model/_base";
 @Index(['tenantId'])
 @Index(['tenantId','projectId'])
 export class UserStoryEntity extends TenantBaseEntity {
+  protected override self = UserStoryEntity;
+
   @PrimaryGeneratedColumn()
   id: string;
 
@@ -18,7 +20,7 @@ export class UserStoryEntity extends TenantBaseEntity {
   @Column()
   title:string
 
-  @Column({type:'text'})
+  @Column({type:'text',nullable:true})
   description:string
 
   @Column({type:'varchar',length:10 , nullable:true})

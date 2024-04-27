@@ -1,9 +1,9 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, BaseEntity} from 'typeorm';
 import {UserStoryEntity} from "./user-story.entity";
 import {UserStoryEstimationEntity} from "./user-story-estimation.entity";
 
 @Entity('user')
-export class UserEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   userId: string;
 

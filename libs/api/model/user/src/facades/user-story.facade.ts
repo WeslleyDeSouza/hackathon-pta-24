@@ -21,6 +21,7 @@ export class UserStoryFacade  {
 
     Object.assign(userStory, data ||{})
 
+    console.log('OK')
     return this.userStoryEntity.save(userStory)
   }
 }
