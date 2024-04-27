@@ -3,6 +3,9 @@ import { ProjectApi } from './common/project.api';
 import { AsyncPipe, NgForOf } from '@angular/common';
 import { PageBase } from '../view.base';
 import { ProjectStore } from './common/project.store';
+import { BehaviorSubject } from 'rxjs';
+import { ProjectDtoResponse } from '@hackathon-pta/app/api';
+import { ProjectItemComponent } from './component/projec-item.component';
 
 @Component({
   standalone: true,
@@ -11,22 +14,19 @@ import { ProjectStore } from './common/project.store';
   styleUrl: './project.component.scss',
   imports: [
     NgForOf,
-    AsyncPipe
+    AsyncPipe,
+    ProjectItemComponent
   ],
   providers:[ProjectApi,ProjectStore]
 })
 export class ProjectComponent extends PageBase{
 
-  get projects$(){
-    return this.store.projects$
-  }
-
   constructor(protected api:ProjectApi,protected store:ProjectStore) {
     super()
+  }
 
-    api.create({
-      title:'Hello World'
-    }).subscribe()
+  get projects$():BehaviorSubject<ProjectDtoResponse[]>{
+    return this.store.data$
   }
 
   getData(){

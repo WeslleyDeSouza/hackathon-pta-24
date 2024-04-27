@@ -1,6 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Patch, Put, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { ProjectDtoCreate, ProjectDtoUpdate, ProjectFacade } from '@hackathon-pta/api/model/project';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ProjectDtoCreate,
+  ProjectDtoResponse,
+  ProjectDtoUpdate,
+  ProjectFacade
+} from '@hackathon-pta/api/model/project';
 import { CurrentTenant, TenantMockGuard, UserMockGuard } from '@hackathon-pta/api/common';
 
 @Controller('project')
@@ -10,6 +15,11 @@ export class ProjectController {
   constructor(private readonly projectService: ProjectFacade) {}
 
   @Get('')
+  @ApiOkResponse({
+    description: 'The Project records',
+    type: ProjectDtoResponse,
+    isArray: true
+  })
   list(@CurrentTenant()tenant) {
     return this.projectService.list(
       tenant.tenantId,
@@ -17,6 +27,10 @@ export class ProjectController {
   }
 
   @Put('create')
+  @ApiOkResponse({
+    description: 'The Project record',
+    type: ProjectDtoResponse,
+  })
   create(@CurrentTenant()tenant, @Body() projectDto:ProjectDtoCreate) {
    return this.projectService.create(
       tenant.tenantId,projectDto
@@ -24,6 +38,10 @@ export class ProjectController {
   }
 
   @Patch('update')
+  @ApiOkResponse({
+    description: 'The Project record',
+    type: ProjectDtoResponse,
+  })
   update(@CurrentTenant()tenant, @Body() projectDto:ProjectDtoUpdate) {
     return this.projectService.update(
       tenant.tenantId,projectDto

@@ -13,6 +13,7 @@ import { projectCreate } from '../fn/project/project-create';
 import { ProjectCreate$Params } from '../fn/project/project-create';
 import { projectDelete } from '../fn/project/project-delete';
 import { ProjectDelete$Params } from '../fn/project/project-delete';
+import { ProjectDtoResponse } from '../models/project-dto-response';
 import { projectList } from '../fn/project/project-list';
 import { ProjectList$Params } from '../fn/project/project-list';
 import { projectUpdate } from '../fn/project/project-update';
@@ -33,7 +34,7 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  projectList$Response(params?: ProjectList$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  projectList$Response(params?: ProjectList$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ProjectDtoResponse>>> {
     return projectList(this.http, this.rootUrl, params, context);
   }
 
@@ -43,9 +44,9 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  projectList(params?: ProjectList$Params, context?: HttpContext): Observable<void> {
+  projectList(params?: ProjectList$Params, context?: HttpContext): Observable<Array<ProjectDtoResponse>> {
     return this.projectList$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<Array<ProjectDtoResponse>>): Array<ProjectDtoResponse> => r.body)
     );
   }
 
@@ -58,7 +59,7 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  projectCreate$Response(params: ProjectCreate$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  projectCreate$Response(params: ProjectCreate$Params, context?: HttpContext): Observable<StrictHttpResponse<ProjectDtoResponse>> {
     return projectCreate(this.http, this.rootUrl, params, context);
   }
 
@@ -68,9 +69,9 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  projectCreate(params: ProjectCreate$Params, context?: HttpContext): Observable<void> {
+  projectCreate(params: ProjectCreate$Params, context?: HttpContext): Observable<ProjectDtoResponse> {
     return this.projectCreate$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<ProjectDtoResponse>): ProjectDtoResponse => r.body)
     );
   }
 
@@ -83,7 +84,7 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  projectUpdate$Response(params: ProjectUpdate$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  projectUpdate$Response(params: ProjectUpdate$Params, context?: HttpContext): Observable<StrictHttpResponse<ProjectDtoResponse>> {
     return projectUpdate(this.http, this.rootUrl, params, context);
   }
 
@@ -93,9 +94,9 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  projectUpdate(params: ProjectUpdate$Params, context?: HttpContext): Observable<void> {
+  projectUpdate(params: ProjectUpdate$Params, context?: HttpContext): Observable<ProjectDtoResponse> {
     return this.projectUpdate$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<ProjectDtoResponse>): ProjectDtoResponse => r.body)
     );
   }
 

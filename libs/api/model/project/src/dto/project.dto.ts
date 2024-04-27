@@ -14,3 +14,12 @@ export class ProjectDtoUpdate extends ProjectDtoCreate {
   @ApiProperty({type:Number,required:true})
   override projectId: number;
 }
+
+export class ProjectDtoResponse extends ProjectEntity {
+  @ApiProperty()
+  override title: string;
+  @ApiProperty()
+  override tenantId: number;
+  @ApiProperty()
+  override projectId: number;
+}
