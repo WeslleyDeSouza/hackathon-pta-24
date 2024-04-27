@@ -15,6 +15,9 @@ export class ProjectEntity extends TenantBaseEntity {
   @Column()
   title: string;
 
+  @Column()
+  description: string;
+
   @BeforeInsert()
   async beforeInsert(){
     await this.setLastEntryId('projectId')

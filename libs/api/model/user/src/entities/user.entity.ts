@@ -20,7 +20,7 @@ export class UserEntity extends BaseEntity {
   @OneToMany(() => UserStoryEntity, (stories) => stories.user)
   stories: UserStoryEntity[]
 
-  @OneToMany(() => UserBadgeAchievementEntity, (achievement) => achievement.userId)
+  @OneToMany(() => UserBadgeAchievementEntity, (achievement) => achievement.user)
   achievements: UserBadgeAchievementEntity[]
 
   @OneToMany(() => UserStoryEstimationEntity, (estimation) => estimation.user)
