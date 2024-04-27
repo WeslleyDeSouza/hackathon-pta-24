@@ -9,5 +9,6 @@ import { PageBase } from '../../view.base';
   imports: [],
 })
 export class UserStoryComponent extends PageBase{
-
+  override getData() {
+  }
 }

@@ -13,6 +13,8 @@ import { projectCreateProject } from '../fn/project/project-create-project';
 import { ProjectCreateProject$Params } from '../fn/project/project-create-project';
 import { projectDeleteProject } from '../fn/project/project-delete-project';
 import { ProjectDeleteProject$Params } from '../fn/project/project-delete-project';
+import { projectListProject } from '../fn/project/project-list-project';
+import { ProjectListProject$Params } from '../fn/project/project-list-project';
 import { projectUpdateProject } from '../fn/project/project-update-project';
 import { ProjectUpdateProject$Params } from '../fn/project/project-update-project';
 
@@ -20,6 +22,31 @@ import { ProjectUpdateProject$Params } from '../fn/project/project-update-projec
 export class ProjectService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
+  }
+
+  /** Path part for operation `projectListProject()` */
+  static readonly ProjectListProjectPath = '/api/project';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `projectListProject()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  projectListProject$Response(params?: ProjectListProject$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return projectListProject(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `projectListProject$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  projectListProject(params?: ProjectListProject$Params, context?: HttpContext): Observable<void> {
+    return this.projectListProject$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
+    );
   }
 
   /** Path part for operation `projectCreateProject()` */

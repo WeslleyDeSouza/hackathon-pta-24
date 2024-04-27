@@ -8,6 +8,16 @@ import { CurrentTenant, TenantMockGuard, UserMockGuard } from '@hackathon-pta/ap
 @UseGuards(UserMockGuard,TenantMockGuard)
 export class ProjectController {
   constructor(private readonly projectService: ProjectFacade) {}
+
+
+  @Get('')
+  listProject(@CurrentTenant()tenant,
+             ) {
+    return this.projectService.list(
+      tenant.tenantId,
+    )
+  }
+
   @Put('create')
   createProject(@CurrentTenant()tenant,
                 @Body() projectDto:ProjectDtoCreate) {

@@ -1,7 +1,8 @@
 import { Component, TemplateRef, inject } from '@angular/core';
 import { ProjectApi } from './common/project.api';
-import { NgForOf } from '@angular/common';
+import { AsyncPipe, NgForOf } from '@angular/common';
 import { PageBase } from '../view.base';
+import { ProjectStore } from './common/project.store';
 
 @Component({
   standalone: true,
@@ -9,19 +10,25 @@ import { PageBase } from '../view.base';
   templateUrl: './project.component.html',
   styleUrl: './project.component.scss',
   imports: [
-    NgForOf
+    NgForOf,
+    AsyncPipe
   ],
-  providers:[ProjectApi]
+  providers:[ProjectApi,ProjectStore]
 })
 export class ProjectComponent extends PageBase{
 
-  projects = [
-    {},
-    {},
-    {},
-  ]
+  get projects$(){
+    return this.store.projects$
+  }
 
-  constructor(api:ProjectApi) {
+  constructor(protected api:ProjectApi,protected store:ProjectStore) {
     super()
+  }
+
+  getData(){
+    this.onLoadAndSetData(
+      this.api.list(),
+      this.store.projects$
+    )
   }
 }

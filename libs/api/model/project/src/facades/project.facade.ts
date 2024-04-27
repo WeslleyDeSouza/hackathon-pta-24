@@ -8,6 +8,15 @@ import { ProjectDtoCreate, ProjectDtoUpdate } from '../dto';
 @Injectable()
 export class ProjectFacade {
   constructor(@InjectRepository( ProjectEntity ) protected projectEntity: Repository<ProjectEntity>) {}
+  list(tenantId:number){
+   return  this.projectEntity.find(
+      {
+        where:{
+          tenantId
+        }
+      }
+    )
+  }
   findById(tenantId:number,projectId:number){
    return  this.projectEntity.findOne(
       {

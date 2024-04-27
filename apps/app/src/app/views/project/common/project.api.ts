@@ -7,14 +7,24 @@ import { ProjectDtoCreate } from '../../../../../../../libs/app/generated/core/m
 
 
 @Injectable()
+export class ProjectStore{}
+
+@Injectable()
 export class ProjectApi{
   constructor(protected projectService:ProjectService) {
   }
 
-  projectCreateProject(params: ProjectDtoCreate){
+  create(params: ProjectDtoCreate){
     return this.projectService.projectCreateProject(
       {
         body:params
+      }
+    )
+  }
+  list(){
+    return this.projectService.projectListProject(
+      {
+        body:{}
       }
     )
   }
