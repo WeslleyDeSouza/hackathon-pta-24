@@ -80,7 +80,9 @@ export const DummyDataGenerator  = ({
     achievementFacadeFace.create({
         badgeId: 'DUMMY_01',
         tenantId: 1,
-        userId: 'DUMMY-1-1-1'
+        user:<any>{
+         userId: 'DUMMY-1-1-1'
+     }
     }).catch(()=> null)
   },
 })

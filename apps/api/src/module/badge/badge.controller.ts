@@ -3,7 +3,7 @@ import {BadgeAchievementFacade, BadgeFacade} from "@hackathon-pta/api/model/badg
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser, TenantMockGuard, UserMockGuard } from '@hackathon-pta/api/common';
 import { IUser } from '@hackathon-pta/api/model/user';
-import { BadgeAchievementEntity } from '../../../../../libs/api/model/badge/src/lib/entities/badge-achievement.entity';
+import { BadgeUserAchievementViewEntity } from '../../../../../libs/api/model/badge/src/lib/entities/badge-user-achievement.view';
 
 @Controller('badge')
 @ApiTags('Badge')
@@ -14,7 +14,7 @@ export class BadgeController {
   @Get()
   @ApiOkResponse({
     description: 'List Badge record',
-    type: BadgeAchievementEntity,
+    type: BadgeUserAchievementViewEntity,
     isArray:true
   })
   list(@CurrentUser() currentUser:IUser) {
@@ -24,7 +24,7 @@ export class BadgeController {
   @Get("user/:userId")
   @ApiOkResponse({
     description: 'The Badge record',
-    type: BadgeAchievementEntity,
+    type: BadgeUserAchievementViewEntity,
     isArray:true
   })
   listByUserId(@Param('id') userId: string) {
@@ -34,7 +34,7 @@ export class BadgeController {
   @Get(':id')
   @ApiOkResponse({
     description: 'Get Badge record',
-    type: BadgeAchievementEntity,
+    type: BadgeUserAchievementViewEntity,
   })
   findOne(@Param('id') id: string) {
     return this.badgeService.findByBadgeId(id);

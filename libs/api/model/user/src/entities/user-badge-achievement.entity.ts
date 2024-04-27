@@ -1,17 +1,11 @@
 import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, BeforeInsert} from 'typeorm';
-import {UserEntity} from "./user.entity";
 import {TenantBaseEntity} from "@hackathon-pta/api/model/_base";
+import { UserEntity } from './user.entity';
 
-@Entity('badge_user_achievement')
+@Entity('user_badge_achievement')
 export class UserBadgeAchievementEntity extends TenantBaseEntity{
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column({
-    type: 'uuid',
-    nullable: false
-  })
-  userId: string;
 
   @Column({
     type: 'uuid',
@@ -21,4 +15,7 @@ export class UserBadgeAchievementEntity extends TenantBaseEntity{
 
   @CreateDateColumn()
   achievementAt:Date
+
+  @ManyToOne(() => UserEntity, (user) => user.achievements)
+  user: UserEntity
 }

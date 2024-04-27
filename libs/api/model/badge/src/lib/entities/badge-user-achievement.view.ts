@@ -8,11 +8,11 @@ import { ViewColumn, ViewEntity } from "typeorm"
         badge.activityName as activityName, badge.activityValue AS activityValue, 0 AS activityProgress
         FROM user
         CROSS JOIN badge
-        LEFT JOIN user_badge_achievement achievements ON badge.badgeId = achievements.badgeId 
+        LEFT JOIN user_badge_achievement achievements ON badge.badgeId = achievements.badgeId
         AND user.userId = achievements.userId
     `,
 })
-export class BadgeAchievementEntity {
+export class BadgeUserAchievementViewEntity {
     @ViewColumn()
     badgeId: string;
 
