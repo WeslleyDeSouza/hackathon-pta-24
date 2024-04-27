@@ -7,10 +7,8 @@ import { TenantMockGuard, UserMockGuard } from '@hackathon-pta/api/common';
 @ApiTags('Tenant')
 @UseGuards(UserMockGuard,TenantMockGuard)
 export class TenantController {
-  constructor(private readonly tenantFacade: TenantFacade) {
-
-  }
+  constructor(private readonly tenantFacade: TenantFacade) {}
 
   @Get('create')
-  createProject(@Body() tenantDTO:TenantDTOCreate) {}
+  create(@Body() tenantDTO:TenantDTOCreate) {}
 }

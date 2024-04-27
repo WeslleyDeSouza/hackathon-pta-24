@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "ng-swagger": "node tools/swagger.generator.js"
+    "ng-swagger": "node tools/swagger.generator.js",
+    "app": "npx nx serve app",
+    "api": "npx nx serve api"
   },
   "private": true,
   "dependencies": {
