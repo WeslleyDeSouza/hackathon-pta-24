@@ -1,10 +1,14 @@
 import { TenantEntity } from '../entities';
+import { ApiParam, ApiProperty } from '@nestjs/swagger';
 
 
-export class TenantCreate extends TenantEntity {
-
+export class TenantDTOCreate extends TenantEntity {
+  @ApiProperty()
+  override tenantId:number
+  @ApiProperty()
+  override name:string
 }
 
-export class TenantUpdate extends TenantCreate {
+export class TenantDTOUpdate extends TenantDTOCreate {
 
 }
