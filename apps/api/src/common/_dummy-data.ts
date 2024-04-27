@@ -1,6 +1,8 @@
 import { TenantFacade } from '@hackathon-pta/api/model/tenant';
 import { UserFacade } from '@hackathon-pta/api/model/user';
 import * as process from 'process';
+import { BadgeEntity } from '../../../../libs/api/model/badge/src/lib/entities';
+import { BadgeFacade } from '@hackathon-pta/api/model/badge';
 
 const isDev:boolean = process.env['APP_ENV'] == 'development' || true //
 
@@ -22,5 +24,43 @@ export const DummyDataGenerator  = ({
       firstName:'Max',
       email:'max.musterman@pta.ch'
     })
+  },
+  async badgeGenerate(badgeFacade:BadgeFacade){
+    const badges: Partial<BadgeEntity>[] = [
+      {
+        title: 'First Step',
+        description: 'This badge is earned by submitting your first estimation of a user-story',
+        tag: 'first_step'
+      },
+      {
+        title: 'Totally Accurate',
+        description: 'This badge shows that your estimate was perfectly estimated since the execution took exactly that amount.',
+        tag: 'totally_accurate'
+      },
+      {
+        title: 'Estimation Veteran',
+        description: 'WOW you have estimated over 100 stories! Keep up the good work.',
+        tag: 'estimation_veteran',
+        score: 100
+      },
+      {
+        title: 'Thumbs Up',
+        description: 'Your co-workers liked your estimation, since your estimation was taken for the user story',
+        tag: 'thumbs_up'
+      },
+      {
+        title: 'A crown-load of work',
+        description: 'You participated in a project that was estimated over 100 hours',
+        tag: 'crown'
+      },
+      {
+        title: 'All good things are 3',
+        description: 'You participated in a in 3 projects',
+        tag: 'three'
+      },
+    ]
+    Promise.all(badges.map((b,i) =>
+      badgeFacade.save({ ...b,badgeId:'DUMMY_'+i+1 })
+    ))
   }
 })

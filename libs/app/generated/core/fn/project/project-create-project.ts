@@ -13,7 +13,7 @@ export interface ProjectCreateProject$Params {
 }
 
 export function projectCreateProject(http: HttpClient, rootUrl: string, params: ProjectCreateProject$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, projectCreateProject.PATH, 'get');
+  const rb = new RequestBuilder(rootUrl, projectCreateProject.PATH, 'put');
   if (params) {
     rb.body(params.body, 'application/json');
   }

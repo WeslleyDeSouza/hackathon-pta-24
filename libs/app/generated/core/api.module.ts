@@ -4,6 +4,7 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
+import { UserService } from './services/user.service';
 import { UserStoryService } from './services/user-story.service';
 import { ProjectService } from './services/project.service';
 import { TenantService } from './services/tenant.service';
@@ -17,6 +18,7 @@ import { BadgeService } from './services/badge.service';
   exports: [],
   declarations: [],
   providers: [
+    UserService,
     UserStoryService,
     ProjectService,
     TenantService,

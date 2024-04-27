@@ -51,19 +51,13 @@ const badges: Partial<BadgeEntity>[] = [
 @Injectable()
 export class BadgeFacade  {
   constructor(@InjectRepository( BadgeEntity ) protected badgeRepo: Repository<BadgeEntity>) {
-    badges.forEach(b => {
-      badgeRepo.findOne({
-        where: {
-          title: b.title ?? ''
-      }}).then(r => {
-        if (r === null) {
-          const badge = badgeRepo.create(b);
-          Object.assign(badge, b);
-          badgeRepo.save(badge);
-        }
-      })
-    });
+
   }
+
+  save(entity:Partial<BadgeEntity>){
+   return  this.badgeRepo.save(entity)
+  }
+
   findByBadgeId(badgeId:string):Promise<BadgeEntity | null>
   {
     return this.badgeRepo.findOne({

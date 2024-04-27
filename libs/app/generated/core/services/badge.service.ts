@@ -9,8 +9,8 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { badgeFindAll } from '../fn/badge/badge-find-all';
-import { BadgeFindAll$Params } from '../fn/badge/badge-find-all';
+import { badgeFindFromUser } from '../fn/badge/badge-find-from-user';
+import { BadgeFindFromUser$Params } from '../fn/badge/badge-find-from-user';
 import { badgeFindOne } from '../fn/badge/badge-find-one';
 import { BadgeFindOne$Params } from '../fn/badge/badge-find-one';
 
@@ -20,27 +20,27 @@ export class BadgeService extends BaseService {
     super(config, http);
   }
 
-  /** Path part for operation `badgeFindAll()` */
-  static readonly BadgeFindAllPath = '/api/badge';
+  /** Path part for operation `badgeFindFromUser()` */
+  static readonly BadgeFindFromUserPath = '/api/badge';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `badgeFindAll()` instead.
+   * To access only the response body, use `badgeFindFromUser()` instead.
    *
    * This method doesn't expect any request body.
    */
-  badgeFindAll$Response(params?: BadgeFindAll$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return badgeFindAll(this.http, this.rootUrl, params, context);
+  badgeFindFromUser$Response(params?: BadgeFindFromUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return badgeFindFromUser(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `badgeFindAll$Response()` instead.
+   * To access the full response (for headers, for example), `badgeFindFromUser$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  badgeFindAll(params?: BadgeFindAll$Params, context?: HttpContext): Observable<void> {
-    return this.badgeFindAll$Response(params, context).pipe(
+  badgeFindFromUser(params?: BadgeFindFromUser$Params, context?: HttpContext): Observable<void> {
+    return this.badgeFindFromUser$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }

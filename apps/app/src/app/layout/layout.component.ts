@@ -20,6 +20,7 @@ export class LayoutComponent {
   closeResult = '';
 
   open(content: TemplateRef<any>) {
+
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result) => {
         this.closeResult = `Closed with: ${result}`;
