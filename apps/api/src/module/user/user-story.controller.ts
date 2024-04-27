@@ -1,8 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
+import {Body, Controller, Get} from '@nestjs/common';
 import {UserFacade, UserStoryFacade} from "@hackathon-pta/api/model/user";
-import {UserStoryCreate} from "../../../../../libs/api/model/user/src/dto";
+import {UserStoryCreate} from "@hackathon-pta/api/model/user";
+import {ApiTags} from "@nestjs/swagger";
 
 @Controller('user-story')
+@ApiTags('UserStory')
 export class UserStoryController {
   constructor(
     private readonly userService: UserFacade,
@@ -10,7 +12,7 @@ export class UserStoryController {
   ) {}
 
   @Get('create')
-  createUser(story:UserStoryCreate) {
+  createUser(@Body()story:UserStoryCreate) {
 
   }
 }

@@ -6,13 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { UserStoryCreate } from '../../models/user-story-create';
 
 export interface UserStoryCreateUser$Params {
+      body: UserStoryCreate
 }
 
-export function userStoryCreateUser(http: HttpClient, rootUrl: string, params?: UserStoryCreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function userStoryCreateUser(http: HttpClient, rootUrl: string, params: UserStoryCreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
   const rb = new RequestBuilder(rootUrl, userStoryCreateUser.PATH, 'get');
   if (params) {
+    rb.body(params.body, 'application/json');
   }
 
   return http.request(

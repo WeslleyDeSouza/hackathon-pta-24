@@ -11,8 +11,6 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { userCreateUser } from '../fn/operations/user-create-user';
 import { UserCreateUser$Params } from '../fn/operations/user-create-user';
-import { userStoryCreateUser } from '../fn/operations/user-story-create-user';
-import { UserStoryCreateUser$Params } from '../fn/operations/user-story-create-user';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService extends BaseService {
@@ -41,31 +39,6 @@ export class ApiService extends BaseService {
    */
   userCreateUser(params?: UserCreateUser$Params, context?: HttpContext): Observable<void> {
     return this.userCreateUser$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
-    );
-  }
-
-  /** Path part for operation `userStoryCreateUser()` */
-  static readonly UserStoryCreateUserPath = '/api/user-story/create';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `userStoryCreateUser()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  userStoryCreateUser$Response(params?: UserStoryCreateUser$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return userStoryCreateUser(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `userStoryCreateUser$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  userStoryCreateUser(params?: UserStoryCreateUser$Params, context?: HttpContext): Observable<void> {
-    return this.userStoryCreateUser$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
