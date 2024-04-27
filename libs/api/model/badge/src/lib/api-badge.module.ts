@@ -2,18 +2,18 @@ import { Module } from '@nestjs/common';
 import {DBBadgeConfig} from "./db";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {EntityClassOrSchema} from "@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type";
-import {BadgeFacade} from "./facades";
+import {BadgeAchievementFacade, BadgeFacade} from "./facades";
 
 @Module({
   controllers: [],
   providers: [
-    BadgeFacade
+    BadgeFacade, BadgeAchievementFacade
   ],
   imports:[
     TypeOrmModule.forFeature(DBBadgeConfig.entities as EntityClassOrSchema[])
   ],
   exports: [
-    BadgeFacade
+    BadgeFacade, BadgeAchievementFacade
   ],
 })
 export class ApiModelBadgeModule {

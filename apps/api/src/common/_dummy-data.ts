@@ -3,6 +3,7 @@ import { UserFacade } from '@hackathon-pta/api/model/user';
 import * as process from 'process';
 import { BadgeEntity } from '../../../../libs/api/model/badge/src/lib/entities';
 import { BadgeFacade } from '@hackathon-pta/api/model/badge';
+import { UserBadgeAchievementFacade } from '@hackathon-pta/api/model/user';
 
 const isDev:boolean = process.env['APP_ENV'] == 'development' || true //
 
@@ -73,5 +74,13 @@ export const DummyDataGenerator  = ({
     Promise.all(badges.map((b,i) =>
       badgeFacade.save({ ...b,badgeId:'DUMMY_'+i+1 })
     ))
-  }
+  },
+  async achievementGenerate( achievementFacadeFace :UserBadgeAchievementFacade){
+    if(!isDev)return;
+    achievementFacadeFace.create({
+        badgeId: 'DUMMY_01',
+        tenantId: 1,
+        userId: 'DUMMY-1-1-1'
+    })
+  },
 })
