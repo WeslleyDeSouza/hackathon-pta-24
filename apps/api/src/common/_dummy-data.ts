@@ -4,6 +4,7 @@ import * as process from 'process';
 import { BadgeEntity } from '../../../../libs/api/model/badge/src/lib/entities';
 import { BadgeFacade } from '@hackathon-pta/api/model/badge';
 import { UserBadgeAchievementFacade } from '@hackathon-pta/api/model/user';
+import { UserActivityFacade } from 'libs/api/model/user/src/facades/user-activity.facade';
 
 const isDev:boolean = process.env['APP_ENV'] == 'development' || true //
 
@@ -84,5 +85,15 @@ export const DummyDataGenerator  = ({
          userId: 'DUMMY-1-1-1'
      }
     }).catch(()=> null)
+  },
+  async userActivityGenerate( userActivityFacade :UserActivityFacade){
+    if(!isDev)return;
+    userActivityFacade.create({
+        userId: 'DUMMY-1-1-1',
+        activities: [{
+          name: "workload_hours",
+          progress: 50
+        }]
+    })
   },
 })
