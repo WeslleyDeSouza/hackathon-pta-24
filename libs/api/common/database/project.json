@@ -1,0 +1,9 @@
+{
+  "name": "api-common-database",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/common/database/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project api-common-database --web",
+  "targets": {}
+}

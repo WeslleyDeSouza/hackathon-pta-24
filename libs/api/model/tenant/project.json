@@ -1,0 +1,9 @@
+{
+  "name": "api-model-tenant",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/model/tenant/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project api-model-tenant --web",
+  "targets": {}
+}

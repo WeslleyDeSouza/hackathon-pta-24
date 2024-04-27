@@ -14,7 +14,15 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@hackathon-pta/api/common/database": [
+        "libs/api/common/database/src/index.ts"
+      ],
+      "@hackathon-pta/api/model/badge": ["libs/api/model/badge/src/index.ts"],
+      "@hackathon-pta/api/model/role": ["libs/api/model/role/src/index.ts"],
+      "@hackathon-pta/api/model/tenant": ["libs/api/model/tenant/src/index.ts"],
+      "@hackathon-pta/api/model/user": ["libs/api/model/user/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
