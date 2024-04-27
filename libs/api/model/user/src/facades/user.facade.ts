@@ -6,7 +6,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 
 @Injectable()
 export class UserFacade  {
-  constructor(@InjectRepository( UserEntity) protected userRepo: Repository<UserEntity>) {}
+  constructor(@InjectRepository( UserEntity ) protected userRepo: Repository<UserEntity>) {}
   findUserById(userId:string):Promise<UserEntity | null>
   {
     return this.userRepo.findOne({

@@ -13,9 +13,12 @@ export class UserEntity {
   @Column()
   lastName: string;
 
+  @Column({type:"varchar",length:50,nullable:false,unique:true})
+  email: string;
+
   @OneToMany(() => UserStoryEntity, (stories) => stories.user)
   stories: UserStoryEntity[]
 
-  @ManyToOne(() => UserStoryEstimationEntity, (estimation) => estimation.user)
+  @OneToMany(() => UserStoryEstimationEntity, (estimation) => estimation.user)
   estimations: UserStoryEstimationEntity[]
 }
