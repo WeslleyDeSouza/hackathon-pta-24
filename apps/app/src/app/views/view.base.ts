@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-@Component({})
+@Component({template:''})
 export abstract class PageBase{
 
 }
