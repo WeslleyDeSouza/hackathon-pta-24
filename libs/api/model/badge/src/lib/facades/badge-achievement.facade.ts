@@ -13,7 +13,7 @@ export class BadgeAchievementFacade  {
    return  this.badgeRepo.save(entity)
   }
 
-  findByUserId(userId:string):Promise<BadgeAchievementEntity[] | null>
+  listByUserId(userId:string):Promise<BadgeAchievementEntity[] | null>
   {
     return this.badgeRepo.find({
       where:{

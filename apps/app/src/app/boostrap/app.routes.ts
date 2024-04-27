@@ -3,6 +3,7 @@ import { LayoutComponent } from '../layout/layout.component';
 import { ProjectComponent } from '../views/project/project.component';
 import { UserStoryComponent } from '../views/user/user-story/user-story.component';
 import { UserReviewComponent } from '../views/user/user-review/user-review.component';
+import { UserStoryResolver } from '../views/user/user-story/common';
 
 export const appRoutes: Route[] = [
   {
@@ -11,18 +12,25 @@ export const appRoutes: Route[] = [
     children:[
       {
         path:'project',
-        loadComponent:()=> ProjectComponent
-      },
-      {
-        path:'user',
+        loadComponent:()=> ProjectComponent,
         children:[
           {
-            path:'story',
-            loadComponent:()=> UserStoryComponent
-          },
-          {
-            path:'review',
-            loadComponent:()=> UserReviewComponent
+            path: ':projectId',
+            children:[
+              {
+                path:'story',
+                loadComponent:()=> UserStoryComponent,
+                resolve:{
+                  stories:UserStoryResolver
+                },
+                children:[
+                  {
+                    path:'review',
+                    loadComponent:()=> UserReviewComponent
+                  }
+                ]
+              },
+            ]
           }
         ]
       }
