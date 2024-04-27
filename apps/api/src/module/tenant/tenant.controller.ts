@@ -4,12 +4,9 @@ import {  TenantDTOCreate, TenantFacade } from '@hackathon-pta/api/model/tenant'
 
 @Controller('tenant')
 @ApiTags('Tenant')
-export class ProjectController {
+export class TenantController {
   constructor(private readonly tenantFacade: TenantFacade) {
-    tenantFacade.create({
-      tenantId:1,
-      name:'PTA Undefined Team'
-    })
+
   }
 
   @Get('create')

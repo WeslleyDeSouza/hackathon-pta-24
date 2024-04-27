@@ -1,6 +1,5 @@
 import {BaseEntity, Column, Entity} from "typeorm";
 
-@Entity()
 export abstract class TenantBaseEntity extends BaseEntity{
   protected self:typeof TenantBaseEntity = TenantBaseEntity
 

@@ -6,6 +6,7 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { UserStoryService } from './services/user-story.service';
 import { ProjectService } from './services/project.service';
+import { TenantService } from './services/tenant.service';
 import { BadgeService } from './services/badge.service';
 
 /**
@@ -18,6 +19,7 @@ import { BadgeService } from './services/badge.service';
   providers: [
     UserStoryService,
     ProjectService,
+    TenantService,
     BadgeService,
     ApiConfiguration
   ],
