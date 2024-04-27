@@ -4,8 +4,8 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
-import { ApiService } from './services/api.service';
 import { UserStoryService } from './services/user-story.service';
+import { ProjectService } from './services/project.service';
 
 /**
  * Module that provides all services and configuration.
@@ -15,8 +15,8 @@ import { UserStoryService } from './services/user-story.service';
   exports: [],
   declarations: [],
   providers: [
-    ApiService,
     UserStoryService,
+    ProjectService,
     ApiConfiguration
   ],
 })

@@ -10,4 +10,7 @@ import {UserStoryController} from "./user-story.controller";
   controllers: [UserController,UserStoryController],
   providers: [],
 })
-export class UserModule {}
+export class UserModule {
+  constructor() {
+  }
+}

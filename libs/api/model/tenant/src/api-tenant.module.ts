@@ -1,22 +1,22 @@
 import { Module } from '@nestjs/common';
-import {DBUserConfig} from "./db";
+import {DBTenantConfig} from "./db";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {EntityClassOrSchema} from "@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type";
-import { ProjectFacade } from './facades';
+import { TenantFacade } from './facades';
 
 
 @Module({
   controllers: [],
   providers: [
-    ProjectFacade
+    TenantFacade
   ],
   imports:[
-    TypeOrmModule.forFeature(DBUserConfig.entities as EntityClassOrSchema[])
+    TypeOrmModule.forFeature(DBTenantConfig.entities as EntityClassOrSchema[])
   ],
   exports: [
-    ProjectFacade
+    TenantFacade
   ],
 })
-export class ApiModelProjectModule {
-  static dbConfig = DBUserConfig
+export class ApiModelTenantModule {
+  static dbConfig = DBTenantConfig
 }

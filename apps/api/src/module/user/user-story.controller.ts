@@ -1,4 +1,4 @@
-import {Body, Controller, Get} from '@nestjs/common';
+import { Body, Controller, Get, Patch, Put } from '@nestjs/common';
 import { UserFacade, UserStoryFacade, UserStoryUpdate } from '@hackathon-pta/api/model/user';
 import {UserStoryCreate} from "@hackathon-pta/api/model/user";
 import {ApiTags} from "@nestjs/swagger";
@@ -11,12 +11,13 @@ export class UserStoryController {
     private readonly userStoryService: UserStoryFacade
   ) {}
 
-  @Get('create')
+  @Put('create')
   createUserStory(@Body()story:UserStoryCreate) {
+
 
   }
 
-  @Get('create')
+  @Patch('update')
   updateUserStory(@Body()story:UserStoryUpdate) {
 
   }

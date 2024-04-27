@@ -2,7 +2,7 @@ import {ApiProperty} from "@nestjs/swagger";
 import { ProjectEntity } from '../entities';
 
 
-export class projectDtoCreate extends ProjectEntity {
+export class ProjectDtoCreate extends ProjectEntity {
   @ApiProperty({required:true})
   override title: string;
 
@@ -10,7 +10,7 @@ export class projectDtoCreate extends ProjectEntity {
 
 }
 
-export class projectDtoUpdate extends projectDtoCreate {
+export class ProjectDtoUpdate extends ProjectDtoCreate {
   @ApiProperty({type:Number,required:true})
   override projectId: number;
 }

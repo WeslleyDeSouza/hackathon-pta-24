@@ -6,14 +6,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { UserStoryUpdate } from '../../models/user-story-update';
+import { ProjectDtoCreate } from '../../models/project-dto-create';
 
-export interface UserStoryUpdateUserStory$Params {
-      body: UserStoryUpdate
+export interface ProjectCreateProject$Params {
+      body: ProjectDtoCreate
 }
 
-export function userStoryUpdateUserStory(http: HttpClient, rootUrl: string, params: UserStoryUpdateUserStory$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, userStoryUpdateUserStory.PATH, 'patch');
+export function projectCreateProject(http: HttpClient, rootUrl: string, params: ProjectCreateProject$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  const rb = new RequestBuilder(rootUrl, projectCreateProject.PATH, 'get');
   if (params) {
     rb.body(params.body, 'application/json');
   }
@@ -28,4 +28,4 @@ export function userStoryUpdateUserStory(http: HttpClient, rootUrl: string, para
   );
 }
 
-userStoryUpdateUserStory.PATH = '/api/user-story/update';
+projectCreateProject.PATH = '/api/project/create';

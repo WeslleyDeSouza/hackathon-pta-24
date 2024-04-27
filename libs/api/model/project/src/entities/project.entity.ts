@@ -1,13 +1,20 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, BaseEntity} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, BaseEntity, BeforeInsert, Index } from 'typeorm';
+import { TenantBaseEntity } from '@hackathon-pta/api/model/_base';
 
 @Entity('project')
-export class ProjectEntity extends BaseEntity {
+@Index(['tenantId'])
+export class ProjectEntity extends TenantBaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({type:'number'})
+  @Column({type:'int'})
   projectId: number;
 
   @Column()
   title: string;
+
+  @BeforeInsert()
+  async beforeInsert(){
+    await this.setLastEntryId('projectId')
+  }
 }

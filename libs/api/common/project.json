@@ -1,0 +1,8 @@
+{
+  "name": "api-common",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/common",
+  "projectType": "library",
+  "tags": [],
+  "targets": {}
+}

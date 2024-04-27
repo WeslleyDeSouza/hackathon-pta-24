@@ -1,1 +1,2 @@
-export * from './lib/api-model-tenant.module';
+export * from './api-tenant.module';
+export * from './facades';
