@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import {
-  ApiModelUserModule,
+  ApiModelUserModule, UserActivityFacade,
   UserBadgeAchievementFacade,
   UserFacade,
   UserStoryFacade
@@ -19,12 +19,14 @@ import { DummyDataGenerator } from '../../common/_dummy-data';
 export class UserModule {
   constructor(
     userStoryFacade:UserStoryFacade,
-    facade:UserFacade, achievementFacade: UserBadgeAchievementFacade) {
+    facade:UserFacade, achievementFacade: UserBadgeAchievementFacade,
+    activityFacade:UserActivityFacade
+  ) {
     DummyDataGenerator.userGenerate(facade).then(()=> {
       DummyDataGenerator.userStoryGenerate(userStoryFacade)
       DummyDataGenerator.achievementGenerate(achievementFacade)
+      DummyDataGenerator.userActivityGenerate(activityFacade);
     })
-
   }
 
 }
