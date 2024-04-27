@@ -5,7 +5,9 @@ import { UserStoryService } from '@hackathon-pta/app/api';
 
 @Injectable()
 export class UserStoryResolver implements Resolve<any> {
-  constructor(protected userStoryService:UserStoryService) {}
+  constructor(
+    protected userStoryService:UserStoryService
+  ) {}
 
   resolve(
     route: ActivatedRouteSnapshot,

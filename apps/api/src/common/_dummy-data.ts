@@ -72,7 +72,7 @@ export const DummyDataGenerator  = ({
       },
     ]
     Promise.all(badges.map((b,i) =>
-      badgeFacade.save({ ...b,badgeId:'DUMMY_'+i+1 })
+      badgeFacade.save({ ...b,badgeId:'DUMMY_'+i+1 }).catch(()=> null)
     ))
   },
   async achievementGenerate( achievementFacadeFace :UserBadgeAchievementFacade){
@@ -81,6 +81,6 @@ export const DummyDataGenerator  = ({
         badgeId: 'DUMMY_01',
         tenantId: 1,
         userId: 'DUMMY-1-1-1'
-    })
+    }).catch(()=> null)
   },
 })
