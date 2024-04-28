@@ -1,5 +1,5 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
-import {BadgeAchievementFacade, BadgeFacade} from "@hackathon-pta/api/model/badge";
+import {BadgeAchievementFacade, BadgeFacade, BadgeUserAchievementDtoResponse} from "@hackathon-pta/api/model/badge";
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser, TenantMockGuard, UserMockGuard } from '@hackathon-pta/api/common';
 import { IUser } from '@hackathon-pta/api/model/user';
@@ -14,7 +14,7 @@ export class BadgeController {
   @Get()
   @ApiOkResponse({
     description: 'List Badge record',
-    type: BadgeUserAchievementViewEntity,
+    type: BadgeUserAchievementDtoResponse,
     isArray:true
   })
   list(@CurrentUser() currentUser:IUser) {
@@ -24,7 +24,7 @@ export class BadgeController {
   @Get("user/:userId")
   @ApiOkResponse({
     description: 'The Badge record',
-    type: BadgeUserAchievementViewEntity,
+    type: BadgeUserAchievementDtoResponse,
     isArray:true
   })
   listByUserId(@Param('id') userId: string) {

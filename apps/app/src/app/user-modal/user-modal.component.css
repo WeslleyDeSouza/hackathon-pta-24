@@ -1,0 +1,10 @@
+.icon {
+    width: 32px;
+    height: 32px;
+    margin: 8px;
+}
+
+.not-achieved-title {
+    font-weight: bold;
+    font-size: medium;
+}

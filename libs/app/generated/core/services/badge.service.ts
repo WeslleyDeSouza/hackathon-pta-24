@@ -15,6 +15,7 @@ import { badgeList } from '../fn/badge/badge-list';
 import { BadgeList$Params } from '../fn/badge/badge-list';
 import { badgeListByUserId } from '../fn/badge/badge-list-by-user-id';
 import { BadgeListByUserId$Params } from '../fn/badge/badge-list-by-user-id';
+import { BadgeUserAchievementDtoResponse } from '../models/badge-user-achievement-dto-response';
 import { BadgeUserAchievementViewEntity } from '../models/badge-user-achievement-view-entity';
 
 @Injectable({ providedIn: 'root' })
@@ -32,7 +33,7 @@ export class BadgeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  badgeList$Response(params?: BadgeList$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<BadgeUserAchievementViewEntity>>> {
+  badgeList$Response(params?: BadgeList$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<BadgeUserAchievementDtoResponse>>> {
     return badgeList(this.http, this.rootUrl, params, context);
   }
 
@@ -42,9 +43,9 @@ export class BadgeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  badgeList(params?: BadgeList$Params, context?: HttpContext): Observable<Array<BadgeUserAchievementViewEntity>> {
+  badgeList(params?: BadgeList$Params, context?: HttpContext): Observable<Array<BadgeUserAchievementDtoResponse>> {
     return this.badgeList$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<BadgeUserAchievementViewEntity>>): Array<BadgeUserAchievementViewEntity> => r.body)
+      map((r: StrictHttpResponse<Array<BadgeUserAchievementDtoResponse>>): Array<BadgeUserAchievementDtoResponse> => r.body)
     );
   }
 
@@ -57,7 +58,7 @@ export class BadgeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  badgeListByUserId$Response(params: BadgeListByUserId$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<BadgeUserAchievementViewEntity>>> {
+  badgeListByUserId$Response(params: BadgeListByUserId$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<BadgeUserAchievementDtoResponse>>> {
     return badgeListByUserId(this.http, this.rootUrl, params, context);
   }
 
@@ -67,9 +68,9 @@ export class BadgeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  badgeListByUserId(params: BadgeListByUserId$Params, context?: HttpContext): Observable<Array<BadgeUserAchievementViewEntity>> {
+  badgeListByUserId(params: BadgeListByUserId$Params, context?: HttpContext): Observable<Array<BadgeUserAchievementDtoResponse>> {
     return this.badgeListByUserId$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<BadgeUserAchievementViewEntity>>): Array<BadgeUserAchievementViewEntity> => r.body)
+      map((r: StrictHttpResponse<Array<BadgeUserAchievementDtoResponse>>): Array<BadgeUserAchievementDtoResponse> => r.body)
     );
   }
 

@@ -5,15 +5,29 @@
   <li [ngbNavItem]="1">
     <button ngbNavLink>Badge Overview</button>
     <ng-template ngbNavContent>
-      <p>
-        Raw denim you probably haven't heard of them jean shorts Austin.
-        Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache
-        cliche tempor, williamsburg carles vegan helvetica. Reprehenderit
-        butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui
-        irure terry richardson ex squid. Aliquip placeat salvia cillum iphone.
-        Seitan aliquip quis cardigan american apparel, butcher voluptate nisi
-        qui.
-      </p>
+      <div style="display: flex; flex-wrap: wrap">
+        <img
+          *ngFor="let badge of badgeListAchieved$ | async"
+          class="icon"
+          src="assets/{{ badge.badgeTag }}.png"
+        />
+      </div>
+      <div *ngFor="let badge of badgeListNotAchieved$ | async">
+        <div style="display: flex">
+          <img class="icon" src="assets/{{ badge.badgeTag }}_gray.png" />
+          <div style="display: flex; flex-direction: column">
+            <h3 class="not-achieved-title">{{ badge.badgeTitle }}</h3>
+            <p>{{ badge.badgeDescription }}</p>
+          </div>
+        </div>
+        <ngb-progressbar
+          *ngIf="badge.activityValue"
+          style="margin: 8px"
+          type="primary"
+          [value]="badge.activityProgress ?? 0"
+          [max]="badge.activityValue"
+        />
+      </div>
     </ng-template>
   </li>
   <li [ngbNavItem]="2">

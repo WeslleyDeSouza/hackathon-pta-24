@@ -7,7 +7,8 @@ import { ViewColumn, ViewEntity } from "typeorm"
           badge.badgeId AS badgeId,
           user.userId AS userId,
           badge.title AS badgeTitle,
-          badge.description AS badgeDescription, IF(achievements.userId IS NOT NULL, true, false) AS achieved,
+          badge.tag AS badgeTag,
+          badge.description AS badgeDescription, IF(achievements.userId IS NOT NULL, 1, 0) AS achieved,
           badge.activityName as activityName, badge.activityValue AS activityValue,
           IF (user_activity.userId IS NOT NULL,
             json_extract(activities, CONCAT(json_unquote(json_search(json_extract(activities, '$[*].name'), 'one', badge.activityName)), '.progress')),
@@ -33,11 +34,19 @@ export class BadgeUserAchievementViewEntity {
     @ViewColumn()
     badgeDescription: string;
 
-    @ViewColumn()
+    @ViewColumn({
+      transformer: {
+        to: (value: boolean) => "",
+        from: (value: string) => value !== "0",
+      }
+    })
     achieved: boolean;
 
     @ViewColumn()
     activityName: string;
+
+    @ViewColumn()
+    badgeTag: string;
 
     @ViewColumn()
     activityValue: number | null;
