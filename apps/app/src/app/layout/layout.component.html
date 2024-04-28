@@ -1,7 +1,7 @@
 <nav class="navbar navbar-light bg-light">
   <div style="display: flex">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand">
         <img
           src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg"
           alt=""
@@ -13,22 +13,40 @@
       >demo modal</a
     >
   </div>
-  <div style="margin-right: 8px">
-    <a class="text-decoration-none" (click)="open(content)">
-      <img
-        src="https://github.com/mdo.png"
-        alt=""
-        width="32"
-        height="32"
-        class="rounded-circle me-2" />
-      <br />
-      <strong>mdo</strong>
-    </a>
+
+  <div *ngIf="currentUser$ | async as user" style="margin-right: 8px">
+    <div class="d-flex">
+      <div *ngIf="users.length" ngbDropdown class="d-inline-block me-2">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+          Dev: Switch User
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+           <a class="w-100 dropdown-item"  (click)="switchUser(user.userId)" *ngFor="let user of users">
+             {{user.firstName}}
+             {{user.LastName}}
+           </a>
+        </div>
+      </div>
+
+
+      <a class="text-decoration-none" (click)="open(content)">
+        <img
+          src="https://github.com/mdo.png"
+          alt=""
+          width="32"
+          height="32"
+          class="rounded-circle me-2" />
+        <br />
+        <strong>
+          {{user.firstName}}
+        </strong>
+      </a>
+    </div>
   </div>
 </nav>
 
 <router-outlet></router-outlet>
 
 <ng-template #content let-modal>
-  <app-user-modal-component [user]="this.currentUser$"></app-user-modal-component>
+  <app-user-modal-component [user]="$any(this.currentUser$)"></app-user-modal-component>
 </ng-template>

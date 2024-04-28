@@ -4,8 +4,8 @@ import { PageBase } from "../../../../../view.base";
 import { UserStoryFlowSidenavComponent } from "../component/sidenav/user-story-flow--sidenav.component";
 import { UserStoryStore } from "../../../common/user-story.store";
 import { UserActivityService } from "@hackathon-pta/app/api";
-import { ToastService } from "apps/app/src/app/common/toast.service";
-import { AchievementToastComponent } from "apps/app/src/app/achievement-toast/achievement-toast.component";
+import { ToastService } from "../../../../../../_common/toast.service";
+import { AchievementToastComponent } from "../../../../../../_component/achievement-toast/achievement-toast.component";
 
 @Component({
   standalone: true,
@@ -70,18 +70,24 @@ export class UserStoryFlowLayoutComponent extends PageBase {
   }
 
   onNext(): void {
-    this.userActivityService.userActivityUpdateUserStory({
-      body: {
-        activityName: 'estimation_hours',
-        activityProgress: this.reviewValue
-      }}).subscribe(x => x.forEach(e => this.toastService.show(e)));
+    this.userActivityService
+      .userActivityUpdateUserStory({
+        body: {
+          activityName: "estimation_hours",
+          activityProgress: this.reviewValue,
+        },
+      })
+      .subscribe(x => x.forEach(e => this.toastService.show(e)));
     this.reviewValue = 0;
-    this.userActivityService.userActivityUpdateUserStory({
-      body: {
-        activityName: 'estimation',
-        activityProgress: 1
-      }}).subscribe(x => x.forEach(e => this.toastService.show(e)));
-      
+    this.userActivityService
+      .userActivityUpdateUserStory({
+        body: {
+          activityName: "estimation",
+          activityProgress: 1,
+        },
+      })
+      .subscribe(x => x.forEach(e => this.toastService.show(e as any)));
+
     this.index++;
     this.navigateToNext();
   }
