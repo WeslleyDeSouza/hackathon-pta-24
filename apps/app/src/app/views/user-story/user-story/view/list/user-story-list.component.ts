@@ -29,7 +29,7 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
     protected cdr: ChangeDetectorRef
   ) {
     super();
-    this.store.stories = this.route.snapshot.data["stories"];
+    if (this.store.stories.length == 0) this.store.stories = this.route.snapshot.data["stories"];
   }
 
   ngAfterViewInit(): void {

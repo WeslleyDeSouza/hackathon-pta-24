@@ -1,8 +1,16 @@
 :host{
   position: relative;
+  height: 85%;
+  display: block;
   app-review-flip-card{
-    top: 175px;
+    top: 20px;
     position: relative;
+  }
+  .review-footer{
+    position: absolute;
+    bottom: 100px;
+    text-align: center;
+
   }
 }
 .selection-item
