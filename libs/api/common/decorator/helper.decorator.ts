@@ -19,7 +19,6 @@ export class TenantMockGuard implements CanActivate {
 @Injectable()
 export class UserMockGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    console.log(process.env["USER_MOCK_ID"]);
     const request = context.switchToHttp().getRequest();
     const tenant = UserEntity as any as typeof BaseEntity;
     request["user"] = await tenant.findOne({
