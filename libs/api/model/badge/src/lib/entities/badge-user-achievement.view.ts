@@ -1,8 +1,8 @@
-import { ViewColumn, ViewEntity } from "typeorm"
-
+import { ViewColumn, ViewEntity } from "typeorm";
 
 @ViewEntity({
-    expression: `
+  name: "badge_user_achievement_view_entity",
+  expression: `
         SELECT
           badge.badgeId AS badgeId,
           user.userId AS userId,
@@ -22,35 +22,35 @@ import { ViewColumn, ViewEntity } from "typeorm"
     `,
 })
 export class BadgeUserAchievementViewEntity {
-    @ViewColumn()
-    badgeId: string;
+  @ViewColumn()
+  badgeId: string;
 
-    @ViewColumn()
-    userId: string;
+  @ViewColumn()
+  userId: string;
 
-    @ViewColumn()
-    badgeTitle: string;
+  @ViewColumn()
+  badgeTitle: string;
 
-    @ViewColumn()
-    badgeDescription: string;
+  @ViewColumn()
+  badgeDescription: string;
 
-    @ViewColumn({
-      transformer: {
-        to: (value: boolean) => "",
-        from: (value: string) => value !== "0",
-      }
-    })
-    achieved: boolean;
+  @ViewColumn({
+    transformer: {
+      to: (value: boolean) => "",
+      from: (value: string) => value !== "0",
+    },
+  })
+  achieved: boolean;
 
-    @ViewColumn()
-    activityName: string;
+  @ViewColumn()
+  activityName: string;
 
-    @ViewColumn()
-    badgeTag: string;
+  @ViewColumn()
+  badgeTag: string;
 
-    @ViewColumn()
-    activityValue: number | null;
+  @ViewColumn()
+  activityValue: number | null;
 
-    @ViewColumn()
-    activityProgress: number | null;
+  @ViewColumn()
+  activityProgress: number | null;
 }

@@ -112,6 +112,10 @@ export class UserStoryController {
   }
 
   @Get("estimation/:projectId/:storyId/:estimationId")
+  @ApiOkResponse({
+    description: "Gets Estimation from User and Story",
+    type: Number,
+  })
   getEstimation(
     @Param("storyId") storyId: number,
     @Param("projectId") projectId: number,
@@ -119,12 +123,8 @@ export class UserStoryController {
     @CurrentTenant() tenant: any,
     @CurrentUser() user: IUser
   ) {
-    return this.userStoryEstimationService.getEstimation(
-      tenant.tenantId,
-      user.userId,
-      storyId,
-      projectId,
-      estimationId
-    );
+    return this.userStoryEstimationService
+      .getEstimation(tenant.tenantId, user.userId, storyId, projectId, estimationId)
+      .then(row => row?.estimateValue);
   }
 }

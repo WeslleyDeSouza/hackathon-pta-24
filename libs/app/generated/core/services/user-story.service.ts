@@ -163,7 +163,7 @@ export class UserStoryService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  userStoryGetEstimation$Response(params: UserStoryGetEstimation$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  userStoryGetEstimation$Response(params: UserStoryGetEstimation$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
     return userStoryGetEstimation(this.http, this.rootUrl, params, context);
   }
 
@@ -173,9 +173,9 @@ export class UserStoryService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  userStoryGetEstimation(params: UserStoryGetEstimation$Params, context?: HttpContext): Observable<void> {
+  userStoryGetEstimation(params: UserStoryGetEstimation$Params, context?: HttpContext): Observable<number> {
     return this.userStoryGetEstimation$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<number>): number => r.body)
     );
   }
 

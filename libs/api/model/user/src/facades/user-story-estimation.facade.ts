@@ -39,7 +39,7 @@ export class UserStoryEstimationFacade {
     projectId: number,
     estimationId: number
   ) {
-    return this.userStoryEstimationEntity.find({
+    return this.userStoryEstimationEntity.findOne({
       where: {
         tenantId,
         user: { userId },
