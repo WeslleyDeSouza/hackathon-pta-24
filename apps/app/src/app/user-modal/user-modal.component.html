@@ -1,20 +1,30 @@
 <div class="modal-header" style="justify-content: center">
-  <h4 class="modal-title" id="modal-basic-title">Max Muster</h4>
+  <h4 class="modal-title" id="modal-basic-title">{{ userFirstName }} {{ userLastName }}</h4>
 </div>
 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
   <li [ngbNavItem]="1">
     <button ngbNavLink>Badge Overview</button>
     <ng-template ngbNavContent>
-      <div style="display: flex; flex-wrap: wrap">
-        <img
-          *ngFor="let badge of badgeListAchieved$ | async"
-          class="icon"
-          (click)="open(badge, content)"
-          src="assets/{{ badge.badgeTag }}.png" />
+      <div *ngIf="badgeListAchieved as list; else noAchievements">
+        <div style="display: flex; flex-wrap: wrap">
+          <img
+            *ngFor="let badge of list"
+            class="icon"
+            (click)="open(badge, content)"
+            src="assets/{{ badge.badgeTag }}.png" />
+        </div>
+        <div *ngIf="list.length === 0; then noAchievements"></div>
       </div>
-      <div style="display: flex; flex-wrap: wrap">
+      <ng-template #noAchievements>
+        <p style="margin-left: 8px; text-align: center">
+          Unfortunately no Badges achieved... Keep on trying!
+        </p>
+      </ng-template>
+      <div
+        style="display: flex; flex-wrap: wrap"
+        *ngIf="currentUser !== null && currentUser.userId === userId">
         <img
-          *ngFor="let badge of badgeListNotAchieved$ | async"
+          *ngFor="let badge of badgeListNotAchieved"
           class="icon"
           [style]="additionalStyle(badge)"
           (click)="open(badge, content)"
@@ -22,18 +32,34 @@
       </div>
     </ng-template>
   </li>
-  <li [ngbNavItem]="2">
+  <li [ngbNavItem]="2" *ngIf="currentUser !== null && currentUser.userId !== userId">
     <button ngbNavLink>Two</button>
     <ng-template ngbNavContent>
-      <p>
-        Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan
-        four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft
-        beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic,
-        assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero
-        magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit,
-        sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party
-        scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
-      </p>
+      <div style="display: flex; justify-content: space-between; margin: 8px">
+        <p style="font-weight: bolder; min-width: 150px; text-align: center; margin-bottom: 4px">
+          {{ this.userFirstName }} {{ this.userLastName }}
+        </p>
+        <p style="font-weight: bolder; min-width: 150px; text-align: center; margin-bottom: 4px">
+          You
+        </p>
+      </div>
+      <div
+        style="display: flex; justify-content: space-between; margin: 8px"
+        *ngFor="let group of badgeGroupedList">
+        <div style="min-width: 150px; text-align: center">
+          <img
+            class="icon"
+            src="assets/{{ group.user1.badgeTag }}.png"
+            [style]="grayScaleStyleString(group.user1.achieved ? 0 : 1)" />
+        </div>
+
+        <div style="min-width: 150px; text-align: center">
+          <img
+            class="icon"
+            src="assets/{{ group.user2.badgeTag }}.png"
+            [style]="grayScaleStyleString(group.user2.achieved ? 0 : 1)" />
+        </div>
+      </div>
     </ng-template>
   </li>
 </ul>

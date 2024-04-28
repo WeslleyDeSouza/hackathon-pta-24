@@ -24,11 +24,17 @@ export const DummyDataGenerator  = ({
   },
   async userGenerate( userFace :UserFacade){
     if(!isDev)return;
-   return userFace.create({
+    userFace.create({
       userId:'DUMMY-1-1-1',
       lastName:'Musterman',
       firstName:'Max',
       email:'max.musterman@pta.ch'
+    })
+   return userFace.create({
+      userId:'DUMMY-1-1-2',
+      lastName:'Meier',
+      firstName:'Hans',
+      email:'hans.meier@pta.ch'
     })
   },
   async projectGenerate(projectFacade:ProjectFacade){

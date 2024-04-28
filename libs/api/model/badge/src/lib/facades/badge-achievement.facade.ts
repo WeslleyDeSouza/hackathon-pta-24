@@ -17,7 +17,7 @@ export class BadgeAchievementFacade  {
   {
     const whereQuery = achieved !== null ? { userId: userId, achieved: achieved } : { userId: userId };
     return this.badgeRepo.find({
-      where:whereQuery
+      where: whereQuery
     })
   }
 }

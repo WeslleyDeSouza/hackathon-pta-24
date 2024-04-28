@@ -1,10 +1,22 @@
 import { Component, OnInit, TemplateRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalDismissReasons, NgbModal, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import { BadgeService } from '@hackathon-pta/app/api';
-import { Observable, map } from 'rxjs';
+import { BadgeService, UserDtoResponse, UserService } from '@hackathon-pta/app/api';
+import { Observable, from, groupBy, mergeMap, of, partition, tap, toArray } from 'rxjs';
 import { BadgeUserAchievementDtoResponse } from '@hackathon-pta/app/api';
 import { BadgeModalComponent } from '../badge-modal/badge-modal.component';
+
+interface BadgeGroupedList {
+  badgeId: string,
+  user1: {
+    achieved: boolean,
+    badgeTag: string
+  },
+  user2: {
+    achieved: boolean,
+    badgeTag: string
+  }
+}
 
 @Component({
   selector: "app-user-modal-component",
@@ -15,23 +27,56 @@ import { BadgeModalComponent } from '../badge-modal/badge-modal.component';
 })
 export class UserModalComponentComponent implements OnInit {
   active = 1;
-  userId = "DUMMY-1-1-1";
+  userId = "DUMMY-1-1-2";
+  userFirstName = "Hans";
+  userLastName = "Meier";
   selectedBadge: BadgeUserAchievementDtoResponse;
   
-  badgeListAchieved$: Observable<BadgeUserAchievementDtoResponse[]>;
-  badgeListNotAchieved$: Observable<BadgeUserAchievementDtoResponse[]>;
+  currentUser: UserDtoResponse | null = null;
+  badgeListAchieved: BadgeUserAchievementDtoResponse[];
+  badgeListNotAchieved: BadgeUserAchievementDtoResponse[];
+  badgeGroupedList: BadgeGroupedList[];
   private modalService = inject(NgbModal);
   closeResult = '';
 
-  constructor(private readonly badgeService: BadgeService) {}
+  constructor(private readonly badgeService: BadgeService, private readonly userService: UserService) {}
 
   ngOnInit() {
-    this.badgeListAchieved$ = this.badgeService.badgeListByUserId({id: this.userId, achieved: true }).pipe(
-      map(x => x.filter(b => b.achieved))
-    );
-    this.badgeListNotAchieved$ = this.badgeService.badgeListByUserId({id: this.userId, achieved: false }).pipe(
-      map(x => x.filter(b => !b.achieved))
-    );
+    this.badgeService.badgeListByUserId({ userId: this.userId }).subscribe(x => {
+      this.badgeListAchieved = x.filter(x => x.achieved);
+      this.badgeListNotAchieved = x.filter(x => !x.achieved);
+    });
+    this.userService.userGetCurrentUser().subscribe(u => {
+      this.currentUser = u;
+      if (u.userId !== this.userId) {
+        this.badgeService.badgeListByUserId({ userId: u.userId }).subscribe(x => {
+            this.badgeGroupedList = x.filter(e => e.achieved).concat(this.badgeListAchieved).reduce(
+              (result:BadgeGroupedList[], currentValue:BadgeUserAchievementDtoResponse) => {
+                const existing = result.find(r => r.badgeId === currentValue.badgeId);
+                if (existing === undefined) {
+                  result.push({
+                    badgeId: currentValue.badgeId,
+                    user1: {
+                      achieved: currentValue.userId === this.userId && currentValue.achieved,
+                      badgeTag: currentValue.badgeTag
+                    },
+                    user2: {
+                      achieved: currentValue.userId === u.userId && currentValue.achieved,
+                      badgeTag: currentValue.badgeTag
+                    }
+                  });
+                } else {
+                  if (currentValue.userId === this.userId) {
+                    existing.user1.achieved = currentValue.achieved;
+                  } else {
+                    existing.user2.achieved = currentValue.achieved;
+                  }
+                }
+                return result;
+              }, []);
+        });
+      } 
+    });
   }
 
   open(badge: BadgeUserAchievementDtoResponse, content: TemplateRef<any>) {
@@ -48,7 +93,12 @@ export class UserModalComponentComponent implements OnInit {
   }
 
   additionalStyle(badge: BadgeUserAchievementDtoResponse): string {
-    const value = 1-(badge.activityProgress / badge.activityValue);
+    const value = 1-(badge.activityProgress ?? 0 / badge.activityValue);
+    console.log(value);
+    return this.grayScaleStyleString(value);
+  }
+
+  grayScaleStyleString(value = 1): string {
     return `filter: grayscale(${value});`;
   }
 

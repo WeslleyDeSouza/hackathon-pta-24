@@ -1,4 +1,4 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import {BadgeAchievementFacade, BadgeFacade, BadgeUserAchievementDtoResponse} from "@hackathon-pta/api/model/badge";
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser, TenantMockGuard, UserMockGuard } from '@hackathon-pta/api/common';
@@ -27,8 +27,8 @@ export class BadgeController {
     type: BadgeUserAchievementDtoResponse,
     isArray:true
   })
-  listByUserId(@Param('id') userId: string, @Param('achieved') achieved: boolean | null = null) {
-    return this.badgeAchievementService.listByUserId(userId, achieved);
+  listByUserId(@Param('userId') userId: string) {
+    return this.badgeAchievementService.listByUserId(userId);
   }
 
   @Get(':id')
