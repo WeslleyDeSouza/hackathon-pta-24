@@ -1,8 +1,7 @@
 import { Body, Controller, Get, Param, Patch, Put } from '@nestjs/common';
-import { UserFacade, UserStoryFacade, UserStoryUpdate } from '@hackathon-pta/api/model/user';
-import {UserStoryCreate} from "@hackathon-pta/api/model/user";
+import { UserFacade, UserStoryFacade, UserStoryDtoUpdate, UserStoryDtoResponse } from '@hackathon-pta/api/model/user';
+import {UserStoryDtoCreate} from "@hackathon-pta/api/model/user";
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { ProjectDtoResponse } from '@hackathon-pta/api/model/project';
 import { CurrentTenant } from '@hackathon-pta/api/common';
 
 @Controller('user-story')
@@ -14,20 +13,29 @@ export class UserStoryController {
   ) {}
 
   @Put('create')
-  createUserStory(@Body()story:UserStoryCreate) {
+  createUserStory(@Body()story:UserStoryDtoCreate) {
 
 
   }
 
   @Patch('update')
-  updateUserStory(@Body()story:UserStoryUpdate) {
+  updateUserStory( @CurrentTenant()id:number,@Body()story:UserStoryDtoUpdate) {
+    this.userStoryService.update(id,story.projectId,story)
+  }
 
+  @Patch('update-state/:projectId/:userStoryId/:state')
+  setStateForReview( @CurrentTenant()id:number,
+                   @Param('projectId')projectId:number,
+                   @Param('userStoryId')userStoryId:number,
+                   @Param('state')state:boolean,
+                   ) {
+   return this.userStoryService.setStateForReview(id,projectId,userStoryId,state )
   }
 
   @Get('list/:projectId')
   @ApiOkResponse({
     description: 'The Project records',
-    type: ProjectDtoResponse,
+    type: UserStoryDtoResponse,
     isArray: true
   })
   listFromProject(
@@ -36,5 +44,6 @@ export class UserStoryController {
     return this.userStoryService.listByProjectId(
       id,projectId,
     )
+
   }
 }

@@ -2,7 +2,7 @@ import {UserStoryEntity} from "../entities/user-story.entity";
 import {ApiProperty} from "@nestjs/swagger";
 
 
-export class UserStoryCreate extends UserStoryEntity {
+export class UserStoryDtoCreate extends UserStoryEntity {
   @ApiProperty({required:true})
   override title: string;
 
@@ -15,7 +15,26 @@ export class UserStoryCreate extends UserStoryEntity {
   override projectId: number;
 }
 
-export class UserStoryUpdate extends UserStoryCreate {
+export class UserStoryDtoUpdate extends UserStoryDtoCreate {
   @ApiProperty({type:Number,required:true})
   override userStoryId: number;
+}
+
+export class UserStoryDtoResponse extends UserStoryDtoCreate {
+  @ApiProperty({required:true})
+  override title: string;
+
+  @ApiProperty()
+  override description: string;
+
+  @ApiProperty()
+  override projectId: number;
+  @ApiProperty()
+  override userStoryId: number;
+
+  @ApiProperty({type:Date})
+  override updatedAt: boolean;
+
+  @ApiProperty({type:Number})
+  override stateOpenForReview: Date;
 }

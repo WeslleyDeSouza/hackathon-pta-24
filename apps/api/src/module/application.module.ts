@@ -26,7 +26,7 @@ import { ApiModelBadgeModule } from '@hackathon-pta/api/model/badge';
     ProjectModule,
     TenantModule,
     BadgeModule
-  ],
+  ]
 })
 export class ApplicationModule {
 

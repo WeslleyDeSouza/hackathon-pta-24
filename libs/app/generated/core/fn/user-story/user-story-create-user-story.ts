@@ -6,10 +6,10 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { UserStoryCreate } from '../../models/user-story-create';
+import { UserStoryDtoCreate } from '../../models/user-story-dto-create';
 
 export interface UserStoryCreateUserStory$Params {
-      body: UserStoryCreate
+      body: UserStoryDtoCreate
 }
 
 export function userStoryCreateUserStory(http: HttpClient, rootUrl: string, params: UserStoryCreateUserStory$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
