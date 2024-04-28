@@ -6,10 +6,10 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { UserStoryUpdate } from '../../models/user-story-update';
+import { UserStoryDtoUpdate } from '../../models/user-story-dto-update';
 
 export interface UserStoryUpdateUserStory$Params {
-      body: UserStoryUpdate
+      body: UserStoryDtoUpdate
 }
 
 export function userStoryUpdateUserStory(http: HttpClient, rootUrl: string, params: UserStoryUpdateUserStory$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {

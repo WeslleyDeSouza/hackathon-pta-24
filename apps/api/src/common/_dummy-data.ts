@@ -6,7 +6,6 @@ import { BadgeFacade } from '@hackathon-pta/api/model/badge';
 import { UserBadgeAchievementFacade } from '@hackathon-pta/api/model/user';
 import { UserActivityFacade } from 'libs/api/model/user/src/facades/user-activity.facade';
 import ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
-import Project = ts.server.Project;
 import { ProjectEntity } from '../../../../libs/api/model/project/src/entities';
 import { ProjectFacade } from '@hackathon-pta/api/model/project';
 import { UserStoryEntity } from '../../../../libs/api/model/user/src/entities/user-story.entity';

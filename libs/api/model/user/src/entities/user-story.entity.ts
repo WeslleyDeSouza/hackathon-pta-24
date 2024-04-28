@@ -42,7 +42,7 @@ export class UserStoryEntity extends TenantBaseEntity {
   user: UserEntity
 
   @Column({nullable:true, default:null, type:'date'})
-  stateOpenForReview:boolean
+  stateOpenForReview:Date | null
 
   @UpdateDateColumn()
   updatedAt:boolean

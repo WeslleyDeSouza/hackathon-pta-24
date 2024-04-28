@@ -30,9 +30,43 @@ export class UserStoryFacade  {
 
     Object.assign(userStory, data ||{})
 
-    console.log('OK')
     return this.userStoryEntity.save(userStory)
   }
+
+  async update(tenantId:number,projectId:number,data:Partial<UserStoryEntity>):Promise<UserStoryEntity>{
+    if(!data.userStoryId)throw Error('userStoryId not Provided')
+
+    let userStory = await this.findById(tenantId,projectId,data.userStoryId)
+
+    if(!userStory?.userStoryId)throw Error('userStoryId not valid')
+
+
+    delete data.id
+    delete data.user
+    delete data.tenantId
+    delete data.projectId
+
+    userStory = Object.assign(userStory, data ||{})
+
+    return this.userStoryEntity.save(userStory)
+  }
+
+
+  findById(tenantId:number,projectId:number,userStoryId:number){
+    return this.userStoryEntity.findOne({
+      where:{
+        tenantId,projectId,userStoryId
+      }
+    })
+  }
+
+  async setStateForReview(tenantId:number,projectId:number,id:number,state:boolean):Promise<boolean>{
+    const userStory = await this.findById(tenantId,projectId,id);
+    if(!userStory)return false;
+    userStory.stateOpenForReview = state ? new Date() : null;
+    return userStory.save().then(()=> true)
+  }
+
 }
 
 

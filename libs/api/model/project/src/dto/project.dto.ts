@@ -22,4 +22,5 @@ export class ProjectDtoResponse extends ProjectEntity {
   override tenantId: number;
   @ApiProperty()
   override projectId: number;
+
 }
