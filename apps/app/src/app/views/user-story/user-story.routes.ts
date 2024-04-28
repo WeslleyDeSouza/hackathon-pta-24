@@ -4,6 +4,7 @@ import { Route, UrlSegment } from "@angular/router";
 import { UserStoryFlowLayoutComponent } from "./user-story/view/flow/layout";
 import { UserStoryStore } from "./user-story/common/user-story.store";
 import { UserStoryFlowDoneComponent } from "./user-story/view/flow/views/done/user-story-flow-done.component";
+import { UserStoryResultComponent } from "./user-story/view/result/user-story-result.component";
 
 const isNumber = (value: string | number) => !isNaN(value as number);
 
@@ -34,6 +35,11 @@ export const userStoryRoutes: Route[] = [
       {
         path: ":storyId/review/:estimationId",
         component: UserStoryReviewComponent,
+        canMatch: [(route: Route, segments: UrlSegment[]) => isNumber(segments[0]?.path)],
+      },
+      {
+        path: ":storyId/result",
+        component: UserStoryResultComponent,
         canMatch: [(route: Route, segments: UrlSegment[]) => isNumber(segments[0]?.path)],
       },
       {

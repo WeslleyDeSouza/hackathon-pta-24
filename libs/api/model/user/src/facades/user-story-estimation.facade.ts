@@ -11,23 +11,28 @@ export class UserStoryEstimationFacade {
     protected userStoryEstimationEntity: Repository<UserStoryEstimationEntity>
   ) {}
 
-  setEstimation(
+  async setEstimation(
     tenantId: number,
     userId: string,
     userStoryId: number,
     projectId: number,
-    reviewId: number,
+    estimationId: number,
     value: number
   ) {
+    const userEstimation = await this.getEstimation(tenantId, userId, userStoryId, projectId);
+
+    if (userEstimation) {
+      userEstimation.estimateValue = value;
+      return userEstimation.save();
+    }
+
     const estimation = this.userStoryEstimationEntity.create();
     estimation.user = { userId } as any;
     estimation.tenantId = tenantId;
     estimation.projectId = projectId;
     estimation.userStoryId = userStoryId;
-    if (reviewId) estimation.estimationId = reviewId;
+    if (estimationId) estimation.estimationId = estimationId;
     estimation.estimateValue = value;
-
-    console.log(estimation);
 
     return this.userStoryEstimationEntity.save(estimation);
   }
@@ -37,15 +42,30 @@ export class UserStoryEstimationFacade {
     userId: string,
     userStoryId: number,
     projectId: number,
-    estimationId: number
+    estimationId?: number
   ) {
+    const params: any = {
+      tenantId,
+      user: { userId },
+      userStory: { userStoryId: userStoryId || -1 },
+      projectId,
+    };
+
+    if (estimationId) {
+      params.estimationId = estimationId || -1;
+    }
+
     return this.userStoryEstimationEntity.findOne({
+      where: params,
+    });
+  }
+  getEstimations(tenantId: number, userStoryId: number, projectId: number) {
+    return this.userStoryEstimationEntity.find({
+      relations: ["user"],
       where: {
         tenantId,
-        user: { userId },
         userStory: { userStoryId: userStoryId || -1 },
         projectId,
-        estimationId: estimationId || -1,
       },
     });
   }

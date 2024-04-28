@@ -32,7 +32,7 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
   ) {
     super();
     const { projectId } = this.route.snapshot.params;
-    this.store.stories = this.route.snapshot.data["stories"];
+    if (this.store.stories.length == 0) this.store.stories = this.route.snapshot.data["stories"];
     this.api.userStoryGetCompletionPercentage({
       projectId: projectId
     }).subscribe(x => {
@@ -76,4 +76,6 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
     this.cdr.markForCheck();
     this.cdr.detectChanges();
   }
+
+  onUserSelectClick(userId: number) {}
 }

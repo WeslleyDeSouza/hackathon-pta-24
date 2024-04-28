@@ -70,24 +70,34 @@ export class UserStoryController {
     @Query("withEstimation") withEstimation: boolean,
     @Param("projectId") projectId: number,
     @CurrentTenant() tenant: any,
-    @CurrentTenant() user: IUser
+    @CurrentUser() user: IUser
   ) {
     const filterWithEstimationOnlySelf = true;
     return this.userStoryService
       .listByProjectId(tenant.tenantId, projectId, { withEstimation })
       .then(userStories => {
         return userStories.map(userStory => {
-          let estimation = undefined;
+          let estimation: any = {};
+
           if (filterWithEstimationOnlySelf) {
-            estimation = userStory.estimations.filter(estimation => {
-              return !!estimation.user?.userId;
-            })?.[0];
-            delete userStory.estimations;
+            estimation =
+              userStory.estimations.filter(estimation => {
+                return estimation.user?.userId == user.userId;
+              })?.[0] || {};
           }
+
+          estimation["estimationsCount"] = userStory.estimations?.length;
+          estimation["estimationsUsers"] = userStory.estimations?.map(
+            estimation => estimation.user?.userId
+          );
+
+          delete userStory.estimations;
 
           return {
             ...userStory,
             estimation: {
+              estimationsUsers: estimation?.estimationsUsers,
+              estimationsCount: estimation?.estimationsCount,
               estimationValue: estimation?.estimateValue,
               estimationId: estimation?.estimationId,
             },
@@ -150,5 +160,19 @@ export class UserStoryController {
     return this.userStoryEstimationService
       .getEstimation(tenant.tenantId, user.userId, storyId, projectId, estimationId)
       .then(row => row?.estimateValue);
+  }
+
+  @Get("estimation-summary/:projectId/:storyId/")
+  @ApiOkResponse({
+    description: "Gets Estimations from Story",
+    isArray: true,
+  })
+  getEstimationSummary(
+    @Param("storyId") storyId: number,
+    @Param("projectId") projectId: number,
+    @CurrentTenant() tenant: any,
+    @CurrentUser() user: IUser
+  ) {
+    return this.userStoryEstimationService.getEstimations(tenant.tenantId, storyId, projectId);
   }
 }

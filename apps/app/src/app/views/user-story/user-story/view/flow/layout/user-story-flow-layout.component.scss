@@ -1,0 +1,7 @@
+:host {
+  height: 100%;
+  display: block;
+  ::ng-deep .card-flip {
+    width: 1155px !important;
+  }
+}

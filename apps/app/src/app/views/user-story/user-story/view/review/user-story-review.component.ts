@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output, inject } from "@angular/core";
-import { ActivatedRoute, RouterLink } from "@angular/router";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Output,
+  inject,
+} from "@angular/core";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
 import { PageBase } from "../../../../view.base";
 import { UserStoryService, UserStoryWithReviewDtoResponse } from "@hackathon-pta/app/api";
@@ -35,9 +42,8 @@ const svg2 = `
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserStoryReviewComponent extends PageBase {
-  @Output()
-  reviewValueChanged = new EventEmitter<number>();
   route = inject(ActivatedRoute);
+  router = inject(Router);
 
   showNavButton = true;
 
@@ -128,6 +134,7 @@ export class UserStoryReviewComponent extends PageBase {
   }
 
   onReviewValueChange(estimationValue: number) {
+    if (!estimationValue) return;
     this.userStoryService
       .userStorySetEstimation({
         projectId: this.projectId,
@@ -135,13 +142,34 @@ export class UserStoryReviewComponent extends PageBase {
         storyId: this.storyId,
         value: estimationValue,
       })
-      .subscribe(x => this.reviewValueChanged.emit(estimationValue));
+      .subscribe((data: any) => {
+        const story = this.store.stories.find(story => {
+          return story.userStoryId == this.storyId && story.projectId == this.projectId;
+        });
+        if (story)
+          story.estimation = {
+            estimationId: data.estimationId || this.estimationId,
+            estimationValue: data.estimationValue || estimationValue,
+          };
+
+        const nextBtn = this.nextBtn;
+        if (nextBtn) nextBtn.click();
+
+        return;
+      });
   }
 
   verifyData(): boolean {
     if (this.store.stories.length == 0) {
       this.store.stories = this.route.parent?.snapshot.data["stories"];
     }
+
+    if (isNaN(this.projectId)) {
+      console.warn("Project Id is not valid");
+      this.router.navigate(["/"]);
+      return false;
+    }
+
     return true;
   }
 
@@ -169,5 +197,13 @@ export class UserStoryReviewComponent extends PageBase {
 
   updateView() {
     this.cdr.markForCheck();
+  }
+
+  get navBackUrl() {
+    return this.router.url.includes("flow") ? "../../../../../" : "../../../";
+  }
+
+  get nextBtn() {
+    return document.querySelector("#btn-next") as HTMLButtonElement;
   }
 }
