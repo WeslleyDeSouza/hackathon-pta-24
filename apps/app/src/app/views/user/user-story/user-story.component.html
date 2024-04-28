@@ -2,7 +2,11 @@
 <div class="container">
 
   <div class="p-md-2 bg-white shadow-sm">
-    <h2>Bereit für die Schätzung</h2>
+
+    <div class="d-flex justify-content-between">
+      <h2>Bereit für die Schätzung</h2>
+      <a class="btn btn-success">Start</a>
+    </div>
 
     <ng-container>
 
@@ -23,6 +27,7 @@
           <td></td>
           <td></td>
           <td>
+            <button class="btn btn-success" [disabled]="!hasStateOpenStoriesForReview">Schätzen</button>
           </td>
         </tr>
         </tbody>
