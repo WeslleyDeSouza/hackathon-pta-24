@@ -3,6 +3,8 @@
 ## Setup Projects
 copy .env.example into project root as .env and fill creds info
 
+Notes for Docker / Database
+
 ## Start Projects
 Frontend `npx nx serve app `
 Backend `npx nx serve api `

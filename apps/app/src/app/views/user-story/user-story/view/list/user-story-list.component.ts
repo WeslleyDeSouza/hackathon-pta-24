@@ -68,7 +68,7 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
     return true;
   }
 
-  override getData(force = false): void {
+  override getData(force = true): void {
     const { projectId } = this.route.snapshot.params;
     this.api
       .userStoryGetCompletionPercentage({
