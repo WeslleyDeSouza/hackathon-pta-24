@@ -1,9 +1,9 @@
-import { Component, TemplateRef, inject } from '@angular/core';
+import { Component, TemplateRef, inject } from "@angular/core";
 
 @Component({
   standalone: true,
-  selector: 'app-user',
-  template: '',
+  selector: "app-user",
+  template: "",
   imports: [],
 })
 export class UserComponent {}

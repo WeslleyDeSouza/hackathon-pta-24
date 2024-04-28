@@ -1,2 +1,1 @@
-
-export * from './user-story.resolver'
+export * from "./user-story.resolver";
