@@ -9,25 +9,28 @@
           height="24" />
       </a>
     </div>
-    <a class="btn btn-lg btn-outline-primary" style="min-width: 160px" (click)="open(content)"
-      >demo modal</a
-    >
   </div>
 
   <div *ngIf="currentUser$ | async as user" style="margin-right: 8px">
     <div class="d-flex">
       <div *ngIf="users.length" ngbDropdown class="d-inline-block me-2">
-        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          id="dropdownBasic1"
+          ngbDropdownToggle>
           Dev: Switch User
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-           <a class="w-100 dropdown-item"  (click)="switchUser(user.userId)" *ngFor="let user of users">
-             {{user.firstName}}
-             {{user.LastName}}
-           </a>
+          <a
+            class="w-100 dropdown-item"
+            (click)="switchUser(user.userId)"
+            *ngFor="let user of users">
+            {{ user.firstName }}
+            {{ user.LastName }}
+          </a>
         </div>
       </div>
-
 
       <a class="text-decoration-none" (click)="open(content)">
         <img
@@ -38,7 +41,7 @@
           class="rounded-circle me-2" />
         <br />
         <strong>
-          {{user.firstName}}
+          {{ user.firstName }}
         </strong>
       </a>
     </div>
