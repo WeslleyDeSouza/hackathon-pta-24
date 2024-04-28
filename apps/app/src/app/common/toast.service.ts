@@ -1,20 +1,15 @@
 import { Injectable, TemplateRef } from '@angular/core';
-
-export interface Toast {
-	template: TemplateRef<any>;
-	classname?: string;
-	delay?: number;
-}
+import { BadgeDtoResponse } from '@hackathon-pta/app/api';
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
-	toasts: Toast[] = [];
+	toasts: BadgeDtoResponse[] = [];
 
-	show(toast: Toast) {
+	show(toast: BadgeDtoResponse) {
 		this.toasts.push(toast);
 	}
 
-	remove(toast: Toast) {
+	remove(toast: BadgeDtoResponse) {
 		this.toasts = this.toasts.filter((t) => t !== toast);
 	}
 

@@ -1,32 +1,32 @@
-import { Component, OnInit, TemplateRef, ViewChild, inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ToastAchievementStore } from "../common/toast-achievement.store";
 import { ToastService } from "../common/toast.service";
-import { BadgeDtoResponse } from "@hackathon-pta/app/api";
-import { delay } from "rxjs";
+import { NgbToastModule } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-achievement-toast",
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: "./achievement-toast.component.html",
-  styleUrl: "./achievement-toast.component.css",
+  imports: [CommonModule, NgbToastModule],
+  template: `
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1200">
+		@for (toast of toastService.toasts; track toast) {
+			<ngb-toast
+				[autohide]="true"
+				[delay]="5000"
+				(hidden)="toastService.remove(toast)"
+			>
+      <strong >{{toast.title}}</strong>
+      <div style="display: flex">
+      <img
+        style="height: 48px; width: 48px; margin-right: 12px;margin-left:8px;"
+        src="assets/{{ toast.tag }}.png" />
+        <p>{{toast.description}}</p>
+    </div>
+			</ngb-toast>
+		}
+      <div>
+	`
 })
-export class AchievementToastComponent implements OnInit {
-  @ViewChild('ngbToastHeader') toastTemplate: TemplateRef<any>;
-  toastAchievementStore = inject(ToastAchievementStore);
+export class AchievementToastComponent {
   toastService = inject(ToastService);
-  currentBadgeAchievement: BadgeDtoResponse | null = null;
-
-  ngOnInit() {
-    this.toastAchievementStore.data$.subscribe(x => {
-      x.forEach(b => {
-        this.currentBadgeAchievement = b;
-        this.toastService.show({
-          template: this.toastTemplate
-      });
-        delay(500);
-      })
-    })
-  }
 }
