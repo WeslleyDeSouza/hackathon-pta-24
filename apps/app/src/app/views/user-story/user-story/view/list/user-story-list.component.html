@@ -19,8 +19,7 @@
           <th></th>
           <th>Titel</th>
           <th>Bezeichnung</th>
-          <th>Status</th>
-          <th>Reviews</th>
+          <th  class="text-center " align="center">Reviews</th>
           <th></th>
         </thead>
         <tbody>
@@ -28,8 +27,16 @@
             <td width="10px"></td>
             <td>{{ item.title }}</td>
             <td>{{ item.description?.slice(0, 20) }}...</td>
-            <td></td>
-            <td></td>
+            <td>
+             <div class="d-flex">
+               <ng-container *ngFor="let user of item.estimation?.['estimationsUsers']">
+                 <div (click)="onUserSelectClick(user)" class="avatar shadow-sm">
+                   U
+                 </div>
+               </ng-container>
+             </div>
+            </td>
+            <td class="text-center " align="center">  {{item.estimation?.['estimationsCount']}} </td>
             <td align="right">
               <button class="btn btn-success" [disabled]="!hasStateOpenStoriesForReview"
               routerLink="{{item.userStoryId}}/review/{{item.reviewId || 'new'}}"
@@ -63,8 +70,18 @@
           <td width="10px"></td>
           <td>{{ item.title }}</td>
           <td>{{ item.description?.slice(0, 20) }}...</td>
-          <td></td>
-          <td></td>
+          <td>
+            <div class="d-flex">
+              <ng-container *ngFor="let user of item.estimation?.['estimationsUsers']">
+                <div class="avatar shadow-sm" (click)="onUserSelectClick(user)">
+                  U
+                </div>
+              </ng-container>
+            </div>
+          </td>
+          <td>
+            {{item.estimation?.['estimationsCount']}}
+          </td>
           <td  align="right">
             <a
               *ngIf="!item.stateOpenForReview"
@@ -86,7 +103,9 @@
         <th>Titel</th>
         <th>Bezeichnung</th>
         <th>Status</th>
-        <th title="Eigene Schätzung">Schätzung</th>
+        <th>Reviwers</th>
+        <th></th>
+        <th title="Eigene Schätzung">Eig. Schätzung</th>
         <th></th>
       </thead>
       <tbody>
@@ -98,7 +117,16 @@
             Geschätzt
           </td>
           <td>
-            {{item.estimation?.['estimationValue']}}
+            <div class="d-flex">
+              <ng-container *ngFor="let user of item.estimation?.['estimationsUsers']">
+                <div class="avatar shadow-sm" (click)="onUserSelectClick(user)">
+                  U
+                </div>
+              </ng-container>
+            </div>
+          </td>
+          <td align="center" class="text-center">
+           <p class=""> {{item.estimation?.['estimationValue']}} </p>
           </td>
           <td  align="right">
             <a class="btn btn-primary me-1"  routerLink="{{item.userStoryId}}/review/{{item.estimation?.['estimationId']}}">

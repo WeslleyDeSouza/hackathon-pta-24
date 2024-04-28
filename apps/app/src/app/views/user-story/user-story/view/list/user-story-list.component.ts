@@ -67,4 +67,6 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
     this.cdr.markForCheck();
     this.cdr.detectChanges();
   }
+
+  onUserSelectClick(userId: number) {}
 }
