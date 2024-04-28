@@ -127,4 +127,18 @@ export class UserStoryController {
       .getEstimation(tenant.tenantId, user.userId, storyId, projectId, estimationId)
       .then(row => row?.estimateValue);
   }
+
+  @Get("estimation-summary/:projectId/:storyId/")
+  @ApiOkResponse({
+    description: "Gets Estimations from Story",
+    isArray: true,
+  })
+  getEstimationSummary(
+    @Param("storyId") storyId: number,
+    @Param("projectId") projectId: number,
+    @CurrentTenant() tenant: any,
+    @CurrentUser() user: IUser
+  ) {
+    return this.userStoryEstimationService.getEstimations(tenant.tenantId, storyId, projectId);
+  }
 }

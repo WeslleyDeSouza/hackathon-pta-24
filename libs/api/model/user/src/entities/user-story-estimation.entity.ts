@@ -13,7 +13,7 @@ import { TenantBaseEntity } from "@hackathon-pta/api/model/_base";
 import { UserStoryEntity } from "./user-story.entity";
 
 @Entity("user_story_estimation")
-@Unique(["userStoryId", "tenantId", "estimationId"])
+@Unique(["userStoryId", "tenantId", "user.userId"])
 export class UserStoryEstimationEntity extends TenantBaseEntity {
   override self: typeof UserStoryEstimationEntity = UserStoryEstimationEntity;
 
@@ -51,7 +51,10 @@ export class UserStoryEstimationEntity extends TenantBaseEntity {
 
   @BeforeInsert()
   async beforeInsert() {
-    console.log("TODO multiple fields");
-    await this.setLastEntryId("estimationId");
+    await this.setLastEntryIdByFields("estimationId", {
+      userStory: {
+        userStoryId: this.userStoryId,
+      },
+    });
   }
 }

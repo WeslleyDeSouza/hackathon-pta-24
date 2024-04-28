@@ -1,0 +1,37 @@
+<div class="container m-auto p-0">
+  <div class="card border-0 bg-white shadow-sm p-2 mt-2">
+    <h2>
+      {{ currentStory?.title }}
+    </h2>
+
+    <h6>
+      Storypoint AVG : {{summaryAvg}}
+    </h6>
+
+    <table class="table w-100 mt-2">
+      <thead>
+      <tr>
+        <td>Wer</td>
+        <td>Schätzung</td>
+        <td>Abweichung</td>
+        <td></td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let item of summary">
+        <td>{{ item.user?.firstName }} {{ item.user?.lastName }}</td>
+        <td>{{ item.estimateValue }}</td>
+        <td>{{ calculateDiff(item.estimateValue )}}</td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <div class="container w-100">
+    <button id="btn-back" routerLink="../../" class="btn-default btn mt-2">Zurück</button>
+  </div>
+</div>

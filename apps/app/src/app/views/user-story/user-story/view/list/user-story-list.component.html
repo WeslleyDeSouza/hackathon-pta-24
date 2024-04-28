@@ -101,8 +101,11 @@
             {{item.estimation?.['estimationValue']}}
           </td>
           <td  align="right">
-            <a class="btn btn-primary"  routerLink="{{item.userStoryId}}/review/{{item.estimation?.['estimationId']}}">
+            <a class="btn btn-primary me-1"  routerLink="{{item.userStoryId}}/review/{{item.estimation?.['estimationId']}}">
               Erneut schätzen
+            </a>
+            <a class="btn btn-secondary"  routerLink="{{item.userStoryId}}/result/">
+              Resultat ansechen
             </a>
           </td>
         </tr>

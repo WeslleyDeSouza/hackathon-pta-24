@@ -13,6 +13,8 @@ import { userStoryCreateUserStory } from '../fn/user-story/user-story-create-use
 import { UserStoryCreateUserStory$Params } from '../fn/user-story/user-story-create-user-story';
 import { userStoryGetEstimation } from '../fn/user-story/user-story-get-estimation';
 import { UserStoryGetEstimation$Params } from '../fn/user-story/user-story-get-estimation';
+import { userStoryGetEstimationSummary } from '../fn/user-story/user-story-get-estimation-summary';
+import { UserStoryGetEstimationSummary$Params } from '../fn/user-story/user-story-get-estimation-summary';
 import { userStoryListByProjectId } from '../fn/user-story/user-story-list-by-project-id';
 import { UserStoryListByProjectId$Params } from '../fn/user-story/user-story-list-by-project-id';
 import { userStorySetEstimation } from '../fn/user-story/user-story-set-estimation';
@@ -176,6 +178,31 @@ export class UserStoryService extends BaseService {
   userStoryGetEstimation(params: UserStoryGetEstimation$Params, context?: HttpContext): Observable<number> {
     return this.userStoryGetEstimation$Response(params, context).pipe(
       map((r: StrictHttpResponse<number>): number => r.body)
+    );
+  }
+
+  /** Path part for operation `userStoryGetEstimationSummary()` */
+  static readonly UserStoryGetEstimationSummaryPath = '/api/user-story/estimation-summary/{projectId}/{storyId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `userStoryGetEstimationSummary()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  userStoryGetEstimationSummary$Response(params: UserStoryGetEstimationSummary$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return userStoryGetEstimationSummary(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `userStoryGetEstimationSummary$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  userStoryGetEstimationSummary(params: UserStoryGetEstimationSummary$Params, context?: HttpContext): Observable<void> {
+    return this.userStoryGetEstimationSummary$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 
