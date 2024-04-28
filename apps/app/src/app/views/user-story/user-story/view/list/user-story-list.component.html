@@ -1,25 +1,30 @@
 <div class="container">
-
   <div class="user-stories-overview card border-0 shadow-sm p-2 mt-3">
     <h1>Das Schätzkabinett erwartet euch!</h1>
-    <p>Kühne Visionäre, sammelt euch! Vor euch liegt das kunterbunte Kaleidoskop unserer User Stories – jede einzelne eine Perle der Möglichkeiten. Bereitet eure weisesten Vermutungen vor, denn es ist an der Zeit, die Tiefen der Entwicklungsgeheimnisse zu ergründen.</p>
+    <p>
+      Kühne Visionäre, sammelt euch! Vor euch liegt das kunterbunte Kaleidoskop unserer User
+      Stories – jede einzelne eine Perle der Möglichkeiten. Bereitet eure weisesten Vermutungen
+      vor, denn es ist an der Zeit, die Tiefen der Entwicklungsgeheimnisse zu ergründen.
+    </p>
   </div>
 
-
   <div class="p-md-2 bg-white shadow-sm mt-2">
-    <ng-container *ngIf="store.storiesOpenForReview as openForeReviews;">
+    <ng-container *ngIf="store.storiesOpenForReview as openForeReviews">
+      <div class="d-flex justify-content-between">
+        <h3>
+          Stories bereit für die Schätzung <small>{{ openForeReviews.length }}</small>
+        </h3>
+        <button [hidden]="!openForeReviews.length" class="btn btn-success" routerLink="flow/">
+          Start
+        </button>
+      </div>
 
-    <div class="d-flex justify-content-between">
-      <h3>Stories bereit für die Schätzung <small>{{openForeReviews.length}}</small></h3>
-      <button [hidden]="!openForeReviews.length" class="btn btn-success" routerLink="flow/">Start</button>
-    </div>
-
-    <table *ngIf="openForeReviews.length;else empty" class="table table-striped table-hover">
+      <table *ngIf="openForeReviews.length; else empty" class="table table-striped table-hover">
         <thead>
           <th></th>
           <th>Titel</th>
           <th>Bezeichnung</th>
-          <th  class="text-center " align="center">Reviews</th>
+          <th class="text-center" align="center">Reviews</th>
           <th></th>
         </thead>
         <tbody>
@@ -28,19 +33,17 @@
             <td>{{ item.title }}</td>
             <td>{{ item.description?.slice(0, 20) }}...</td>
             <td>
-             <div class="d-flex">
-               <ng-container *ngFor="let user of item.estimation?.['estimationsUsers']">
-                 <div (click)="onUserSelectClick(user)" class="avatar shadow-sm">
-                   U
-                 </div>
-               </ng-container>
-             </div>
+              <div class="d-flex">
+                <ng-container *ngFor="let user of item.estimation?.['estimationsUsers']">
+                  <div (click)="onUserSelectClick(user)" class="avatar shadow-sm">U</div>
+                </ng-container>
+              </div>
             </td>
-            <td class="text-center " align="center">  {{item.estimation?.['estimationsCount']}} </td>
             <td align="right">
-              <button class="btn btn-success" [disabled]="!hasStateOpenStoriesForReview"
-              routerLink="{{item.userStoryId}}/review/{{item.reviewId || 'new'}}"
-              >
+              <button
+                class="btn btn-success"
+                [disabled]="!hasStateOpenStoriesForReview"
+                routerLink="{{ item.userStoryId }}/review/{{ item.reviewId || 'new' }}">
                 Schätzen
               </button>
             </td>
@@ -50,7 +53,10 @@
     </ng-container>
     <ng-template #empty>
       <h6>Hohe Fünf! 🙌</h6>
-      <p>Glückwunsch, Schätzmeister! Du hast das Ende der Schätzungs-Piste erreicht und alle User Stories mit deiner Weisheit bedacht.</p>
+      <p>
+        Glückwunsch, Schätzmeister! Du hast das Ende der Schätzungs-Piste erreicht und alle User
+        Stories mit deiner Weisheit bedacht.
+      </p>
     </ng-template>
   </div>
 
@@ -61,7 +67,6 @@
         <th></th>
         <th>Titel</th>
         <th>Bezeichnung</th>
-        <th>Status</th>
         <th>Reviews</th>
         <th></th>
       </thead>
@@ -73,16 +78,12 @@
           <td>
             <div class="d-flex">
               <ng-container *ngFor="let user of item.estimation?.['estimationsUsers']">
-                <div class="avatar shadow-sm" (click)="onUserSelectClick(user)">
-                  U
-                </div>
+                <div class="avatar shadow-sm" (click)="onUserSelectClick(user)">U</div>
               </ng-container>
             </div>
           </td>
-          <td>
-            {{item.estimation?.['estimationsCount']}}
-          </td>
-          <td  align="right">
+
+          <td align="right">
             <a
               *ngIf="!item.stateOpenForReview"
               (click)="onSetStateOpenForReview(item)"
@@ -113,26 +114,24 @@
           <td width="10px"></td>
           <td>{{ item.title }}</td>
           <td>{{ item.description?.slice(0, 20) }}...</td>
-          <td>
-            Geschätzt
-          </td>
+          <td>Geschätzt</td>
           <td>
             <div class="d-flex">
               <ng-container *ngFor="let user of item.estimation?.['estimationsUsers']">
-                <div class="avatar shadow-sm" (click)="onUserSelectClick(user)">
-                  U
-                </div>
+                <div class="avatar shadow-sm" (click)="onUserSelectClick(user)">U</div>
               </ng-container>
             </div>
           </td>
           <td align="center" class="text-center">
-           <p class=""> {{item.estimation?.['estimationValue']}} </p>
+            <p class="">{{item.estimation?.['estimationValue']}}</p>
           </td>
-          <td  align="right">
-            <a class="btn btn-primary me-1"  routerLink="{{item.userStoryId}}/review/{{item.estimation?.['estimationId']}}">
+          <td align="right">
+            <a
+              class="btn btn-primary me-1"
+              routerLink="{{ item.userStoryId }}/review/{{item.estimation?.['estimationId']}}">
               Erneut schätzen
             </a>
-            <a class="btn btn-secondary"  routerLink="{{item.userStoryId}}/result/">
+            <a class="btn btn-secondary" routerLink="{{ item.userStoryId }}/result/">
               Resultat ansechen
             </a>
           </td>
