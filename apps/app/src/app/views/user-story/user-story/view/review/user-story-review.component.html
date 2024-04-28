@@ -2,20 +2,31 @@
   <h2>
     {{currentStory?.title}}
   </h2>
-  <p>
-    {{currentStory?.description}}
-  </p>
 
-  <div class="row">
-    <div *ngFor="let selection of selections" class="col-12 col-md-3 p-2" (click)="onSelectionClick(selection)">
-      <div class="card selection-item">
-        <div class="card-body">
-          {{selection.value}}
+
+  <app-review-flip-card class=" ">
+    <ng-container front>
+      <div class="row">
+        <div *ngFor="let selection of selections" class="col-12 col-md-3 p-2" (click)="onSelectionClick(selection)">
+          <div class="selection-item">
+            <div class="card-body">
+              <div [innerHTML]="selection.svg | bypassHtmlSanitizer "></div>
+              <div>
+                <p class="m-0 w-100">   {{selection.value}}</p>
+                <small class="m-0 w-100">{{selection.duration}}</small>
+                <small class="m-0 w-100">{{selection.description}}</small>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
+    </ng-container>
+    <ng-container back>
+      <p class="text-dark">
+        {{currentStory?.description}}
+      </p>
+    </ng-container>
+  </app-review-flip-card>
 
 
   <input
