@@ -32,8 +32,8 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
     this.store.stories = this.route.snapshot.data["stories"];
   }
 
-  ngAfterViewInit() {
-    //this.updateView()
+  ngAfterViewInit(): void {
+    this.updateView();
   }
 
   get estimationId() {
