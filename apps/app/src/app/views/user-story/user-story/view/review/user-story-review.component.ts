@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output, inject } from "@angular/core";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
 import { PageBase } from "../../../../view.base";
@@ -15,6 +15,8 @@ import { UserStoryStore } from "../../common/user-story.store";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserStoryReviewComponent extends PageBase {
+  @Output()
+  reviewValueChanged = new EventEmitter<number>();
   route = inject(ActivatedRoute);
 
   showNavButton = true;
@@ -90,7 +92,7 @@ export class UserStoryReviewComponent extends PageBase {
         storyId: this.storyId,
         value: estimationValue,
       })
-      .subscribe();
+      .subscribe(x => this.reviewValueChanged.emit(estimationValue));
   }
 
   verifyData(): boolean {

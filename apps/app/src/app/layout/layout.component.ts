@@ -5,6 +5,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserStore } from '../common/user.store';
 import { BehaviorSubject } from 'rxjs';
 import { UserDtoResponse } from '@hackathon-pta/app/api';
+import { AchievementToastComponent } from '../achievement-toast/achievement-toast.component';
 
 @Component({
   standalone: true,
@@ -13,7 +14,8 @@ import { UserDtoResponse } from '@hackathon-pta/app/api';
   styleUrl: './layout.component.scss',
   imports: [
     RouterOutlet,
-    UserModalComponentComponent
+    UserModalComponentComponent,
+    AchievementToastComponent
   ]
 })
 export class LayoutComponent {

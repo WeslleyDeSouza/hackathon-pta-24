@@ -3,6 +3,8 @@ import { ActivatedRoute, Router, RouterOutlet } from "@angular/router";
 import { PageBase } from "../../../../../view.base";
 import { UserStoryFlowSidenavComponent } from "../component/sidenav/user-story-flow--sidenav.component";
 import { UserStoryStore } from "../../../common/user-story.store";
+import { UserActivityService } from "@hackathon-pta/app/api";
+import { ToastAchievementStore } from "apps/app/src/app/common/toast-achievement.store";
 
 @Component({
   standalone: true,
@@ -15,6 +17,9 @@ export class UserStoryFlowLayoutComponent extends PageBase {
   route: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
   userStoryStore: UserStoryStore = inject(UserStoryStore);
+  userActivityService: UserActivityService = inject(UserActivityService);
+  toastAchievementStore: ToastAchievementStore = inject(ToastAchievementStore);
+  reviewValue = 0;
 
   index: number = 0;
 
@@ -50,6 +55,10 @@ export class UserStoryFlowLayoutComponent extends PageBase {
     return true;
   }
 
+  onReviewValueChangedHandler(value: number) {
+    this.reviewValue = value;
+  }
+
   override getData() {
     if (!this.verifyData()) return;
 
@@ -60,6 +69,18 @@ export class UserStoryFlowLayoutComponent extends PageBase {
   }
 
   onNext(): void {
+    this.userActivityService.userActivityUpdateUserStory({
+      body: {
+        activityName: 'estimation_hours',
+        activityProgress: this.reviewValue
+      }}).subscribe(x => this.toastAchievementStore.add(x));
+    this.reviewValue = 0;
+    this.userActivityService.userActivityUpdateUserStory({
+      body: {
+        activityName: 'estimation',
+        activityProgress: 1
+      }}).subscribe(x => this.toastAchievementStore.add(x));
+      
     this.index++;
     this.navigateToNext();
   }

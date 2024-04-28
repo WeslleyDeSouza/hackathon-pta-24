@@ -7,6 +7,11 @@ import { userStoryRoutes } from "../views/user-story/user-story.routes";
 export const appRoutes: Route[] = [
   {
     path: "",
+    redirectTo: "project",
+    pathMatch: "full",
+  },
+  {
+    path: "",
     component: LayoutComponent,
     children: [
       {
@@ -24,10 +29,5 @@ export const appRoutes: Route[] = [
         ],
       },
     ],
-  },
-  {
-    path: "",
-    redirectTo: "project",
-    pathMatch: "full",
   },
 ];

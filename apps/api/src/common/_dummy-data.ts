@@ -784,17 +784,17 @@ export const DummyDataGenerator = {
       },
       {
         title: "A crown-load of work",
-        description: "You participated in a project that was estimated over 100 hours",
+        description: "You have estimated over 100 units of work. Maybe get some Vacations?",
         tag: "crown",
         activityValue: 100,
-        activityName: "workload_hours",
+        activityName: "estimation_hours",
       },
       {
         title: "All good things are 3",
-        description: "You participated in a in 3 projects",
+        description: "You estimated 3 User Stories, getting the hang of it?",
         tag: "three",
         activityValue: 3,
-        activityName: "project_participation",
+        activityName: "estimation",
       },
     ];
     Promise.all(
