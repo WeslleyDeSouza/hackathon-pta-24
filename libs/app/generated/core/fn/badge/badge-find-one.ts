@@ -6,13 +6,13 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { BadgeUserAchievementViewEntity } from '../../models/badge-user-achievement-view-entity';
+import { BadgeEntity } from '../../models/badge-entity';
 
 export interface BadgeFindOne$Params {
   id: string;
 }
 
-export function badgeFindOne(http: HttpClient, rootUrl: string, params: BadgeFindOne$Params, context?: HttpContext): Observable<StrictHttpResponse<BadgeUserAchievementViewEntity>> {
+export function badgeFindOne(http: HttpClient, rootUrl: string, params: BadgeFindOne$Params, context?: HttpContext): Observable<StrictHttpResponse<BadgeEntity>> {
   const rb = new RequestBuilder(rootUrl, badgeFindOne.PATH, 'get');
   if (params) {
     rb.path('id', params.id, {});
@@ -23,7 +23,7 @@ export function badgeFindOne(http: HttpClient, rootUrl: string, params: BadgeFin
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<BadgeUserAchievementViewEntity>;
+      return r as StrictHttpResponse<BadgeEntity>;
     })
   );
 }

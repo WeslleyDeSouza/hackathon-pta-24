@@ -1,4 +1,4 @@
-<div class="modal-header">
+<div class="modal-header" style="justify-content: center">
   <h4 class="modal-title" id="modal-basic-title">Max Muster</h4>
 </div>
 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
@@ -9,24 +9,16 @@
         <img
           *ngFor="let badge of badgeListAchieved$ | async"
           class="icon"
-          src="assets/{{ badge.badgeTag }}.png"
-        />
+          (click)="open(badge, content)"
+          src="assets/{{ badge.badgeTag }}.png" />
       </div>
-      <div *ngFor="let badge of badgeListNotAchieved$ | async">
-        <div style="display: flex">
-          <img class="icon" src="assets/{{ badge.badgeTag }}_gray.png" />
-          <div style="display: flex; flex-direction: column">
-            <h3 class="not-achieved-title">{{ badge.badgeTitle }}</h3>
-            <p>{{ badge.badgeDescription }}</p>
-          </div>
-        </div>
-        <ngb-progressbar
-          *ngIf="badge.activityValue"
-          style="margin: 8px"
-          type="primary"
-          [value]="badge.activityProgress ?? 0"
-          [max]="badge.activityValue"
-        />
+      <div style="display: flex; flex-wrap: wrap">
+        <img
+          *ngFor="let badge of badgeListNotAchieved$ | async"
+          class="icon"
+          [style]="additionalStyle(badge)"
+          (click)="open(badge, content)"
+          src="assets/{{ badge.badgeTag }}.png" />
       </div>
     </ng-template>
   </li>
@@ -34,18 +26,23 @@
     <button ngbNavLink>Two</button>
     <ng-template ngbNavContent>
       <p>
-        Exercitation +1 labore velit, blog sartorial PBR leggings next level wes
-        anderson artisan four loko farm-to-table craft beer twee. Qui photo
-        booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts
-        ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore
-        aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero
-        magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes
-        anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry
-        richardson biodiesel. Art party scenester stumptown, tumblr butcher vero
-        sint qui sapiente accusamus tattooed echo park.
+        Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan
+        four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft
+        beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic,
+        assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero
+        magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit,
+        sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party
+        scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
       </p>
     </ng-template>
   </li>
 </ul>
 
-<div [ngbNavOutlet]="nav" class="mt-2"></div>
+<div
+  [ngbNavOutlet]="nav"
+  class="mt-2"
+  style="height: 60vh; max-height: 60vh; overflow-y: scroll"></div>
+
+<ng-template #content let-modal>
+  <app-badge-modal [badge]="selectedBadge"></app-badge-modal>
+</ng-template>

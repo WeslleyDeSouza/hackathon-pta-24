@@ -9,6 +9,7 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { BadgeEntity } from '../models/badge-entity';
 import { badgeFindOne } from '../fn/badge/badge-find-one';
 import { BadgeFindOne$Params } from '../fn/badge/badge-find-one';
 import { badgeList } from '../fn/badge/badge-list';
@@ -16,7 +17,6 @@ import { BadgeList$Params } from '../fn/badge/badge-list';
 import { badgeListByUserId } from '../fn/badge/badge-list-by-user-id';
 import { BadgeListByUserId$Params } from '../fn/badge/badge-list-by-user-id';
 import { BadgeUserAchievementDtoResponse } from '../models/badge-user-achievement-dto-response';
-import { BadgeUserAchievementViewEntity } from '../models/badge-user-achievement-view-entity';
 
 @Injectable({ providedIn: 'root' })
 export class BadgeService extends BaseService {
@@ -83,7 +83,7 @@ export class BadgeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  badgeFindOne$Response(params: BadgeFindOne$Params, context?: HttpContext): Observable<StrictHttpResponse<BadgeUserAchievementViewEntity>> {
+  badgeFindOne$Response(params: BadgeFindOne$Params, context?: HttpContext): Observable<StrictHttpResponse<BadgeEntity>> {
     return badgeFindOne(this.http, this.rootUrl, params, context);
   }
 
@@ -93,9 +93,9 @@ export class BadgeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  badgeFindOne(params: BadgeFindOne$Params, context?: HttpContext): Observable<BadgeUserAchievementViewEntity> {
+  badgeFindOne(params: BadgeFindOne$Params, context?: HttpContext): Observable<BadgeEntity> {
     return this.badgeFindOne$Response(params, context).pipe(
-      map((r: StrictHttpResponse<BadgeUserAchievementViewEntity>): BadgeUserAchievementViewEntity => r.body)
+      map((r: StrictHttpResponse<BadgeEntity>): BadgeEntity => r.body)
     );
   }
 

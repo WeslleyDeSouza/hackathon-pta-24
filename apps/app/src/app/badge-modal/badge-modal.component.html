@@ -1,0 +1,19 @@
+<div class="modal-header" style="justify-content: center">
+  <h4 class="modal-title" id="modal-basic-title">
+    {{ badge.badgeTitle }}
+  </h4>
+</div>
+<div class="modal-body" style="text-align: center; height: 68vh">
+  <img
+    [style]="additionalStyle()"
+    style="height: 128px; width: 128px; margin: auto"
+    src="assets/{{ badge.badgeTag }}.png" />
+  <p>{{ badge.badgeDescription }}</p>
+  <ngb-progressbar
+    *ngIf="!badge.achieved"
+    style="margin: 8px"
+    type="primary"
+    [showValue]="true"
+    [value]="badge.activityProgress"
+    [max]="badge.activityValue" />
+</div>

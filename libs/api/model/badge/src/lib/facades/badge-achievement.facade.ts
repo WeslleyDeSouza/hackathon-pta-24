@@ -13,12 +13,11 @@ export class BadgeAchievementFacade  {
    return  this.badgeRepo.save(entity)
   }
 
-  listByUserId(userId:string):Promise<BadgeUserAchievementViewEntity[] | null>
+  listByUserId(userId:string, achieved: boolean | null = null):Promise<BadgeUserAchievementViewEntity[] | null>
   {
+    const whereQuery = achieved !== null ? { userId: userId, achieved: achieved } : { userId: userId };
     return this.badgeRepo.find({
-      where:{
-        userId: userId
-      }
+      where:whereQuery
     })
   }
 }

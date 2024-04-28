@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
+export { BadgeEntity } from './models/badge-entity';
 export { BadgeUserAchievementDtoResponse } from './models/badge-user-achievement-dto-response';
-export { BadgeUserAchievementViewEntity } from './models/badge-user-achievement-view-entity';
 export { ProjectDtoCreate } from './models/project-dto-create';
 export { ProjectDtoResponse } from './models/project-dto-response';
 export { ProjectDtoUpdate } from './models/project-dto-update';
