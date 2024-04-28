@@ -13,8 +13,9 @@ export class UserStoryResolver implements Resolve<any> {
   ): Observable<any> | Promise<any> | any {
     const { params } = route;
     const { projectId } = params;
-    return this.userStoryService.userStoryListFromProject({
+    return this.userStoryService.userStoryListByProjectId({
       projectId,
+      withEstimation: true,
     });
   }
 }

@@ -2,7 +2,7 @@
   <div class="p-md-2 bg-white shadow-sm">
     <div class="d-flex justify-content-between">
       <h2>Bereit für die Schätzung</h2>
-      <a class="btn btn-success">Start</a>
+      <a class="btn btn-success" routerLink="flow">Start</a>
     </div>
 
     <ng-container>
@@ -23,7 +23,9 @@
             <td></td>
             <td></td>
             <td>
-              <button class="btn btn-success" [disabled]="!hasStateOpenStoriesForReview">
+              <button class="btn btn-success" [disabled]="!hasStateOpenStoriesForReview"
+              routerLink="{{item.userStoryId}}/review/{{item.reviewId || 'new'}}"
+              >
                 Schätzen
               </button>
             </td>
