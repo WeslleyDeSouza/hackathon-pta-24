@@ -1,17 +1,32 @@
 <nav class="navbar navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="#">
-      <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24">
+      <img
+        src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg"
+        alt=""
+        width="30"
+        height="24" />
+    </a>
+  </div>
+
+  <div style="margin-right: 8px">
+    <a class="text-decoration-none" (click)="open(content)">
+      <img
+        src="https://github.com/mdo.png"
+        alt=""
+        width="32"
+        height="32"
+        class="rounded-circle me-2" />
+      <br />
+      <strong>mdo</strong>
     </a>
   </div>
 </nav>
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">
-  Launch demo modal
-</button>
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
 
- <router-outlet></router-outlet>
+<router-outlet></router-outlet>
 
 <ng-template #content let-modal>
-  <app-user-modal-component></app-user-modal-component>
+  <app-user-modal-component [user]="currentUser$"></app-user-modal-component>
 </ng-template>

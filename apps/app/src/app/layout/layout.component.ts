@@ -2,6 +2,9 @@ import { Component, TemplateRef, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { UserModalComponentComponent } from '../user-modal/user-modal.component';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserStore } from '../common/user.store';
+import { BehaviorSubject } from 'rxjs';
+import { UserDtoResponse } from '@hackathon-pta/app/api';
 
 @Component({
   standalone: true,
@@ -18,6 +21,12 @@ export class LayoutComponent {
 
   private modalService = inject(NgbModal);
   closeResult = '';
+
+  constructor(private readonly userStore: UserStore){}
+
+  get currentUser$(): BehaviorSubject<UserDtoResponse> {
+    return this.userStore.data$;
+  }
 
   open(content: TemplateRef<any>) {
 
