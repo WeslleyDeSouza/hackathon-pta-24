@@ -1,9 +1,8 @@
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
-import {BadgeAchievementFacade, BadgeFacade, BadgeUserAchievementDtoResponse} from "@hackathon-pta/api/model/badge";
+import {BadgeAchievementFacade, BadgeDtoResponse, BadgeFacade, BadgeUserAchievementDtoResponse} from "@hackathon-pta/api/model/badge";
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser, TenantMockGuard, UserMockGuard } from '@hackathon-pta/api/common';
 import { IUser } from '@hackathon-pta/api/model/user';
-import { BadgeEntity } from 'libs/api/model/badge/src/lib/entities';
 
 @Controller('badge')
 @ApiTags('Badge')
@@ -34,7 +33,7 @@ export class BadgeController {
   @Get(':id')
   @ApiOkResponse({
     description: 'Get Badge record',
-    type: BadgeEntity,
+    type: BadgeDtoResponse,
   })
   findOne(@Param('id') id: string) {
     return this.badgeService.findByBadgeId(id);

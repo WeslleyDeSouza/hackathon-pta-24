@@ -9,7 +9,7 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { BadgeEntity } from '../models/badge-entity';
+import { BadgeDtoResponse } from '../models/badge-dto-response';
 import { badgeFindOne } from '../fn/badge/badge-find-one';
 import { BadgeFindOne$Params } from '../fn/badge/badge-find-one';
 import { badgeList } from '../fn/badge/badge-list';
@@ -83,7 +83,7 @@ export class BadgeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  badgeFindOne$Response(params: BadgeFindOne$Params, context?: HttpContext): Observable<StrictHttpResponse<BadgeEntity>> {
+  badgeFindOne$Response(params: BadgeFindOne$Params, context?: HttpContext): Observable<StrictHttpResponse<BadgeDtoResponse>> {
     return badgeFindOne(this.http, this.rootUrl, params, context);
   }
 
@@ -93,9 +93,9 @@ export class BadgeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  badgeFindOne(params: BadgeFindOne$Params, context?: HttpContext): Observable<BadgeEntity> {
+  badgeFindOne(params: BadgeFindOne$Params, context?: HttpContext): Observable<BadgeDtoResponse> {
     return this.badgeFindOne$Response(params, context).pipe(
-      map((r: StrictHttpResponse<BadgeEntity>): BadgeEntity => r.body)
+      map((r: StrictHttpResponse<BadgeDtoResponse>): BadgeDtoResponse => r.body)
     );
   }
 
