@@ -13,7 +13,7 @@ export abstract class PageBase {
 
   private init() {
     setTimeout(() => this.getData(), 10);
-    this.gde.reload$.pipe(takeUntilDestroyed()).subscribe(() => this.getData());
+    this.gde.reload$.pipe(takeUntilDestroyed()).subscribe(() => this.getData(true));
   }
 
   protected onLoadAndSetData<T>(
@@ -32,5 +32,5 @@ export abstract class PageBase {
     api$.pipe(first()).subscribe(cb);
   }
 
-  abstract getData(): void;
+  abstract getData(force?: boolean): void;
 }

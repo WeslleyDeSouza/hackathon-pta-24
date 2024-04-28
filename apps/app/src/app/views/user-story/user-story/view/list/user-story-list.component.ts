@@ -48,16 +48,8 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
     protected cdr: ChangeDetectorRef
   ) {
     super();
-    const { projectId } = this.route.snapshot.params;
+
     if (this.store.stories.length == 0) this.store.stories = this.route.snapshot.data["stories"];
-    this.api
-      .userStoryGetCompletionPercentage({
-        projectId: projectId,
-      })
-      .subscribe(x => {
-        this.completionPercent = Math.round((x.result + Number.EPSILON) * 100) / 100;
-        this.updateView();
-      });
   }
 
   ngAfterViewInit(): void {
@@ -76,7 +68,25 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
     return true;
   }
 
-  override getData(): void {}
+  override getData(force = false): void {
+    const { projectId } = this.route.snapshot.params;
+    this.api
+      .userStoryGetCompletionPercentage({
+        projectId: projectId,
+      })
+      .subscribe(x => {
+        this.completionPercent = Math.round((x.result + Number.EPSILON) * 100) / 100;
+        this.updateView();
+      });
+
+    if (force)
+      this.api
+        .userStoryListByProjectId({
+          projectId,
+          withEstimation: true,
+        })
+        .subscribe(data => (this.store.stories = data));
+  }
   onSetStateOpenForReview(userStory: UserStoryWithReviewDtoResponse): void {
     this.api
       .userStorySetStateForReview({
