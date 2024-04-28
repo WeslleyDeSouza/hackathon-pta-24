@@ -1,4 +1,26 @@
+:host{
+  position: relative;
+  app-review-flip-card{
+    top: 175px;
+    position: relative;
+  }
+}
 .selection-item
 {
   cursor: pointer;
+  border: solid #c1c7cd 0.8px;
+  > div{
+    height: 169px;
+  }
+  p{
+    font-size: 25px;
+    line-height: normal;
+  }
+  small{
+    color:  #c1c7cd;
+    height: 14px;
+    font-size: 14px;
+    line-height: normal;
+    display: block;
+  }
 }

@@ -1,7 +1,22 @@
 <div class="container">
-  <div class="row">
-    <div *ngFor="let project of projects$ | async" class="col-12 col-md-4 mt-3">
-      <app-project-item [project]="project"></app-project-item>
+
+  <div class="project-overview card border-0 shadow-sm p-2 mt-3">
+    <h2>Willkommen im Reich der Geschichten!</h2>
+    <p>Oh edle Helden der Planung und Strategen des Digitalen! Tretet näher und schaut euch das Panorama der Projektlegenden an. Jede User Story hier ist wie ein Stern am Himmel der Entwicklung – einzigartig, leuchtend und bereit, zu einer schillernden Funktionalität heranzureifen. </p>
+
+    <p>Seid ihr bereit, mit uns auf eine epische Reise durch Wälder voller Wireframes und über Berge von Backlogs zu gehen? Wappnet euch mit Post-its und Kaffee, denn wir werden gemeinsam jeden Abschnitt dieser Karte erkunden, von den verheißungsvollen Ebenen der "Must-Haves" bis zu den geheimnisvollen Tiefen der "Nice-to-Haves".</p>
+
+    <p>Und vergesst nicht, unterwegs auch mal zu lachen, denn in jedem Satz an Anforderungen verbirgt sich eine Geschichte, die darauf wartet, mit Freude erzählt zu werden. Möge der Wind der Agilität stets in euren Sprint-Segeln wehen und eure Schätzung genau sein!</p>
+
+  </div>
+
+  <div class="mt-2 card border-0 shadow-sm p-2">
+    <h2>Deine Projektlegenden</h2>
+      <div class="row">
+        <div *ngFor="let project of projects$ | async" class="col-12 col-md-4 mt-3">
+          <app-project-item [project]="project"></app-project-item>
+        </div>
     </div>
   </div>
+
 </div>
