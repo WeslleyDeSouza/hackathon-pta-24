@@ -23,7 +23,7 @@ export class UserStoryFlowFlipCardComponent extends PageBase {
     if (event.altKey && event.code == "KeyR") this.doFlip();
   }
   @Input() flip = false;
-  flipByClick = true;
+  @Input() flipByClick = true;
   constructor() {
     super();
   }

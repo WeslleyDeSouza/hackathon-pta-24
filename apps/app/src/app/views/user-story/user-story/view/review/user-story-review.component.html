@@ -4,7 +4,7 @@
   </h2>
 
 
-  <app-review-flip-card class=" ">
+  <app-review-flip-card class=" " [flipByClick]="false">
     <ng-container front>
       <div class="row">
         <div *ngFor="let selection of selections" class="col-12 col-md-3 p-2" (click)="onSelectionClick(selection)">
