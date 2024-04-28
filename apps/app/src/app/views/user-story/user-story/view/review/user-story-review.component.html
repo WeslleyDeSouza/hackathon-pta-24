@@ -1,8 +1,28 @@
-Hello World
+<div>
+  <h2>
+    {{currentStory?.title}}
+  </h2>
+  <p>
+    {{currentStory?.description}}
+  </p>
 
-<input
-  [formControl]="formControl"
-  placeholder="review"
-  (change)="onReviewValueChange($any($event.target).value)" />
+  <div class="row">
+    <div *ngFor="let selection of selections" class="col-12 col-md-3 p-2">
+      <div class="card">
+        <div class="card-body">
+          1
+        </div>
+      </div>
+    </div>
+  </div>
 
-<button *ngIf="showNavButton" routerLink="../../../" class="btn-default btn">Zurück</button>
+
+
+  <input
+    [formControl]="formControl"
+    placeholder="review"
+    (change)="onReviewValueChange($any($event.target).value)" />
+
+  <button *ngIf="showNavButton" routerLink="../../../" class="btn-default btn">Zurück</button>
+
+</div>

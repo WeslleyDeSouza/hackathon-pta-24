@@ -12,37 +12,83 @@ import { UserStoryStore } from "../../../common/user-story.store";
   imports: [RouterOutlet, UserStoryFlowSidenavComponent],
 })
 export class UserStoryFlowLayoutComponent extends PageBase {
-  route = inject(ActivatedRoute);
-  router = inject(Router);
-  userStoryStore = inject(UserStoryStore);
+  route: ActivatedRoute = inject(ActivatedRoute);
+  router: Router = inject(Router);
+  userStoryStore: UserStoryStore = inject(UserStoryStore);
+
+  index: number = 0;
 
   constructor() {
     super();
   }
 
-  override getData() {
+  get userStoryId(): string {
+    return (
+      this.route.snapshot.params["storyId"] || this.route.snapshot.firstChild?.params["storyId"]
+    );
+  }
+  get projectId(): string {
+    if (this.route.snapshot.params["projectId"]) return this.route.snapshot.params["projectId"];
+
+    return this.route.snapshot.firstChild?.params["projectId"];
+  }
+  get estimationId(): string {
+    return (
+      this.route.snapshot.params["estimationId"] ||
+      this.route.snapshot.firstChild?.params["estimationId"]
+    );
+  }
+
+  verifyData(): boolean {
     if (this.userStoryStore.stories.length == 0) {
-      this.router.navigate(["../../"]);
+      this.userStoryStore.stories = this.route.parent?.snapshot.data["stories"];
+      if (this.userStoryStore.stories.length == 0) {
+        this.router.navigate(["../../"]);
+        return false;
+      }
     }
+    return true;
+  }
+
+  override getData() {
+    if (!this.verifyData()) return;
 
     const { projectId, estimationId } = this.route.snapshot.params;
-    console.log(projectId);
     if (!estimationId) {
-      this.onNext();
+      this.navigateToNext();
     }
   }
 
-  onNext() {
-    let { projectId, userStoryId, estimationId } = this.route.snapshot.params;
+  onNext(): void {
+    this.index++;
+    this.navigateToNext();
+  }
 
-    if (!projectId || !userStoryId) {
-      const review = this.userStoryStore.storiesOpenForReview[0];
+  navigateToNext(): void {
+    let projectId: string | number = this.projectId;
+    let userStoryId: string | number = this.userStoryId;
+    let estimationId: string | number = this.estimationId;
 
-      projectId = review.projectId;
-      userStoryId = review.userStoryId;
-      estimationId = review.estimation?.["estimationId"];
+    const review = this.userStoryStore.storiesOpenForReview[this.index];
+
+    if (!review) {
+      this.router.navigate([`/project/${projectId}/user-story/flow/${userStoryId}/done`]);
+      return;
     }
 
-    this.router.navigate([`./${userStoryId}/review/${estimationId || "new"}`]);
+    projectId = review.projectId ? review.projectId : projectId;
+    userStoryId = review.userStoryId;
+    estimationId = review.estimation?.["estimationId"];
+
+    if (isNaN(projectId as number) || isNaN(userStoryId as number)) {
+      console.warn("Validation error ");
+      console.warn(projectId);
+      console.warn(userStoryId);
+      return;
+    }
+
+    this.router.navigate([
+      `/project/${projectId}/user-story/flow/${userStoryId}/review/${estimationId || "new"}`,
+    ]);
   }
 }

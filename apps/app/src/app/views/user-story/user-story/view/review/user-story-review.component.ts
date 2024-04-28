@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from "@angular/core";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
 import { PageBase } from "../../../../view.base";
-import { UserStoryService } from "@hackathon-pta/app/api";
+import { UserStoryService, UserStoryWithReviewDtoResponse } from "@hackathon-pta/app/api";
 import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
+import { UserStoryStore } from "../../common/user-story.store";
 
 @Component({
   standalone: true,
@@ -20,15 +21,28 @@ export class UserStoryReviewComponent extends PageBase {
 
   formControl = new FormControl("", [Validators.required]);
 
-  constructor(protected userStoryService: UserStoryService) {
+  currentStory: UserStoryWithReviewDtoResponse | undefined;
+
+  selections = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
+
+  constructor(
+    protected cdr: ChangeDetectorRef,
+    public store: UserStoryStore,
+    protected userStoryService: UserStoryService
+  ) {
     super();
+    // todo add debounce
+    this.route.params.subscribe(change => {
+      this.getData();
+      this.updateView();
+    });
   }
 
   get routeParams() {
     return this.route.snapshot.params;
   }
   get projectId() {
-    return this.routeParams["projectId"];
+    return this.routeParams["projectId"] || this.route.parent?.snapshot?.params["projectId"];
   }
   get estimationId() {
     return this.routeParams["estimationId"];
@@ -38,19 +52,29 @@ export class UserStoryReviewComponent extends PageBase {
   }
 
   onReviewValueChange(estimationValue: number) {
-    const { projectId, estimationId, storyId } = this.routeParams;
     this.userStoryService
       .userStorySetEstimation({
-        projectId,
-        estimationId,
-        storyId,
+        projectId: this.projectId,
+        estimationId: this.estimationId,
+        storyId: this.storyId,
         value: estimationValue,
       })
       .subscribe();
   }
 
+  verifyData(): boolean {
+    if (this.store.stories.length == 0) {
+      this.store.stories = this.route.parent?.snapshot.data["stories"];
+    }
+    return true;
+  }
+
   override getData() {
-    if (this.estimationId) {
+    this.verifyData();
+
+    this.formControl.reset();
+
+    if (!isNaN(this.estimationId)) {
       this.userStoryService
         .userStoryGetEstimation({
           estimationId: this.estimationId,
@@ -61,5 +85,13 @@ export class UserStoryReviewComponent extends PageBase {
           this.formControl.setValue(value + "");
         });
     }
+
+    this.currentStory = this.store.stories.find(
+      item => (item.projectId = this.projectId && item.userStoryId == this.storyId)
+    );
+  }
+
+  updateView() {
+    this.cdr.markForCheck();
   }
 }
