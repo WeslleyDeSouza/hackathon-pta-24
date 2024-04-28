@@ -10,7 +10,7 @@ import { RouterLink } from "@angular/router";
   selector: "app-project-item",
   template: `
     <div
-      class="card cursor-pointer w-100"
+      class="card shadow-sm border-0 cursor-pointer w-100"
       routerLink="/project/{{ project.projectId }}/user-story">
       <div class="card-body">
         <h5 class="card-title">

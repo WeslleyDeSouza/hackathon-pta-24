@@ -3,6 +3,7 @@ import { Route } from "@angular/router";
 import { LayoutComponent } from "../layout/layout.component";
 import { ProjectComponent } from "../views/project/project.component";
 import { userStoryRoutes } from "../views/user-story/user-story.routes";
+import { HomeComponent } from "../views/home/home.component";
 
 export const appRoutes: Route[] = [
   {
@@ -23,11 +24,10 @@ export const appRoutes: Route[] = [
           },
         ],
       },
+      {
+        path: "",
+        component: HomeComponent,
+      },
     ],
-  },
-  {
-    path: "",
-    redirectTo: "project",
-    pathMatch: "full",
   },
 ];
