@@ -4,21 +4,22 @@ import { PageBase } from "../../../../../view.base";
 import { UserStoryFlowSidenavComponent } from "../component/sidenav/user-story-flow--sidenav.component";
 import { UserStoryStore } from "../../../common/user-story.store";
 import { UserActivityService } from "@hackathon-pta/app/api";
-import { ToastAchievementStore } from "apps/app/src/app/common/toast-achievement.store";
+import { ToastService } from "apps/app/src/app/common/toast.service";
+import { AchievementToastComponent } from "apps/app/src/app/achievement-toast/achievement-toast.component";
 
 @Component({
   standalone: true,
   selector: "app-user-story-flow-layout",
   templateUrl: "./user-story-flow-layout.component.html",
   styleUrl: "./user-story-flow-layout.component.scss",
-  imports: [RouterOutlet, UserStoryFlowSidenavComponent],
+  imports: [RouterOutlet, AchievementToastComponent, UserStoryFlowSidenavComponent],
 })
 export class UserStoryFlowLayoutComponent extends PageBase {
   route: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
   userStoryStore: UserStoryStore = inject(UserStoryStore);
   userActivityService: UserActivityService = inject(UserActivityService);
-  toastAchievementStore: ToastAchievementStore = inject(ToastAchievementStore);
+  toastService = inject(ToastService);
   reviewValue = 0;
 
   index: number = 0;
@@ -73,13 +74,13 @@ export class UserStoryFlowLayoutComponent extends PageBase {
       body: {
         activityName: 'estimation_hours',
         activityProgress: this.reviewValue
-      }}).subscribe(x => this.toastAchievementStore.add(x));
+      }}).subscribe(x => x.forEach(e => this.toastService.show(e)));
     this.reviewValue = 0;
     this.userActivityService.userActivityUpdateUserStory({
       body: {
         activityName: 'estimation',
         activityProgress: 1
-      }}).subscribe(x => this.toastAchievementStore.add(x));
+      }}).subscribe(x => x.forEach(e => this.toastService.show(e)));
       
     this.index++;
     this.navigateToNext();

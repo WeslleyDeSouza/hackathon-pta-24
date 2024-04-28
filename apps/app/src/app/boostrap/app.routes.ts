@@ -8,11 +8,6 @@ import { HomeComponent } from "../views/home/home.component";
 export const appRoutes: Route[] = [
   {
     path: "",
-    redirectTo: "project",
-    pathMatch: "full",
-  },
-  {
-    path: "",
     component: LayoutComponent,
     children: [
       {
