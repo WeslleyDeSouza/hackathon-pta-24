@@ -15,6 +15,12 @@ export class UserFacade  {
       }
     })
   }
+
+  findAll():Promise<UserEntity[]>
+  {
+    return this.userRepo.find();
+  }
+
   create(data:Partial<UserEntity>):Promise<UserEntity>{
     const user = this.userRepo.create();
 

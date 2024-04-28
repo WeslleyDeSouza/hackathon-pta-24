@@ -26,8 +26,6 @@ export class ProjectController {
     )
   }
 
-
-
   @Put('create')
   @ApiOkResponse({
     description: 'The Project record',

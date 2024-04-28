@@ -1,16 +1,30 @@
 <div class="container">
-
   <div class="user-stories-overview card border-0 shadow-sm p-2 mt-3">
     <h1>Das Schätzkabinett erwartet euch!</h1>
-    <p>Kühne Visionäre, sammelt euch! Vor euch liegt das kunterbunte Kaleidoskop unserer User Stories – jede einzelne eine Perle der Möglichkeiten. Bereitet eure weisesten Vermutungen vor, denn es ist an der Zeit, die Tiefen der Entwicklungsgeheimnisse zu ergründen.</p>
-
+    <p>
+      Kühne Visionäre, sammelt euch! Vor euch liegt das kunterbunte Kaleidoskop unserer User
+      Stories – jede einzelne eine Perle der Möglichkeiten. Bereitet eure weisesten Vermutungen
+      vor, denn es ist an der Zeit, die Tiefen der Entwicklungsgeheimnisse zu ergründen.
+    </p>
   </div>
-
 
   <div class="p-md-2 bg-white shadow-sm mt-2">
     <div class="d-flex justify-content-between">
       <h3>Bereit für die Schätzung</h3>
-      <a class="btn btn-success" routerLink="flow/">Start</a>
+      <div class="d-flex">
+        <div style="margin-right: 4px; text-align: center" class="card border-2 shadow-sm p-2">
+          <ngb-rating [rate]="8">
+            <ng-template let-fill="fill" let-index="index">
+              <i
+                class="bi-star{{ fill === 100 ? '-fill' : '' }}"
+                [class.filled]="fill === 100"
+                [class.low]="index < 3"></i>
+            </ng-template>
+          </ngb-rating>
+          <p class="mt-2">Score: {{ this.completionPercent }} %</p>
+        </div>
+        <a class="btn btn-success" routerLink="flow/">Start</a>
+      </div>
     </div>
 
     <ng-container>
@@ -31,9 +45,10 @@
             <td></td>
             <td></td>
             <td>
-              <button class="btn btn-success" [disabled]="!hasStateOpenStoriesForReview"
-              routerLink="{{item.userStoryId}}/review/{{item.reviewId || 'new'}}"
-              >
+              <button
+                class="btn btn-success"
+                [disabled]="!hasStateOpenStoriesForReview"
+                routerLink="{{ item.userStoryId }}/review/{{ item.reviewId || 'new' }}">
                 Schätzen
               </button>
             </td>
@@ -91,14 +106,14 @@
           <td width="10px"></td>
           <td>{{ item.title }}</td>
           <td>{{ item.description?.slice(0, 20) }}...</td>
-          <td>
-            Geschätzt
-          </td>
+          <td>Geschätzt</td>
           <td>
             {{item.estimation?.['estimationValue']}}
           </td>
           <td>
-            <a class="btn btn-primary"  routerLink="{{item.userStoryId}}/review/{{item.estimation?.['estimationId']}}">
+            <a
+              class="btn btn-primary"
+              routerLink="{{ item.userStoryId }}/review/{{item.estimation?.['estimationId']}}">
               Erneut schätzen
             </a>
           </td>

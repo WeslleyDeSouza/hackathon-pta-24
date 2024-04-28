@@ -9,8 +9,11 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { NumberResultDto } from '../models/number-result-dto';
 import { userStoryCreateUserStory } from '../fn/user-story/user-story-create-user-story';
 import { UserStoryCreateUserStory$Params } from '../fn/user-story/user-story-create-user-story';
+import { userStoryGetCompletionPercentage } from '../fn/user-story/user-story-get-completion-percentage';
+import { UserStoryGetCompletionPercentage$Params } from '../fn/user-story/user-story-get-completion-percentage';
 import { userStoryGetEstimation } from '../fn/user-story/user-story-get-estimation';
 import { UserStoryGetEstimation$Params } from '../fn/user-story/user-story-get-estimation';
 import { userStoryListByProjectId } from '../fn/user-story/user-story-list-by-project-id';
@@ -126,6 +129,31 @@ export class UserStoryService extends BaseService {
   userStoryListByProjectId(params: UserStoryListByProjectId$Params, context?: HttpContext): Observable<Array<UserStoryWithReviewDtoResponse>> {
     return this.userStoryListByProjectId$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<UserStoryWithReviewDtoResponse>>): Array<UserStoryWithReviewDtoResponse> => r.body)
+    );
+  }
+
+  /** Path part for operation `userStoryGetCompletionPercentage()` */
+  static readonly UserStoryGetCompletionPercentagePath = '/api/user-story/{projectId}/completion';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `userStoryGetCompletionPercentage()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  userStoryGetCompletionPercentage$Response(params: UserStoryGetCompletionPercentage$Params, context?: HttpContext): Observable<StrictHttpResponse<NumberResultDto>> {
+    return userStoryGetCompletionPercentage(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `userStoryGetCompletionPercentage$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  userStoryGetCompletionPercentage(params: UserStoryGetCompletionPercentage$Params, context?: HttpContext): Observable<NumberResultDto> {
+    return this.userStoryGetCompletionPercentage$Response(params, context).pipe(
+      map((r: StrictHttpResponse<NumberResultDto>): NumberResultDto => r.body)
     );
   }
 

@@ -18,7 +18,7 @@ import {
   IUser,
 } from "@hackathon-pta/api/model/user";
 import { UserStoryDtoCreate } from "@hackathon-pta/api/model/user";
-import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import { ApiOkResponse, ApiProperty, ApiTags } from "@nestjs/swagger";
 import {
   CurrentTenant,
   CurrentUser,
@@ -26,6 +26,11 @@ import {
   UserMockGuard,
 } from "@hackathon-pta/api/common";
 import { UserStoryEstimationFacade } from "@hackathon-pta/api/model/user";
+
+class NumberResultDto {
+  @ApiProperty()
+  result: number;
+}
 
 @Controller("user-story")
 @ApiTags("UserStory")
@@ -89,6 +94,25 @@ export class UserStoryController {
           };
         });
       });
+  }
+
+  @Get(':projectId/completion')
+  @ApiOkResponse({
+    description: 'Percentage of completeness of project',
+    type: NumberResultDto
+  })
+  getCompletionPercentage(@Param('projectId') projectId: number, @CurrentTenant() tenant: any): Promise<NumberResultDto> {
+    return this.userService.findAll().then(u => {
+        return this.userStoryService.listByProjectId(tenant.tenantId, projectId, {withEstimation: true}).then(us => {
+          const countEstimations = us.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.estimations.reduce((sum, val) => { return sum + 1 }, 0);
+          }, 0);
+          const totalPossibleEstimations = us.length * u.length;
+          return {
+            result: 100 / totalPossibleEstimations * countEstimations
+          };
+        })
+    });
   }
 
   @Put("estimation/:projectId/:storyId/:estimationId/:value")

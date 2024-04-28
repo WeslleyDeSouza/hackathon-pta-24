@@ -2,6 +2,7 @@
 /* eslint-disable */
 export { BadgeDtoResponse } from './models/badge-dto-response';
 export { BadgeUserAchievementDtoResponse } from './models/badge-user-achievement-dto-response';
+export { NumberResultDto } from './models/number-result-dto';
 export { ProjectDtoCreate } from './models/project-dto-create';
 export { ProjectDtoResponse } from './models/project-dto-response';
 export { ProjectDtoUpdate } from './models/project-dto-update';
