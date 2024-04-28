@@ -1,4 +1,4 @@
-<div>
+<div class="container m-auto">
   <h2>
     {{currentStory?.title}}
   </h2>
@@ -7,10 +7,10 @@
   </p>
 
   <div class="row">
-    <div *ngFor="let selection of selections" class="col-12 col-md-3 p-2">
-      <div class="card">
+    <div *ngFor="let selection of selections" class="col-12 col-md-3 p-2" (click)="onSelectionClick(selection)">
+      <div class="card selection-item">
         <div class="card-body">
-          1
+          {{selection.value}}
         </div>
       </div>
     </div>
@@ -23,6 +23,6 @@
     placeholder="review"
     (change)="onReviewValueChange($any($event.target).value)" />
 
-  <button *ngIf="showNavButton" routerLink="../../../" class="btn-default btn">Zurück</button>
+  <button id="btn-next" *ngIf="showNavButton" routerLink="../../../" class="btn-default btn">Zurück</button>
 
 </div>

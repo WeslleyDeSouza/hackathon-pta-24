@@ -72,7 +72,9 @@ export class UserStoryFlowLayoutComponent extends PageBase {
     const review = this.userStoryStore.storiesOpenForReview[this.index];
 
     if (!review) {
-      this.router.navigate([`/project/${projectId}/user-story/flow/${userStoryId}/done`]);
+      this.router.url.includes("done")
+        ? this.router.navigate([`/project/${projectId}/user-story`])
+        : this.router.navigate([`/project/${projectId}/user-story/flow/${userStoryId}/done`]);
       return;
     }
 

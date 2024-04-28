@@ -1,5 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from "@angular/core";
-import { ActivatedRoute, RouterLink } from "@angular/router";
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+} from "@angular/core";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
 import { UserStoryService, UserStoryWithReviewDtoResponse } from "@hackathon-pta/app/api";
 import { PageBase } from "../../../../view.base";
@@ -13,8 +19,9 @@ import { UserStoryStore } from "../../common/user-story.store";
   imports: [NgForOf, NgIf, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserStoryListComponent extends PageBase {
+export class UserStoryListComponent extends PageBase implements AfterViewInit {
   route = inject(ActivatedRoute);
+  router = inject(Router);
 
   constructor(
     public store: UserStoryStore,
@@ -23,6 +30,10 @@ export class UserStoryListComponent extends PageBase {
   ) {
     super();
     this.store.stories = this.route.snapshot.data["stories"];
+  }
+
+  ngAfterViewInit() {
+    //this.updateView()
   }
 
   get estimationId() {

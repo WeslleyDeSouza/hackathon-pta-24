@@ -23,7 +23,33 @@ export class UserStoryReviewComponent extends PageBase {
 
   currentStory: UserStoryWithReviewDtoResponse | undefined;
 
-  selections = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
+  selections = [
+    {
+      value: 1,
+    },
+    {
+      value: 2,
+    },
+    {
+      value: 3,
+    },
+    {
+      value: 5,
+    },
+    {
+      value: 8,
+    },
+    {
+      value: 13,
+    },
+    {
+      value: 21,
+    },
+    {
+      value: 34,
+    },
+    { value: 55 },
+  ];
 
   constructor(
     protected cdr: ChangeDetectorRef,
@@ -49,6 +75,11 @@ export class UserStoryReviewComponent extends PageBase {
   }
   get storyId() {
     return this.routeParams["storyId"];
+  }
+
+  onSelectionClick({ value }): void {
+    this.formControl.setValue(value);
+    this.onReviewValueChange(value);
   }
 
   onReviewValueChange(estimationValue: number) {
