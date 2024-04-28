@@ -27,8 +27,12 @@ interface BadgeGroupedList {
   styleUrl: "./user-modal.component.css",
 })
 export class UserModalComponentComponent implements OnInit {
-  @Input()
-  user: BehaviorSubject<UserDtoResponse>;
+
+  user: BehaviorSubject<UserDtoResponse> = new BehaviorSubject<UserDtoResponse>({
+    userId:'DUMMY-1-1-2',
+    lastName:'Meier',
+    firstName:'Hans',
+    email:'hans.meier@pta.ch'});
   active = 1;
   selectedBadge: BadgeUserAchievementDtoResponse;
   

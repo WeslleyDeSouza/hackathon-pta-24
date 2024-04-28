@@ -22,6 +22,14 @@ export class BadgeFacade  {
     })
   }
 
+  findByActivityName(activityName: string): Promise<BadgeEntity[]> {
+    return this.badgeRepo.find({
+      where: {
+        activityName: activityName
+      }
+    });
+  }
+
   findAll():Promise<BadgeEntity[] | null>
   {
     return this.badgeRepo.find();

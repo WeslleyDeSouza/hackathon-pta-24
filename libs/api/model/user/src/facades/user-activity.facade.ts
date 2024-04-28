@@ -15,6 +15,14 @@ export class UserActivityFacade {
 
     return this.userActivityRepo.save(userActivity)
   }
+
+  findByUserId(userId: string): Promise<UserActivityEntity | null>{
+    return this.userActivityRepo.findOne({
+      where: {
+        userId: userId
+      }
+    });
+  }
 }
 
 
