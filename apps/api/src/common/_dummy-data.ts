@@ -805,10 +805,28 @@ export const DummyDataGenerator = {
     if (!isDev) return;
     achievementFacadeFace
       .create({
-        badgeId: "DUMMY_01",
+        badgeId: "DUMMY_21",
         tenantId: 1,
         user: <any>{
-          userId: "DUMMY-1-1-1",
+          userId: "DUMMY-1-1-2",
+        },
+      })
+      .catch(() => null);
+      achievementFacadeFace
+      .create({
+        badgeId: "DUMMY_41",
+        tenantId: 1,
+        user: <any>{
+          userId: "DUMMY-1-1-2",
+        },
+      })
+      .catch(() => null);
+      achievementFacadeFace
+      .create({
+        badgeId: "DUMMY_51",
+        tenantId: 1,
+        user: <any>{
+          userId: "DUMMY-1-1-2",
         },
       })
       .catch(() => null);
@@ -822,6 +840,50 @@ export const DummyDataGenerator = {
           {
             name: "workload_hours",
             progress: 50,
+          },
+        ],
+      })
+      .catch(() => null);
+      userActivityFacade
+      .create({
+        userId: "DUMMY-1-1-2",
+        activities: [
+          {
+            name: "workload_hours",
+            progress: 0,
+          },
+        ],
+      })
+      .catch(() => null);
+      userActivityFacade
+      .create({
+        userId: "DUMMY-1-1-3",
+        activities: [
+          {
+            name: "workload_hours",
+            progress: 0,
+          },
+        ],
+      })
+      .catch(() => null);
+      userActivityFacade
+      .create({
+        userId: "DUMMY-1-1-4",
+        activities: [
+          {
+            name: "workload_hours",
+            progress: 0,
+          },
+        ],
+      })
+      .catch(() => null);
+      userActivityFacade
+      .create({
+        userId: "DUMMY-1-1-5",
+        activities: [
+          {
+            name: "workload_hours",
+            progress: 0,
           },
         ],
       })
