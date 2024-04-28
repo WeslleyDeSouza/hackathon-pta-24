@@ -51,6 +51,7 @@
             <img
               class="icon"
               src="assets/{{ group.user1.badgeTag }}.png"
+              (click)="openByBadgeId(group, group.user1.achieved, content)"
               [style]="grayScaleStyleString(group.user1.achieved ? 0 : 1)" />
           </div>
 
@@ -58,6 +59,7 @@
             <img
               class="icon"
               src="assets/{{ group.user2.badgeTag }}.png"
+              (click)="openByBadgeId(group, group.user2.achieved, content)"
               [style]="grayScaleStyleString(group.user2.achieved ? 0 : 1)" />
           </div>
         </div>

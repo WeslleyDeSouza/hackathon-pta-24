@@ -3,26 +3,38 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  TemplateRef,
   inject,
 } from "@angular/core";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
-import { UserStoryService, UserStoryWithReviewDtoResponse } from "@hackathon-pta/app/api";
+import { UserDtoResponse, UserService, UserStoryService, UserStoryWithReviewDtoResponse } from "@hackathon-pta/app/api";
 import { PageBase } from "../../../../view.base";
 import { UserStoryStore } from "../../common/user-story.store";
-import { NgbRatingModule } from "@ng-bootstrap/ng-bootstrap";
+import { ModalDismissReasons, NgbModal, NgbRatingModule } from "@ng-bootstrap/ng-bootstrap";
+import { UserModalComponentComponent } from "apps/app/src/app/user-modal/user-modal.component";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
   standalone: true,
   selector: "app-user-story-list",
   templateUrl: "./user-story-list.component.html",
   styleUrl: "./user-story-list.component.scss",
-  imports: [NgForOf, NgIf, RouterLink, NgbRatingModule],
+  imports: [NgForOf, NgIf, RouterLink, NgbRatingModule, UserModalComponentComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserStoryListComponent extends PageBase implements AfterViewInit {
   route = inject(ActivatedRoute);
   router = inject(Router);
+  userService = inject(UserService);
+  clickedUser$ = new BehaviorSubject<UserDtoResponse>({
+    userId: "",
+    firstName: "",
+    lastName: "",
+    email: ""
+  });
+  closeResult: string;
+  private modalService = inject(NgbModal);
   completionPercent = 0;
 
   constructor(
@@ -77,5 +89,30 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  onUserSelectClick(userId: number) {}
+  onUserSelectClick(userId: string, content: TemplateRef<any>) {
+    this.userService.userGetUser({
+      id: userId
+    }).subscribe(u => {
+      this.clickedUser$.next(u);
+      this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        },
+      );
+  });
+  }
+
+  private getDismissReason(reason: any): string {
+    switch (reason) {
+      case ModalDismissReasons.ESC:
+        return 'by pressing ESC';
+      case ModalDismissReasons.BACKDROP_CLICK:
+        return 'by clicking on a backdrop';
+      default:
+        return `with: ${reason}`;
+    }
+  }
 }

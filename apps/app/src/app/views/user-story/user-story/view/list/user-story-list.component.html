@@ -61,7 +61,9 @@
             <td>
               <div class="d-flex">
                 <ng-container *ngFor="let user of item.estimation?.['estimationsUsers']">
-                  <div (click)="onUserSelectClick(user)" class="avatar shadow-sm">U</div>
+                  <div (click)="onUserSelectClick(user, userModal)" class="avatar shadow-sm">
+                    U
+                  </div>
                 </ng-container>
               </div>
             </td>
@@ -104,7 +106,7 @@
           <td>
             <div class="d-flex">
               <ng-container *ngFor="let user of item.estimation?.['estimationsUsers']">
-                <div class="avatar shadow-sm" (click)="onUserSelectClick(user)">U</div>
+                <div class="avatar shadow-sm" (click)="onUserSelectClick(user, userModal)">U</div>
               </ng-container>
             </div>
           </td>
@@ -149,7 +151,7 @@
           <td>
             <div class="d-flex">
               <ng-container *ngFor="let user of item.estimation?.['estimationsUsers']">
-                <div class="avatar shadow-sm" (click)="onUserSelectClick(user)">U</div>
+                <div class="avatar shadow-sm" (click)="onUserSelectClick(user, userModal)">U</div>
               </ng-container>
             </div>
           </td>
@@ -171,3 +173,7 @@
     </table>
   </div>
 </div>
+
+<ng-template #userModal let-modal>
+  <app-user-modal-component [user]="this.clickedUser$"></app-user-modal-component>
+</ng-template>

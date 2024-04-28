@@ -17,6 +17,10 @@ interface BadgeGroupedList {
     achieved: boolean;
     badgeTag: string;
   };
+  badgeTitle: string;
+  badgeDescription: string;
+  activityValue: null;
+  progressValue: null;
 }
 
 @Component({
@@ -27,12 +31,8 @@ interface BadgeGroupedList {
   styleUrl: "./user-modal.component.css",
 })
 export class UserModalComponentComponent implements OnInit {
-  user: BehaviorSubject<UserDtoResponse> = new BehaviorSubject<UserDtoResponse>({
-    userId: "DUMMY-1-1-2",
-    lastName: "Meier",
-    firstName: "Hans",
-    email: "hans.meier@pta.ch",
-  });
+  @Input()
+  user: BehaviorSubject<UserDtoResponse>;
 
   active = 1;
   selectedBadge: BadgeUserAchievementDtoResponse;
@@ -75,6 +75,10 @@ export class UserModalComponentComponent implements OnInit {
                     currentValue.userId === this.currentUser.userId && currentValue.achieved,
                   badgeTag: currentValue.badgeTag,
                 },
+                badgeTitle: currentValue.badgeTitle,
+                badgeDescription: currentValue.badgeDescription,
+                activityValue: null,
+                progressValue: null
               });
             } else {
               if (currentValue.userId === this.user.getValue().userId) {
@@ -91,6 +95,29 @@ export class UserModalComponentComponent implements OnInit {
 
   open(badge: BadgeUserAchievementDtoResponse, content: TemplateRef<any>) {
     this.selectedBadge = badge;
+
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" }).result.then(
+      result => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      reason => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
+
+  openByBadgeId(badgeGroup: BadgeGroupedList, achieved: boolean, content: TemplateRef<any>) {
+    this.selectedBadge = {
+      badgeId: badgeGroup.badgeId,
+      badgeTitle: badgeGroup.badgeTitle,
+      badgeDescription: badgeGroup.badgeDescription,
+      achieved: achieved,
+      activityName: "",
+      activityProgress: achieved === false ? 0 : 1,
+      activityValue: achieved === false ? 100 : 1,
+      userId: "",
+      badgeTag: badgeGroup.user1.badgeTag
+    };
 
     this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" }).result.then(
       result => {
