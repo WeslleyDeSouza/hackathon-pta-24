@@ -7,14 +7,14 @@ import { BadgeUserAchievementDtoResponse } from '@hackathon-pta/app/api';
 import { BadgeModalComponent } from '../badge-modal/badge-modal.component';
 
 @Component({
-  selector: 'app-user-modal-component',
+  selector: "app-user-modal-component",
   standalone: true,
   imports: [CommonModule, NgbNavModule, BadgeModalComponent],
-  templateUrl: './user-modal.component.html',
-  styleUrl: './user-modal.component.css',
+  templateUrl: "./user-modal.component.html",
+  styleUrl: "./user-modal.component.css",
 })
 export class UserModalComponentComponent implements OnInit {
-	active = 1;
+  active = 1;
   userId = "DUMMY-1-1-1";
   selectedBadge: BadgeUserAchievementDtoResponse;
   
@@ -23,8 +23,7 @@ export class UserModalComponentComponent implements OnInit {
   private modalService = inject(NgbModal);
   closeResult = '';
 
-
-  constructor(private readonly badgeService: BadgeService){}
+  constructor(private readonly badgeService: BadgeService) {}
 
   ngOnInit() {
     this.badgeListAchieved$ = this.badgeService.badgeListByUserId({id: this.userId, achieved: true }).pipe(

@@ -1,21 +1,21 @@
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
-import { PageBase } from "../../view.base";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterLink } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
-import { UserStoryDtoResponse, UserStoryService } from "@hackathon-pta/app/api";
+import { UserStoryService, UserStoryWithReviewDtoResponse } from "@hackathon-pta/app/api";
+import { PageBase } from "../../../../view.base";
 
-const isStateOpenForReview = (item: UserStoryDtoResponse) => item.stateOpenForReview;
-const isStateReviewed = (item: UserStoryDtoResponse) => false;
+const isStateOpenForReview = (item: UserStoryWithReviewDtoResponse) => item.stateOpenForReview;
+const isStateReviewed = (item: UserStoryWithReviewDtoResponse) => false;
 
 @Component({
   standalone: true,
-  selector: "app-user-story",
-  templateUrl: "./user-story.component.html",
-  styleUrl: "./user-story.component.scss",
-  imports: [NgForOf, NgIf],
+  selector: "app-user-story-list",
+  templateUrl: "./user-story-list.component.html",
+  styleUrl: "./user-story-list.component.scss",
+  imports: [NgForOf, NgIf, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserStoryComponent extends PageBase {
+export class UserStoryListComponent extends PageBase {
   route = inject(ActivatedRoute);
 
   states = {
@@ -31,16 +31,16 @@ export class UserStoryComponent extends PageBase {
     return this.states.hasOpenStoriesForReview;
   }
 
-  get stories(): Array<UserStoryDtoResponse> {
+  get stories(): Array<UserStoryWithReviewDtoResponse> {
     return this.route.snapshot.data["stories"];
   }
-  get storiesOpenForReview(): Array<UserStoryDtoResponse> {
+  get storiesOpenForReview(): Array<UserStoryWithReviewDtoResponse> {
     let stories = this.stories.filter(isStateOpenForReview);
     this.states.hasOpenStoriesForReview = !!stories.length;
     return stories;
   }
 
-  get storiesReviewed(): Array<UserStoryDtoResponse> {
+  get storiesReviewed(): Array<UserStoryWithReviewDtoResponse> {
     let stories = this.stories.filter(isStateReviewed);
     this.states.hasOpenStoriesReviewed = !!stories.length;
     return stories;
@@ -54,7 +54,7 @@ export class UserStoryComponent extends PageBase {
     console.log(this.stories[0]);
   }
 
-  onSetStateOpenForReview(userStory: UserStoryDtoResponse): void {
+  onSetStateOpenForReview(userStory: UserStoryWithReviewDtoResponse): void {
     this.api
       .userStorySetStateForReview({
         projectId: userStory.projectId,
