@@ -56,7 +56,8 @@
               <button
                 class="btn btn-success"
                 [disabled]="!hasStateOpenStoriesForReview"
-                routerLink="{{ item.userStoryId }}/review/{{ item.reviewId || 'new' }}">
+                routerLink="{{ item.userStoryId }}/review/{{ item.reviewId || 'new' }}"></button>
+            </td>
             <td>
               <div class="d-flex">
                 <ng-container *ngFor="let user of item.estimation?.['estimationsUsers']">
@@ -142,6 +143,8 @@
           <td>Geschätzt</td>
           <td>
             {{item.estimation?.['estimationValue']}}
+          </td>
+
           <td>Geschätzt</td>
           <td>
             <div class="d-flex">
