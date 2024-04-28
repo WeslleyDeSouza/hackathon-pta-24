@@ -2,7 +2,7 @@
   <div class="p-md-2 bg-white shadow-sm">
     <div class="d-flex justify-content-between">
       <h2>Bereit für die Schätzung</h2>
-      <a class="btn btn-success" routerLink="flow">Start</a>
+      <a class="btn btn-success" routerLink="flow/">Start</a>
     </div>
 
     <ng-container>
@@ -16,7 +16,7 @@
           <th></th>
         </thead>
         <tbody>
-          <tr *ngFor="let item of storiesOpenForReview">
+          <tr *ngFor="let item of store.storiesOpenForReview">
             <td width="10px"></td>
             <td>{{ item.title }}</td>
             <td>{{ item.description?.slice(0, 20) }}...</td>
@@ -48,7 +48,7 @@
         <th></th>
       </thead>
       <tbody>
-        <tr *ngFor="let item of stories">
+        <tr *ngFor="let item of store.storiesNotReviewed">
           <td width="10px"></td>
           <td>{{ item.title }}</td>
           <td>{{ item.description?.slice(0, 20) }}...</td>
@@ -75,17 +75,25 @@
         <th>Titel</th>
         <th>Bezeichnung</th>
         <th>Status</th>
-        <th>Reviews</th>
+        <th title="Eigene Schätzung">Schätzung</th>
         <th></th>
       </thead>
       <tbody>
-        <tr *ngFor="let item of stories">
+        <tr *ngFor="let item of store.storiesReviewed">
           <td width="10px"></td>
           <td>{{ item.title }}</td>
           <td>{{ item.description?.slice(0, 20) }}...</td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>
+            Geschätzt
+          </td>
+          <td>
+            {{item.estimation?.['estimationValue']}}
+          </td>
+          <td>
+            <a class="btn btn-primary"  routerLink="{{item.userStoryId}}/review/{{item.estimation?.['estimationId']}}">
+              Erneut schätzen
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>

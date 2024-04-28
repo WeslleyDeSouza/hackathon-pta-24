@@ -11,6 +11,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { userStoryCreateUserStory } from '../fn/user-story/user-story-create-user-story';
 import { UserStoryCreateUserStory$Params } from '../fn/user-story/user-story-create-user-story';
+import { userStoryGetEstimation } from '../fn/user-story/user-story-get-estimation';
+import { UserStoryGetEstimation$Params } from '../fn/user-story/user-story-get-estimation';
 import { userStoryListByProjectId } from '../fn/user-story/user-story-list-by-project-id';
 import { UserStoryListByProjectId$Params } from '../fn/user-story/user-story-list-by-project-id';
 import { userStorySetEstimation } from '../fn/user-story/user-story-set-estimation';
@@ -128,7 +130,7 @@ export class UserStoryService extends BaseService {
   }
 
   /** Path part for operation `userStorySetEstimation()` */
-  static readonly UserStorySetEstimationPath = '/api/user-story/estimation/{projectId}/{storyId}/{reviewId}/{value}';
+  static readonly UserStorySetEstimationPath = '/api/user-story/estimation/{projectId}/{storyId}/{estimationId}/{value}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -149,6 +151,31 @@ export class UserStoryService extends BaseService {
   userStorySetEstimation(params: UserStorySetEstimation$Params, context?: HttpContext): Observable<void> {
     return this.userStorySetEstimation$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
+    );
+  }
+
+  /** Path part for operation `userStoryGetEstimation()` */
+  static readonly UserStoryGetEstimationPath = '/api/user-story/estimation/{projectId}/{storyId}/{estimationId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `userStoryGetEstimation()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  userStoryGetEstimation$Response(params: UserStoryGetEstimation$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+    return userStoryGetEstimation(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `userStoryGetEstimation$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  userStoryGetEstimation(params: UserStoryGetEstimation$Params, context?: HttpContext): Observable<number> {
+    return this.userStoryGetEstimation$Response(params, context).pipe(
+      map((r: StrictHttpResponse<number>): number => r.body)
     );
   }
 
