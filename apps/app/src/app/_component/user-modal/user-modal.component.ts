@@ -4,8 +4,8 @@ import { ModalDismissReasons, NgbModal, NgbNavModule } from "@ng-bootstrap/ng-bo
 import { BadgeService, UserDtoResponse, UserService } from "@hackathon-pta/app/api";
 import { BadgeUserAchievementDtoResponse } from "@hackathon-pta/app/api";
 import { BadgeModalComponent } from "../badge-modal/badge-modal.component";
-import { BehaviorSubject } from "rxjs";
-import { UserStore } from "../common/user.store";
+import { BehaviorSubject, filter, firstValueFrom } from "rxjs";
+import { UserStore } from "../../_common/user.store";
 
 interface BadgeGroupedList {
   badgeId: string;
@@ -49,14 +49,19 @@ export class UserModalComponentComponent implements OnInit {
     private readonly userStore: UserStore
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.badgeService.badgeListByUserId({ userId: this.user.getValue().userId }).subscribe(x => {
       this.badgeListAchieved = x.filter(x => x.achieved);
       this.badgeListNotAchieved = x.filter(x => !x.achieved);
     });
-    this.currentUser = this.userStore.data$.getValue();
-    if (this.currentUser.userId !== this.user.getValue().userId) {
-      this.badgeService.badgeListByUserId({ userId: this.currentUser.userId }).subscribe(x => {
+    this.currentUser = (await firstValueFrom(
+      this.userStore.data$.pipe(filter(user => !!user))
+    )) as UserDtoResponse;
+
+    if (this.currentUser?.userId == this.user.getValue().userId) return;
+
+    if (this.currentUser?.userId)
+      this.badgeService.badgeListByUserId({ userId: this.currentUser?.userId }).subscribe(x => {
         this.badgeGroupedList = x
           .filter(e => e.achieved)
           .concat(this.badgeListAchieved)
@@ -90,7 +95,6 @@ export class UserModalComponentComponent implements OnInit {
             return result;
           }, []);
       });
-    }
   }
 
   open(badge: BadgeUserAchievementDtoResponse, content: TemplateRef<any>) {

@@ -8,12 +8,17 @@ import {
 } from "@angular/core";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
-import { UserDtoResponse, UserService, UserStoryService, UserStoryWithReviewDtoResponse } from "@hackathon-pta/app/api";
+import {
+  UserDtoResponse,
+  UserService,
+  UserStoryService,
+  UserStoryWithReviewDtoResponse,
+} from "@hackathon-pta/app/api";
 import { PageBase } from "../../../../view.base";
 import { UserStoryStore } from "../../common/user-story.store";
 import { ModalDismissReasons, NgbModal, NgbRatingModule } from "@ng-bootstrap/ng-bootstrap";
-import { UserModalComponentComponent } from "apps/app/src/app/user-modal/user-modal.component";
 import { BehaviorSubject } from "rxjs";
+import { UserModalComponentComponent } from "../../../../../_component/user-modal/user-modal.component";
 
 @Component({
   standalone: true,
@@ -31,7 +36,7 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
     userId: "",
     firstName: "",
     lastName: "",
-    email: ""
+    email: "",
   });
   closeResult: string;
   private modalService = inject(NgbModal);
@@ -43,14 +48,8 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
     protected cdr: ChangeDetectorRef
   ) {
     super();
-    const { projectId } = this.route.snapshot.params;
+
     if (this.store.stories.length == 0) this.store.stories = this.route.snapshot.data["stories"];
-    this.api.userStoryGetCompletionPercentage({
-      projectId: projectId
-    }).subscribe(x => {
-      this.completionPercent = Math.round((x.result + Number.EPSILON) * 100) / 100;
-      this.updateView();
-  });
   }
 
   ngAfterViewInit(): void {
@@ -69,8 +68,25 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
     return true;
   }
 
-  override getData(): void {}
+  override getData(force = false): void {
+    const { projectId } = this.route.snapshot.params;
+    this.api
+      .userStoryGetCompletionPercentage({
+        projectId: projectId,
+      })
+      .subscribe(x => {
+        this.completionPercent = Math.round((x.result + Number.EPSILON) * 100) / 100;
+        this.updateView();
+      });
 
+    if (force)
+      this.api
+        .userStoryListByProjectId({
+          projectId,
+          withEstimation: true,
+        })
+        .subscribe(data => (this.store.stories = data));
+  }
   onSetStateOpenForReview(userStory: UserStoryWithReviewDtoResponse): void {
     this.api
       .userStorySetStateForReview({
@@ -90,27 +106,29 @@ export class UserStoryListComponent extends PageBase implements AfterViewInit {
   }
 
   onUserSelectClick(userId: string, content: TemplateRef<any>) {
-    this.userService.userGetUser({
-      id: userId
-    }).subscribe(u => {
-      this.clickedUser$.next(u);
-      this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        },
-      );
-  });
+    this.userService
+      .userGetUser({
+        id: userId,
+      })
+      .subscribe(u => {
+        this.clickedUser$.next(u);
+        this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" }).result.then(
+          result => {
+            this.closeResult = `Closed with: ${result}`;
+          },
+          reason => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          }
+        );
+      });
   }
 
   private getDismissReason(reason: any): string {
     switch (reason) {
       case ModalDismissReasons.ESC:
-        return 'by pressing ESC';
+        return "by pressing ESC";
       case ModalDismissReasons.BACKDROP_CLICK:
-        return 'by clicking on a backdrop';
+        return "by clicking on a backdrop";
       default:
         return `with: ${reason}`;
     }

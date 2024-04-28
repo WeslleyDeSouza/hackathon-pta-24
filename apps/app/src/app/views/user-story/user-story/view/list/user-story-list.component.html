@@ -17,7 +17,7 @@
     <ng-container *ngIf="store.storiesOpenForReview as openForeReviews">
       <div class="d-flex justify-content-between">
         <h3>
-          Stories bereit für die Schätzung <small>{{ openForeReviews.length }}</small>
+          Stories bereit für die Schätzung <small>{{ openForeReviews.length }} von {{store.stories?.length}}</small>
         </h3>
         <div class="d-flex">
           <div style="margin-right: 4px; text-align: center" class="card border-2 shadow-sm p-2">
@@ -53,10 +53,7 @@
             <td></td>
             <td></td>
             <td>
-              <button
-                class="btn btn-success"
-                [disabled]="!hasStateOpenStoriesForReview"
-                routerLink="{{ item.userStoryId }}/review/{{ item.reviewId || 'new' }}"></button>
+
             </td>
             <td>
               <div class="d-flex">

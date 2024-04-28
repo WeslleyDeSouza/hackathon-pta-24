@@ -7,7 +7,6 @@ import {
   TenantMockGuard,
   UserMockGuard,
 } from "@hackathon-pta/api/common";
-import { ProjectDtoCreate } from "@hackathon-pta/api/model/project";
 
 @Controller("user")
 @ApiTags("User")
@@ -19,9 +18,20 @@ export class UserController {
   @ApiOkResponse({
     description: "Get Current User record",
     type: UserDtoResponse,
+    isArray: false,
   })
   getCurrentUser(@CurrentUser() currentUser: IUser): IUser {
     return currentUser;
+  }
+
+  @Get("list")
+  @ApiOkResponse({
+    description: "Get Current User record",
+    type: UserDtoResponse,
+    isArray: true,
+  })
+  getUsers(@CurrentUser() currentUser: IUser) {
+    return this.userService.list();
   }
 
   @Get(":id")
@@ -31,5 +41,16 @@ export class UserController {
   })
   getUser(@Param("id") userId: string): Promise<UserDtoResponse> {
     return this.userService.findUserById(userId);
+  }
+
+  @Get("switch/:userId")
+  @ApiOkResponse({
+    description: "Get Current User record",
+    type: UserDtoResponse,
+    isArray: false,
+  })
+  switchUser(@Param("userId") userId: string) {
+    process.env["USER_MOCK_ID"] = userId;
+    return { userId };
   }
 }
