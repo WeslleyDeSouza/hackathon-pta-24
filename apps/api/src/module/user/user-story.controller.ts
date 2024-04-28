@@ -91,11 +91,11 @@ export class UserStoryController {
       });
   }
 
-  @Get("estimation/:projectId/:storyId/:reviewId/:value")
+  @Put("estimation/:projectId/:storyId/:estimationId/:value")
   setEstimation(
     @Param("storyId") storyId: number,
     @Param("projectId") projectId: number,
-    @Param("reviewId") reviewId: string,
+    @Param("estimationId") estimationId: string,
     @Param("value") value: number,
     @CurrentTenant() tenant: any,
     @CurrentUser() user: IUser
@@ -106,8 +106,25 @@ export class UserStoryController {
       user.userId,
       storyId,
       projectId,
-      reviewId === "new" ? null : +reviewId,
+      estimationId === "new" ? null : +estimationId,
       value
+    );
+  }
+
+  @Get("estimation/:projectId/:storyId/:estimationId")
+  getEstimation(
+    @Param("storyId") storyId: number,
+    @Param("projectId") projectId: number,
+    @Param("estimationId") estimationId: number,
+    @CurrentTenant() tenant: any,
+    @CurrentUser() user: IUser
+  ) {
+    return this.userStoryEstimationService.getEstimation(
+      tenant.tenantId,
+      user.userId,
+      storyId,
+      projectId,
+      estimationId
     );
   }
 }

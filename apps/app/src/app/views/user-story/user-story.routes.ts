@@ -1,9 +1,5 @@
 import { UserStoryResolver } from "./user-story/common";
-import {
-  UserStoryFlowComponent,
-  UserStoryListComponent,
-  UserStoryReviewComponent,
-} from "./user-story/view";
+import { UserStoryListComponent, UserStoryReviewComponent } from "./user-story/view";
 import { Route, UrlSegment } from "@angular/router";
 import { UserStoryFlowLayoutComponent } from "./user-story/view/flow/layout";
 

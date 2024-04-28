@@ -31,4 +31,22 @@ export class UserStoryEstimationFacade {
 
     return this.userStoryEstimationEntity.save(estimation);
   }
+
+  getEstimation(
+    tenantId: number,
+    userId: string,
+    userStoryId: number,
+    projectId: number,
+    estimationId: number
+  ) {
+    return this.userStoryEstimationEntity.find({
+      where: {
+        tenantId,
+        user: { userId },
+        userStory: { userStoryId: userStoryId || -1 },
+        projectId,
+        estimationId: estimationId || -1,
+      },
+    });
+  }
 }

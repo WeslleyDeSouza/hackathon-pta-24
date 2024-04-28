@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterLink } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
 import { PageBase } from "../../../../view.base";
 import { UserStoryService } from "@hackathon-pta/app/api";
@@ -9,11 +9,13 @@ import { UserStoryService } from "@hackathon-pta/app/api";
   selector: "app-user-story-review",
   templateUrl: "./user-story-review.component.html",
   styleUrl: "./user-story-review.component.scss",
-  imports: [NgForOf, NgIf],
+  imports: [NgForOf, NgIf, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserStoryReviewComponent extends PageBase {
   route = inject(ActivatedRoute);
+
+  showNavButton = true;
 
   constructor(protected userStoryService: UserStoryService) {
     super();

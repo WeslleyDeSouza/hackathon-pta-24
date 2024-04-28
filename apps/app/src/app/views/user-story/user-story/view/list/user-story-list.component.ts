@@ -1,11 +1,16 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from "@angular/core";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
 import { UserStoryService, UserStoryWithReviewDtoResponse } from "@hackathon-pta/app/api";
 import { PageBase } from "../../../../view.base";
 
-const isStateOpenForReview = (item: UserStoryWithReviewDtoResponse) => item.stateOpenForReview;
-const isStateReviewed = (item: UserStoryWithReviewDtoResponse) => false;
+const isStateOpenForReview = (item: UserStoryWithReviewDtoResponse) =>
+  item.stateOpenForReview && !item.estimation?.["estimationValue"];
+const isStateReviewed = (item: UserStoryWithReviewDtoResponse) =>
+  !!item.estimation?.["estimationValue"];
+
+const isStateNotReviewed = (item: UserStoryWithReviewDtoResponse) =>
+  !item.estimation?.["estimationValue"];
 
 @Component({
   standalone: true,
@@ -23,7 +28,7 @@ export class UserStoryListComponent extends PageBase {
     hasOpenStoriesReviewed: false,
   };
 
-  constructor(protected api: UserStoryService) {
+  constructor(protected api: UserStoryService, protected cdr: ChangeDetectorRef) {
     super();
   }
 
@@ -46,6 +51,10 @@ export class UserStoryListComponent extends PageBase {
     return stories;
   }
 
+  get storiesNotReviewed(): Array<UserStoryWithReviewDtoResponse> {
+    return this.stories.filter(isStateNotReviewed);
+  }
+
   get hasAdminRight(): boolean {
     return true;
   }
@@ -63,6 +72,12 @@ export class UserStoryListComponent extends PageBase {
       })
       .subscribe(() => {
         userStory.stateOpenForReview = new Date() as any;
+        this.updateView();
       });
+  }
+
+  updateView(): void {
+    this.cdr.markForCheck();
+    this.cdr.detectChanges();
   }
 }
