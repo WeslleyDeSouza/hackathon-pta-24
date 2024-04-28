@@ -33,7 +33,7 @@ export const DummyDataGenerator = {
         email: "max.musterman@pta.ch",
       },
       {
-        firstName: "Max",
+        firstName: "Sabine",
         lastName: "Mustermann",
         userId: "DUMMY-1-1-2",
         email: "max.mustermann@example.com",
